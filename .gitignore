@@ -1,0 +1,12 @@
+# IDE files
+.idea/
+.vscode/
+
+# Mac
+.DS_Store
+
+# Front
+node_modules/
+
+# Virtual Environment
+venv/
