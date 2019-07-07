@@ -9,4 +9,8 @@
 node_modules/
 
 # Virtual Environment
-venv/
+web/venv/
+
+# Cache
+
+web/app/__pycache__/

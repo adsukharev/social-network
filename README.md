@@ -46,7 +46,7 @@ cd matcha
 1. pip3 install virtualenv
 2. python3 -m venv venv
 3. source venv/bin/activate
-4. pip install -R requirements.txt
+4. pip install -r requirements.txt
 
 to deactivate:
 ```
