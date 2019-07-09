@@ -1,7 +1,7 @@
 # Matcha
 Dating website
 
-Full specification: https://cdn.intra.42.fr/pdf/pdf/778/camagru.en.pdf
+Full specification: https://cdn.intra.42.fr/pdf/pdf/968/matcha.en.pdf
 
 [Server] Python (Flask)
 
@@ -9,7 +9,7 @@ Full specification: https://cdn.intra.42.fr/pdf/pdf/778/camagru.en.pdf
 
 [Database] PostgreSQL
 
-[Webserver] Apache2
+[Webserver] Nginx
 
 [Deployment] Docker
 
