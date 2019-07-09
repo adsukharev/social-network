@@ -1,6 +1,7 @@
 # Matcha
 Dating website
-Full specification: https://cdn.intra.42.fr/pdf/pdf/778/camagru.en.pdf
+
+Full specification: https://cdn.intra.42.fr/pdf/pdf/968/matcha.en.pdf
 
 [Server] Python (Flask)
 
@@ -8,7 +9,6 @@ Full specification: https://cdn.intra.42.fr/pdf/pdf/778/camagru.en.pdf
 
 [Database] PostgreSQL
 
-[Webserver] Apache2
 
 [Deployment] Docker
 
@@ -36,28 +36,12 @@ P.S  When two people “like” each other, we will say that they are “connect
 brew install node python3
 ```
 
-#### Download project
-```
-git clone https://github.com/AndreiSukharev/Matcha.git matcha
-cd matcha
-```
-#### Activate Virtual Environment
-1. pip3 install virtualenv
-2. python3 -m venv venv
-3. source venv/bin/activate
-4. pip install -R requirements.txt
-
-to deactivate:
-```
-deactivate
-```
-
 #### Install docker
 
 ```
 brew install docker docker-machine docker-compose
 docker-machine create --driver virtualbox Matcha
-eval $(docker-machine env Camaguru)
+eval $(docker-machine env Matcha)
 ```
 
 ### Build and Run
