@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <a href="index.css"></a>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Questrial&display=swap" rel="stylesheet">
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Matcha</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+
+
+<div class="container" style="background-color: black; border-radius: 10px">
+    <div class="row">
+        <div class="col-1">
+        </div>
+        <div class="col-5">
+            <img src="pic/avatar.jpg" width="200" height="200">
+        </div>
+        <div class="col-6" style="top: 50px"> <!-- расположение текста по центру (по высоте) -->
+            <p><span style="font-size: 250%; color: red; font-family: 'Questrial', sans-serif; "><b>Name, 99</span></b>
+            </p>
+            <p><span style="font-size: 150%; color: gold; font-family: 'Questrial', sans-serif; ">My rating: 172</span>
+            </p>
+        </div>
+
+    </div>
+</div>
+
+<!-- Биография, отображаемая в профиле -->
+<div class="container">
+    <div class="row">
+        <div class="col">
+        </div>
+        <div class="col-8">
+
+            <div class="shadow p-3 mb-5 bg-white rounded">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-3">
+                            <p><span style="color: black; font-family: 'Questrial', sans-serif;">First Name:</span></p>
+                            <p><span style="color: black; font-family: 'Questrial', sans-serif;">Last Name:</span></p>
+                            <p><span style="color: black; font-family: 'Questrial', sans-serif;">Age:</span></p>
+                            <p><span style="color: black; font-family: 'Questrial', sans-serif;">I:</span></p>
+                            <p><span style="color: black; font-family: 'Questrial', sans-serif;">Orientation:</span></p>
+                            <p><span style="color: black; font-family: 'Questrial', sans-serif;">From:</span></p>
+
+                        </div>
+                        <div class="col-4">
+                            <p><span style="color: blue; font-family: 'Questrial', sans-serif;">...</span></p>
+                            <p><span style="color: blue; font-family: 'Questrial', sans-serif;">...</span></p>
+                            <p><span style="color: blue; font-family: 'Questrial', sans-serif;">...</span></p>
+                            <p><span style="color: blue; font-family: 'Questrial', sans-serif;">...</span></p>
+                            <p><span style="color: blue; font-family: 'Questrial', sans-serif;">...</span></p>
+                            <p><span style="color: blue; font-family: 'Questrial', sans-serif;">...</span></p>
+                        </div>
+                    </div>
+                    MY TAGS-----
+                </div>
+            </div>
+
+        </div>
+        <div class="col">
+        </div>
+    </div>
+</div>
+
+<!-- Изменение профиля -->
+<div class="container">
+    <div class="row">
+        <div class="col">
+        </div>
+        <div class="col-12">
+            <div class="col align-self-center">
+                <button type="button" class="btn btn-primary" data-toggle="modal"
+                        data-target="#exampleModalCenter">
+                    Change
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Change my profile</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-row">
+
+                        <div class="col">
+
+                            <div class="shadow p-3 mb-5 bg-white rounded">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <label for="FirstNameEdit">New first name</label>
+                                        <input type="text" class="form-control" id="FirstNameEdit"
+                                               placeholder="First name"
+                                               required>
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <label for="LastNameEdit">New last name</label>
+                                        <input type="text" class="form-control" id="LastNameEdit"
+                                               placeholder="Last name"
+                                               required>
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="SexEdit">I am</label>
+
+                                    <select class="form-control" id="SexEdit">
+                                        <option value="Man">Man</option>
+                                        <option value="Woman">Woman</option>
+                                    </select>
+                                </div>
+
+                                <!--    A G E-->
+                                <div class="form-group">
+                                    <label for="AgeEdit">Year of Birth</label>
+                                    <select class="form-control" id="AgeEdit">
+                                        <option value="1980">1980</option>
+                                        <option value="1981">1981</option>
+                                        <option value="1982">1982</option>
+                                        <option value="1983">1983</option>
+                                        <option value="1984">1984</option>
+                                        <option value="1985">1985</option>
+                                        <option value="1986">1986</option>
+                                        <option value="1987">1987</option>
+                                        <option value="1988">1988</option>
+                                        <option value="1989">1989</option>
+                                        <option value="1990">1990</option>
+                                        <option>1991</option>
+                                        <option>1992</option>
+                                        <option>1993</option>
+                                        <option>1994</option>
+                                        <option>1995</option>
+                                        <option>1996</option>
+                                        <option>1997</option>
+                                        <option>1998</option>
+                                        <option>1999</option>
+                                        <option>2000</option>
+                                        <option>2001</option>
+                                        <option>2002</option>
+                                        <option>2003</option>
+                                    </select>
+                                </div>
+
+                                <!--    O R I E N T A T I O N-->
+                                <div class="form-group">
+                                    <label for="OrientationEdit">Orientation</label>
+                                    <select class="form-control" id="OrientationEdit">
+                                        <option value="Original">Original</option>
+                                        <option value="Homosexual">Homosexual</option>
+                                        <option value="Bisexual" selected>Bisexual</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="CityEdit">City</label>
+                                    <select class="form-control" id="CityEdit">
+                                        <option value="Moscow">Moscow</option>
+                                        <option value="Saint-Petersburg">Saint-Petersburg</option>
+                                        <option value="Novosibirsk">Novosibirsk</option>
+                                    </select>
+                                </div>
+                                ADD TAGS---
+
+                                <div class="form-row">
+                                    <div class="form-group col">
+                                        <label for="PasswordEdit">New password</label>
+                                        <input type="password" class="form-control" id="PasswordEdit"
+                                               placeholder="Password">
+                                        <button type="button" class="btn btn-primary" onclick="">Change password
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="editProfile()">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Скрипт для получения данных из формы -->
+<script>
+    window.editProfile = async function editProfile() {
+        const FirstNameEdit = document.getElementById('FirstNameEdit').value;
+        console.log(FirstNameEdit);
+        const LastNameEdit = document.getElementById('LastNameEdit').value;
+        console.log(LastNameEdit);
+        const SexEdit = document.getElementById('SexEdit').value;
+        console.log(SexEdit);
+        const AgeEdit = document.getElementById('AgeEdit').value;
+        console.log(AgeEdit);
+        const OrientationEdit = document.getElementById('OrientationEdit').value;
+        //var value = OrientationEdit.value;
+        console.log(OrientationEdit);
+        const CityEdit = document.getElementById('CityEdit').value;
+        console.log(CityEdit);
+
+        const url = "/";
+        const formData = new FormData();
+        formData.append('FirstNameEdit', FirstNameEdit);
+        formData.append('LastNameEdit', LastNameEdit);
+        formData.append('SexEdit', SexEdit);
+        formData.append('AgeEdit', AgeEdit);
+        formData.append('OrientationEdit', OrientationEdit);
+        formData.append('CityEdit', CityEdit);
+
+        try {
+            let res = await fetch(url, {
+                method: 'POST',
+                body: formData,
+            });
+            let data = await res.json();
+            manageObjects(data);
+        } catch (e) {
+            console.log(e.message);
+        }
+    }
+
+    //function myFunction() {
+    //  var x = document.getElementById("myForm").elements[0].value;
+    //  document.getElementById("demo").innerHTML = x;
+    //}
+</script>
+
+</body>
+</html>
