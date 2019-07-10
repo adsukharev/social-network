@@ -53,10 +53,10 @@ go to http://localhost:8001
 
 #### Note Docker
 
-Run mysql client:
+Run postgres client:
 
 ```
-docker-compose exec db mysql -u root -p
+docker exec -it postgres psql -U root
 ```
 Enter in docker container:
 ```
