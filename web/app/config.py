@@ -1,9 +1,10 @@
+import os
 
 class Config:
     DEBUG = True
 
-    # DB_NAME = postgres
-    # DB_USER = postgres
-    # DB_PASS = postgres
-    # DB_SERVICE = postgres
-    # DB_PORT = 5432
+class Database:
+    DB_NAME = os.environ['POSTGRES_DB']
+    DB_USER = os.environ['POSTGRES_USER']
+    DB_PASS = os.environ['POSTGRES_PASSWORD']
+    DB_HOST = 'postgres'

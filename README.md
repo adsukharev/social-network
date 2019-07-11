@@ -5,10 +5,9 @@ Full specification: https://cdn.intra.42.fr/pdf/pdf/968/matcha.en.pdf
 
 [Server] Python (Flask)
 
-[Client] HTML - CSS - JavaScript (pure)
+[Client] Bootstrap4, JavaScript
 
 [Database] PostgreSQL
-
 
 [Deployment] Docker
 
@@ -56,11 +55,11 @@ go to http://localhost:8001
 Run postgres client:
 
 ```
-docker exec -it postgres psql -U root
+docker exec -it postgres psql matchaDB bbashiri
 ```
-Enter in docker container:
+Enter in flask container:
 ```
-docker exec -it {container name} bash
+docker exec -it flask bash
 ```
 Remove all:
 ```
