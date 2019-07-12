@@ -13,7 +13,7 @@ services:
     depends_on:
       - db
     env_file: .env
-    entrypoint: ["python", "app/main.py"]
+    entrypoint: ["python", "main.py"]
 
   db:
     container_name: postgres
