@@ -1,3 +1,4 @@
+
 # import psycopg2
 #
 # con = psycopg2.connect('dbname='testdb' user='postgres' host='localhost' password='my_password')
@@ -8,3 +9,4 @@
 # con.commit()
 # cur.close()
 # con.close()
+

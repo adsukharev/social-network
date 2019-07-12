@@ -1,3 +1,4 @@
+
 version: '3.1'
 
 services:
@@ -12,18 +13,15 @@ services:
       - ./web:/usr/src/web
     depends_on:
       - db
-#    entrypoint: ["python", "main.py"]
+    env_file: .env
+    entrypoint: ["python", "main.py"]
 
   db:
     container_name: postgres
     image: postgres:latest
     restart: always
-    volumes:
-      - ./db:/var/lib/postgresql/data
-#    env_file: .env
-#    environment:
-#      - POSTGRES_USER=${POSTGRES_USER}
-#      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-#      - POSTGRES_DB=${POSTGRES_DB}
-    ports:
-      - "5432:5432"
+#    volumes:
+#      - ./db:/var/lib/postgresql/data
+    env_file: .env
+    expose:
+      - 5432
