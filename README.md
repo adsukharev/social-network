@@ -24,18 +24,6 @@ Goals:
 P.S  When two people “like” each other, we will say that they are “connected” and are now able to chat
 ## Getting Started
 
-#### Prerequisites
-
-- node v10
-- python3
-- docker-compose
-
-#### Install node, python3
-
-```
-brew install node python3
-```
-
 #### Install docker
 
 You can use two variants.
@@ -50,7 +38,7 @@ docker-machine create --driver virtualbox Matcha
 eval $(docker-machine env Matcha)
 ```
 
-### Build and Run
+## Build and Run
 
 ```
 docker-compose up --build -d
