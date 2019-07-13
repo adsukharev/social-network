@@ -3,18 +3,33 @@ version: '3.1'
 
 services:
 
-  web:
+  backend:
     container_name: flask
-    build: ./web
+    build: ./backend
     restart: always
     ports:
       - "5000:5000"
     volumes:
-      - ./web:/usr/src/web
+      - ./backend:/usr/src/backend
     depends_on:
       - db
     env_file: .env
     entrypoint: ["python", "main.py"]
+
+  frontend:
+    container_name: react
+    build: ./frontend
+    volumes:
+      - './frontend:/usr/src/frontend'
+      - '/usr/src/frontend/node_modules'
+    ports:
+      - '3000:3000'
+    depends_on:
+      - backend
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+      - HOST_URL=http://localhost:5000
 
   db:
     container_name: postgres

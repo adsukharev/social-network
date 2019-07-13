@@ -1,5 +1,5 @@
 import psycopg2
-from connection import start_connection
+from .connection import start_connection
 
 
 def start_db():
@@ -22,8 +22,8 @@ def start_db():
             token           VARCHAR(1024)   NOT NULL,
             status        BOOLEAN         NOT NULL DEFAULT '0',
             notification    BOOLEAN         NOT NULL DEFAULT '1',
-            rating        asdasd
-            history 
+            rating         VARCHAR(5)
+            history        VARCHAR(5)
             );'''
 
         cursor.execute(create_table_query)
@@ -38,33 +38,3 @@ def start_db():
 
     except (Exception, psycopg2.Error) as error:
         print("Error while connecting to PostgreSQL", error)
-
-table history:
-    id,
-    from,
-    to
-
-
-table likes:
-    id,
-    from,
-    to
-
-table rating:
-    id,
-    user,
-    sumLikes
-
-
-
-
-table chat:
-    id,
-    name,
-    users []2
-    messages []
-table message:
-    id,
-    creationDate,
-    text,
-    author

@@ -5,7 +5,7 @@ Full specification: https://cdn.intra.42.fr/pdf/pdf/968/matcha.en.pdf
 
 [Server] Python (Flask)
 
-[Client] Bootstrap4, JavaScript
+[Client] Bootstrap4, React
 
 [Database] PostgreSQL
 
@@ -28,6 +28,7 @@ P.S  When two people “like” each other, we will say that they are “connect
 
 - node v10
 - python3
+- docker-compose
 
 #### Install node, python3
 
@@ -37,6 +38,12 @@ brew install node python3
 
 #### Install docker
 
+You can use two variants.
+The first one (prefer for home laptop):
+```
+https://docs.docker.com/compose/install/
+```
+The second (for school):
 ```
 brew install docker docker-machine docker-compose
 docker-machine create --driver virtualbox Matcha
@@ -47,7 +54,8 @@ eval $(docker-machine env Matcha)
 
 ```
 docker-compose up --build -d
-go to http://localhost:8001
+front: http://localhost:3000
+check backend: http://localhost:5000
 ```
 
 #### Note Docker
@@ -57,9 +65,9 @@ Run postgres client:
 ```
 docker exec -it postgres psql matchaDB bbashiri
 ```
-Enter in flask container:
+Enter in container:
 ```
-docker exec -it flask bash
+docker exec -it {container name} bash
 ```
 Remove all:
 ```
