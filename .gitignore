@@ -5,6 +5,8 @@
 # Mac
 .DS_Store
 
+/node_modules
+
 # Front
 frontend/node_modules
 
