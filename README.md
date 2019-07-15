@@ -53,7 +53,7 @@ check backend: http://localhost:5000
 Run postgres client:
 
 ```
-docker exec -it postgres psql matchaDB bbashiri
+docker exec -it postgres psql matchaDB user
 ```
 Enter in container:
 ```

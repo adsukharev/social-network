@@ -11,4 +11,5 @@ def start_connection():
         return connection, cursor
 
     except (Exception, psycopg2.Error):
+        print(psycopg2.Error)
         return 0
