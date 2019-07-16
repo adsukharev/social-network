@@ -57,7 +57,7 @@ docker exec -it postgres psql matchaDB user
 ```
 Enter in container:
 ```
-docker exec -it {container name} bash
+docker exec -it flask bash
 ```
 Remove all:
 ```

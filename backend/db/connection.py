@@ -1,6 +1,7 @@
 import psycopg2
 from .database_config import Database
 
+
 def start_connection():
     try:
         connection = psycopg2.connect(dbname=Database.DB_NAME,

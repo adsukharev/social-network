@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint
+from flask import Blueprint
 from flask_restful import Api
 from .resources.Users import Users
 
