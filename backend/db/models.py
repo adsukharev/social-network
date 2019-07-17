@@ -24,7 +24,7 @@ class Models:
 
     users = '''
                 CREATE TABLE IF NOT EXISTS users(
-                user_id              SERIAL          NOT NULL PRIMARY KEY,
+                user_id         SERIAL          NOT NULL PRIMARY KEY,
                 login           VARCHAR (30)     NOT NULL
                 );'''
 
@@ -36,77 +36,93 @@ class Models:
 
     users_tags = '''
                 CREATE TABLE IF NOT EXISTS users_tags(
-                user_id     INT REFERENCES users (user_id),
-                tag_id      INT REFERENCES tags (tag_id)
+                user_id_fk     INT REFERENCES users (user_id),
+                tag_id_fk      INT REFERENCES tags (tag_id)
                 );'''
 
-    insert_user1 = '''
-                INSERT INTO users (login)
-                VALUES (%s)
-                ;'''
-    record_insert_user1 = ("olega")
+    history = '''
+                CREATE TABLE IF NOT EXISTS history(
+                history_id    SERIAL          NOT NULL PRIMARY KEY,
+                from_history_fk  INT     NOT NULL REFERENCES users (user_id),
+                to_history_fk   INT     NOT NULL REFERENCES users (user_id)
+                );'''
 
-    insert_user2 = '''
-                INSERT INTO users (login)
-                VALUES ("kolyan")
-                ;'''
+    likes = '''
+                CREATE TABLE IF NOT EXISTS likes(
+                like_id    SERIAL          NOT NULL PRIMARY KEY,
+                from_like_fk  INT     NOT NULL REFERENCES users (user_id),
+                to_like_fk   INT     NOT NULL REFERENCES users (user_id)
+                );'''
 
-    insert_tag1 = '''
-                INSERT INTO tags (tag_name)
-                VALUES ("sport")
-                ;'''
-    insert_tag2 = '''
-                  INSERT INTO tags (tag_name)
-                  VALUES ("yoga")
-                  ;'''
-    insert_tag3 = '''
-                  INSERT INTO tags (tag_name)
-                  VALUES ("books")
-                  ;'''
-    insert_common = '''
-                  INSERT INTO users_tags (user_id, tag_id)
-                  VALUES (1, 2)
-                  ;'''
-    insert_common2 = '''
-                  INSERT INTO users_tags (user_id, tag_id)
-                  VALUES (1, 3)
-                  ;'''
+    rating = '''
+                CREATE TABLE IF NOT EXISTS rating(
+                rating_id        SERIAL          NOT NULL PRIMARY KEY,
+                user_fk      INT     NOT NULL REFERENCES users(user_id),
+                sumLikes  SMALLINT        DEFAULT 0
+                );'''
 
-    # history = '''
-    #             CREATE TABLE IF NOT EXISTS history(
-    #             `id`    SERIAL          NOT NULL PRIMARY KEY,
-    #             `from`  VARCHAR(30)     NOT NULL REFERENCES,
-    #             `to`    VARCHAR(30)     NOT NULL REFERENCES,
-    #             );'''
-    #
-    # likes = '''
-    #             CREATE TABLE IF NOT EXISTS likes(
-    #             `id`    SERIAL          NOT NULL PRIMARY KEY,
-    #             `from`  VARCHAR(30)     NOT NULL REFERENCES,
-    #             `to`    VARCHAR(30)     NOT NULL REFERENCES,
-    #             );'''
-    #
-    # rating = '''
-    #             CREATE TABLE IF NOT EXISTS rating(
-    #             `id`        SERIAL          NOT NULL PRIMARY KEY,
-    #             `user`      VARCHAR(60)     NOT NULL REFERENCES users(id),
-    #             `sumLikes`  SMALLINT        NOT NULL,
-    #             );'''
-    #
+    messages = '''
+                 CREATE TABLE IF NOT EXISTS messages(
+                 message_id            SERIAL          NOT NULL PRIMARY KEY,
+                 creationDate  TIMESTAMP       DEFAULT LOCALTIMESTAMP(),
+                 text         TEXT    NOT NULL,
+                 author       INT     NOT NULL REFERENCES users(user_id)
+                 );'''
+
+
     # chat = '''
     #             CREATE TABLE IF NOT EXISTS chat(
-    #             `id`        SERIAL          NOT NULL PRIMARY KEY,
-    #             `name`      VARCHAR(30)     NOT NULL,
-    #             `users`     VARCHAR(30)[]     NOT NULL REFERENCES,
-    #             `messages`  VARCHAR(30)[]     NOT NULL REFERENCES,
+    #             id        SERIAL          NOT NULL PRIMARY KEY,
+    #             name      VARCHAR(30)     NOT NULL,
+    #             users     VARCHAR(30)[]     NOT NULL REFERENCES,
+    #             messages  VARCHAR(30)[]     NOT NULL REFERENCES
     #             );'''
     #
-    # message = '''
-    #              CREATE TABLE IF NOT EXISTS message(
-    #              `id`           SERIAL          NOT NULL PRIMARY KEY,
-    #              `creationDate` TIMESTAMP       NOT NULL,
-    #              `text`         VARCHAR(100)    NOT NULL,
-    #              `author`       VARCHAR(30)     NOT NULL REFERENCES users(id),
-    #              );'''
+
+
+    # SELECT u.user_id, u.login
+    # FROM users u
+    # JOIN users_tags ut on (i.user_id = ut.user_id);
+
+    # INSERT INTO users (login) VALUES ('Oleg');
+    # INSERT INTO messages (text, author) values ('asd', 1);
+    # insert_user1 = '''
+    #             INSERT INTO users (login)
+    #             VALUES (%s)
+    #             ;'''
+    # record_insert_user1 = ("olega",)
     #
+    # insert_user2 = '''
+    #             INSERT INTO users (login)
+    #             VALUES (%s)
+    #             ;'''
+    # record_insert_user2 = ("kolyan",)
     #
+    # insert_tag1 = '''
+    #             INSERT INTO tags (tag_name)
+    #             VALUES (%s)
+    #             ;'''
+    # record_insert_tags1 = ("sport",)
+    #
+    # insert_tag2 = '''
+    #               INSERT INTO tags (tag_name)
+    #               VALUES (%s)
+    #               ;'''
+    # record_insert_tags2 = ("yoga",)
+    #
+    # insert_tag3 = '''
+    #               INSERT INTO tags (tag_name)
+    #               VALUES (%s)
+    #               ;'''
+    # record_insert_tags3 = ("books",)
+    #
+    # insert_common = '''
+    #               INSERT INTO users_tags (user_id, tag_id)
+    #               VALUES (%s,%s)
+    #               ;'''
+    # record_insert_common1 = (1,2,)
+    # insert_common2 = '''
+    #               INSERT INTO users_tags (user_id, tag_id)
+    #               VALUES (%s, %s)
+    #               ;'''
+    # record_insert_common2 = (1,3,)

@@ -43,7 +43,7 @@ eval $(docker-machine env Matcha)
 ```
 git clone https://github.com/AndreiSukharev/Matcha.git matcha
 cd matcha
-docker-compose up --build -d
+docker-compose up --build
 front: http://localhost:3000
 check backend: http://localhost:5000
 ```
