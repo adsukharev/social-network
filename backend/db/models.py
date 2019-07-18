@@ -7,11 +7,11 @@ class Models:
                 email           VARCHAR(64)     NOT NULL,
                 login           VARCHAR (64)    NOT NULL,
                 password        VARCHAR(1024)   NOT NULL,
-                user_name            VARCHAR(64)     NOT NULL,
+                user_name       VARCHAR(64)     NOT NULL,
                 age             SMALLINT,
                 sex             VARCHAR(8),
                 preferences     VARCHAR(32)     DEFAULT 'bisexual',
-                bio               TEXT,
+                bio             TEXT,
                 avatar          VARCHAR(1024)[],
                 latitude        REAL,
                 longitude       REAL,
@@ -23,7 +23,7 @@ class Models:
     tags = '''
                 CREATE TABLE IF NOT EXISTS tags(
                 tag_id         SERIAL          NOT NULL PRIMARY KEY,
-                tag_name       VARCHAR (64)     NOT NULL
+                tag_name       VARCHAR (64)    NOT NULL
                 );'''
 
     users_tags = '''
@@ -34,31 +34,31 @@ class Models:
 
     history = '''
                 CREATE TABLE IF NOT EXISTS history(
-                history_id    SERIAL          NOT NULL PRIMARY KEY,
-                from_history_fk  INT     NOT NULL REFERENCES users (user_id),
-                to_history_fk   INT     NOT NULL REFERENCES users (user_id)
+                history_id          SERIAL  NOT NULL PRIMARY KEY,
+                from_history_fk     INT     NOT NULL REFERENCES users (user_id),
+                to_history_fk       INT     NOT NULL REFERENCES users (user_id)
                 );'''
 
     likes = '''
                 CREATE TABLE IF NOT EXISTS likes(
-                like_id    SERIAL          NOT NULL PRIMARY KEY,
-                from_like_fk  INT     NOT NULL REFERENCES users (user_id),
-                to_like_fk   INT     NOT NULL REFERENCES users (user_id)
+                like_id         SERIAL  NOT NULL PRIMARY KEY,
+                from_like_fk    INT     NOT NULL REFERENCES users (user_id),
+                to_like_fk      INT     NOT NULL REFERENCES users (user_id)
                 );'''
 
     rating = '''
                 CREATE TABLE IF NOT EXISTS rating(
-                rating_id        SERIAL          NOT NULL PRIMARY KEY,
-                user_fk      INT     NOT NULL REFERENCES users(user_id),
-                sumLikes  SMALLINT        DEFAULT 0
+                rating_id       SERIAL      NOT NULL PRIMARY KEY,
+                user_fk         INT         NOT NULL REFERENCES users(user_id),
+                sumLikes        SMALLINT    DEFAULT 0
                 );'''
 
     messages = '''
                  CREATE TABLE IF NOT EXISTS messages(
-                 message_id            SERIAL          NOT NULL PRIMARY KEY,
-                 creation_date  VARCHAR (64)       DEFAULT TO_CHAR(CURRENT_TIMESTAMP,'YYYY-MM-DD HH24:MI:SS'),
-                 text         TEXT    NOT NULL,
-                 author       INT     NOT NULL REFERENCES users(user_id)
+                 message_id     SERIAL          NOT NULL PRIMARY KEY,
+                 creation_date  VARCHAR(64)     DEFAULT TO_CHAR(CURRENT_TIMESTAMP,'YYYY-MM-DD HH24:MI:SS'),
+                 text           TEXT            NOT NULL,
+                 author         INT             NOT NULL REFERENCES users(user_id)
                  );'''
 
 
