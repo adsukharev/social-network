@@ -5,10 +5,9 @@ class Models:
                 CREATE TABLE IF NOT EXISTS users(
                 user_id         SERIAL          NOT NULL PRIMARY KEY,
                 email           VARCHAR(64)     NOT NULL,
-                login           VARCHAR (64)     NOT NULL,
-                pass            VARCHAR(1024)     NOT NULL,
-                name            VARCHAR(64)     NOT NULL,
-                surname         VARCHAR(64)     NOT NULL,
+                login           VARCHAR (64)    NOT NULL,
+                password        VARCHAR(1024)   NOT NULL,
+                user_name            VARCHAR(64)     NOT NULL,
                 age             SMALLINT,
                 sex             VARCHAR(8),
                 preferences     VARCHAR(32)     DEFAULT 'bisexual',
@@ -16,7 +15,7 @@ class Models:
                 avatar          VARCHAR(1024)[],
                 latitude        REAL,
                 longitude       REAL,
-                token           VARCHAR(1024)   NOT NULL,
+                token           VARCHAR(1024),
                 status          BOOLEAN         NOT NULL DEFAULT '0',
                 notification    BOOLEAN         NOT NULL DEFAULT '1'
                 );'''
