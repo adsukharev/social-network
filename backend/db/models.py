@@ -1,37 +1,30 @@
 
 
 class Models:
-    # users = '''
-    #             CREATE TABLE IF NOT EXISTS users(
-    #             id              SERIAL          NOT NULL PRIMARY KEY,
-    #             email           VARCHAR(30)     NOT NULL,
-    #             login           VARCHAR(30)     NOT NULL,
-    #             pass            VARCHAR(30)     NOT NULL,
-    #             name            VARCHAR(30)     NOT NULL,
-    #             surname         VARCHAR(30)     NOT NULL,
-    #             age             SMALLINT,
-    #             sex             VARCHAR(5),
-    #             preferences     VARCHAR(18)     DEFAULT 'bisexual',
-    #             avatar          VARCHAR(1024),
-    #             location        VARCHAR(30),
-    #             tags            VARCHAR(30)     REFERENCES tags(id),
-    #             token           VARCHAR(1024)   NOT NULL,
-    #             status          BOOLEAN         NOT NULL DEFAULT '0',
-    #             notification    BOOLEAN         NOT NULL DEFAULT '1',
-    #             rating          VARCHAR(5)      REFERENCES,
-    #             history         VARCHAR(5)      REFERENCES
-    #             );'''
-
     users = '''
                 CREATE TABLE IF NOT EXISTS users(
                 user_id         SERIAL          NOT NULL PRIMARY KEY,
-                login           VARCHAR (30)     NOT NULL
+                email           VARCHAR(64)     NOT NULL,
+                login           VARCHAR (64)     NOT NULL,
+                pass            VARCHAR(1024)     NOT NULL,
+                name            VARCHAR(64)     NOT NULL,
+                surname         VARCHAR(64)     NOT NULL,
+                age             SMALLINT,
+                sex             VARCHAR(8),
+                preferences     VARCHAR(32)     DEFAULT 'bisexual',
+                bio               TEXT,
+                avatar          VARCHAR(1024)[],
+                latitude        REAL,
+                longitude       REAL,
+                token           VARCHAR(1024)   NOT NULL,
+                status          BOOLEAN         NOT NULL DEFAULT '0',
+                notification    BOOLEAN         NOT NULL DEFAULT '1'
                 );'''
 
     tags = '''
                 CREATE TABLE IF NOT EXISTS tags(
                 tag_id         SERIAL          NOT NULL PRIMARY KEY,
-                tag_name       VARCHAR (30)     NOT NULL
+                tag_name       VARCHAR (64)     NOT NULL
                 );'''
 
     users_tags = '''
@@ -64,26 +57,44 @@ class Models:
     messages = '''
                  CREATE TABLE IF NOT EXISTS messages(
                  message_id            SERIAL          NOT NULL PRIMARY KEY,
-                 creationDate  TIMESTAMP       DEFAULT LOCALTIMESTAMP(),
+                 creation_date  VARCHAR (64)       DEFAULT TO_CHAR(CURRENT_TIMESTAMP,'YYYY-MM-DD HH24:MI:SS'),
                  text         TEXT    NOT NULL,
                  author       INT     NOT NULL REFERENCES users(user_id)
                  );'''
 
 
-    # chat = '''
-    #             CREATE TABLE IF NOT EXISTS chat(
-    #             id        SERIAL          NOT NULL PRIMARY KEY,
-    #             name      VARCHAR(30)     NOT NULL,
-    #             users     VARCHAR(30)[]     NOT NULL REFERENCES,
-    #             messages  VARCHAR(30)[]     NOT NULL REFERENCES
-    #             );'''
-    #
+    chats = '''
+                CREATE TABLE IF NOT EXISTS chats(
+                chat_id        SERIAL          NOT NULL PRIMARY KEY,
+                chat_name      VARCHAR(64)     NOT NULL
+                );'''
 
+
+    chat_users = '''
+                CREATE TABLE IF NOT EXISTS chat_users(
+                 chat_id_fk     INT REFERENCES chats (chat_id),
+                 user_id_fk     INT REFERENCES users (user_id)
+                );'''
+
+
+    chat_messages = '''
+                CREATE TABLE IF NOT EXISTS chat_messages(
+                 chat_id_fk     INT REFERENCES chats (chat_id),
+                 message_id_fk  INT REFERENCES messages (message_id)
+                );'''
+
+
+    # location = '''
+    #                 CREATE TABLE IF NOT EXISTS location(
+    #                 location_id    SERIAL          NOT NULL PRIMARY KEY,
+    #                 location_name  VARCHAR(1014)     NOT NULL
+    #                 );'''
 
     # SELECT u.user_id, u.login
     # FROM users u
     # JOIN users_tags ut on (i.user_id = ut.user_id);
 
+    #select to_char(creationdate, 'YYYY-MM-DD HH24:MI:SS') as time from messages;
     # INSERT INTO users (login) VALUES ('Oleg');
     # INSERT INTO messages (text, author) values ('asd', 1);
     # insert_user1 = '''

@@ -23,6 +23,9 @@ def start_db():
         cursor.execute(Models.likes)
         cursor.execute(Models.rating)
         cursor.execute(Models.messages)
+        cursor.execute(Models.chats)
+        cursor.execute(Models.chat_users)
+        cursor.execute(Models.chat_messages)
 
         connection.commit()
         print("Tables created successfully in PostgreSQL ")
