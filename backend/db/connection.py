@@ -14,3 +14,11 @@ def start_connection():
     except (Exception, psycopg2.Error):
         print(psycopg2.Error)
         return 0
+
+def close_connection(connection, cursor):
+    try:
+        connection.commit()
+        cursor.close()
+        connection.close()
+    except (Exception, psycopg2.Error):
+        print(psycopg2.Error)
