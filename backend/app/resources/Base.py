@@ -31,14 +31,14 @@ class Base(Resource):
         try:
             connection, cursor = start_connection()
             cursor.execute(sql, record)
-            items = cursor.fetchone()
+            items = cursor.fetchall()
             close_connection(connection, cursor)
             return items
 
         except (Exception, psycopg2.Error):
             print(psycopg2.Error)
 
-    def base_post(self, sql, record):
+    def base_write(self, sql, record):
         try:
             connection, cursor = start_connection()
             cursor.execute(sql, record)
@@ -49,24 +49,15 @@ class Base(Resource):
             print(psycopg2.Error)
             return 0
 
-    def base_put(self, sql, record):
+    def base_write_many(self, sql, record):
         try:
             connection, cursor = start_connection()
-            cursor.execute(sql, record)
+            cursor.executemany(sql, record)
+            rows = cursor.rowcount
             close_connection(connection, cursor)
-            return 1
+            return rows
 
         except (Exception, psycopg2.Error):
             print(psycopg2.Error)
             return 0
 
-    def base_delete(self, sql, record):
-        try:
-            connection, cursor = start_connection()
-            cursor.execute(sql, record)
-            close_connection(connection, cursor)
-            return 1
-
-        except (Exception, psycopg2.Error):
-            print(psycopg2.Error)
-            return 0

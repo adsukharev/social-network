@@ -23,13 +23,13 @@ class Models:
     tags = '''
                 CREATE TABLE IF NOT EXISTS tags(
                 tag_id         SERIAL          NOT NULL PRIMARY KEY,
-                tag_name       VARCHAR (64)    NOT NULL
+                tag_name       VARCHAR (64)    NOT NULL UNIQUE
                 );'''
 
     users_tags = '''
                 CREATE TABLE IF NOT EXISTS users_tags(
-                user_id_fk     INT REFERENCES users (user_id),
-                tag_id_fk      INT REFERENCES tags (tag_id)
+                user_id     INT REFERENCES users (user_id),
+                tag_id      INT REFERENCES tags (tag_id)
                 );'''
 
     history = '''
@@ -71,16 +71,45 @@ class Models:
 
     chat_users = '''
                 CREATE TABLE IF NOT EXISTS chat_users(
-                 chat_id_fk     INT REFERENCES chats (chat_id),
-                 user_id_fk     INT REFERENCES users (user_id)
+                 chat_id     INT REFERENCES chats (chat_id),
+                 user_id     INT REFERENCES users (user_id)
                 );'''
 
 
     chat_messages = '''
                 CREATE TABLE IF NOT EXISTS chat_messages(
-                 chat_id_fk     INT REFERENCES chats (chat_id),
-                 message_id_fk  INT REFERENCES messages (message_id)
+                 chat_id     INT REFERENCES chats (chat_id),
+                 message_id  INT REFERENCES messages (message_id)
                 );'''
+
+
+    """
+        SELECT  u.user_id, u.login, l.likes, h.history
+        FROM users u
+        JOIN (
+            SELECT to_like_fk, array_agg(from_like_fk) as likes
+            FROM likes
+            GROUP BY 1
+            ) l ON u.user_id = l.to_like_fk
+        JOIN (
+            SELECT to_history_fk, array_agg(from_history_fk) as history
+            FROM history
+            GROUP BY 1
+            ) h ON u.user_id = h.to_history_fk
+        WHERE user_id = 2
+        ;
+
+            
+            
+                    FROM users
+                    JOIN likes on (users.user_id = likes.to_like_fk)
+                    JOIN history on (users.user_id = history.to_history_fk)
+                    WHERE user_id = 2
+                    GROUP BY users.user_id
+                    ;
+    """
+
+
 
 
     # location = '''

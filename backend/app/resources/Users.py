@@ -19,7 +19,8 @@ class Users(Base):
             record = (email, login, password, name)
             sql = '''INSERT INTO users (email, login, password, user_name)
                      VALUES (%s, %s, %s, %s);'''
-            self.base_post(sql, record)
-            return 201
-        except:
-            return 400
+            self.base_write(sql, record)
+            return "ok"
+        except Exception as error:
+            print(error)
+            return "error"
