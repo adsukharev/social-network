@@ -1,7 +1,9 @@
 # RESTful API Matcha
 
 #### Note
-All data should be sent to server in JSON file
+All data should be sent to server in JSON file.
+
+Schemas are in backend/db/models.py
 
 ## Endpoints
 
