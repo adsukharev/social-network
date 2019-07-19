@@ -43,6 +43,8 @@ Columns that can be changed
 ['email', 'login', 'password', 'user_name', 'age', 'sex', 'preferences', 'bio', 'avatar',
  'latitude', 'longitude', 'status', 'notification', 'tags']
 ```
+Tags must be in an array, even if there is only one value.
+
 Example for PUT:
 ```
 {
