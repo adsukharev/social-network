@@ -10,17 +10,14 @@ class Users(Base):
         return users
 
     def post(self):
-        try:
-            email = request.json['email']
-            login = request.json['login']
-            password = request.json['password']
-            name = request.json['name']
+        email = request.json['email']
+        login = request.json['login']
+        password = request.json['password']
+        name = request.json['name']
 
-            record = (email, login, password, name)
-            sql = '''INSERT INTO users (email, login, password, user_name)
-                     VALUES (%s, %s, %s, %s);'''
-            self.base_write(sql, record)
+        record = (email, login, password, name)
+        sql = '''INSERT INTO users (email, login, password, user_name)
+                 VALUES (%s, %s, %s, %s);'''
+        if self.base_write(sql, record):
             return "ok"
-        except Exception as error:
-            print(error)
-            return "error"
+        return "error"

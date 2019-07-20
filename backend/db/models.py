@@ -1,11 +1,9 @@
-
-
 class Models:
     users = '''
                 CREATE TABLE IF NOT EXISTS users(
                 user_id         SERIAL          NOT NULL PRIMARY KEY,
-                email           VARCHAR(64)     NOT NULL,
-                login           VARCHAR (64)    NOT NULL,
+                email           VARCHAR(64)     NOT NULL UNIQUE,
+                login           VARCHAR (64)    NOT NULL UNIQUE,
                 password        VARCHAR(1024)   NOT NULL,
                 user_name       VARCHAR(64)     NOT NULL,
                 age             SMALLINT,
@@ -61,13 +59,11 @@ class Models:
                  author         INT             NOT NULL REFERENCES users(user_id)
                  );'''
 
-
     chats = '''
                 CREATE TABLE IF NOT EXISTS chats(
                 chat_id        SERIAL          NOT NULL PRIMARY KEY,
                 chat_name      VARCHAR(64)     NOT NULL
                 );'''
-
 
     chat_users = '''
                 CREATE TABLE IF NOT EXISTS chat_users(
@@ -75,13 +71,11 @@ class Models:
                  user_id     INT REFERENCES users (user_id)
                 );'''
 
-
     chat_messages = '''
                 CREATE TABLE IF NOT EXISTS chat_messages(
                  chat_id     INT REFERENCES chats (chat_id),
                  message_id  INT REFERENCES messages (message_id)
                 );'''
-
 
     """
         SELECT  u.user_id, u.login, l.likes, h.history
@@ -109,9 +103,6 @@ class Models:
                     ;
     """
 
-
-
-
     # location = '''
     #                 CREATE TABLE IF NOT EXISTS location(
     #                 location_id    SERIAL          NOT NULL PRIMARY KEY,
@@ -122,7 +113,7 @@ class Models:
     # FROM users u
     # JOIN users_tags ut on (i.user_id = ut.user_id);
 
-    #select to_char(creationdate, 'YYYY-MM-DD HH24:MI:SS') as time from messages;
+    # select to_char(creationdate, 'YYYY-MM-DD HH24:MI:SS') as time from messages;
     # INSERT INTO users (login) VALUES ('Oleg');
     # INSERT INTO messages (text, author) values ('asd', 1);
     # insert_user1 = '''

@@ -1,5 +1,5 @@
 from flask_restful import Resource
-import psycopg2
+import psycopg2.errors
 from db.connection import start_connection, close_connection
 
 
@@ -25,7 +25,7 @@ class Base(Resource):
             return items
 
         except (Exception, psycopg2.Error):
-            print("Base_get_all",psycopg2.Error)
+            print("Base_get_all", psycopg2.Error)
 
     def base_get_limited_all(self, sql, record):
         try:
@@ -53,11 +53,9 @@ class Base(Resource):
         try:
             connection, cursor = start_connection()
             cursor.executemany(sql, record)
-            rows = cursor.rowcount
             close_connection(connection, cursor)
-            return rows
+            return 1
 
         except (Exception, psycopg2.Error):
             print(psycopg2.Error)
             return 0
-

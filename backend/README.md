@@ -13,6 +13,7 @@ Schemas are in backend/db/models.py
 GET     /api/users -> get all users
 POST    /api/users -> add a new user
 ```
+
 **NOTE:**
 
 These keys are required to create a user:

@@ -2,6 +2,7 @@ from .Base import Base
 from flask import request
 from .Tags import Tags
 
+
 class UserId(Base):
 
     def get(self, user_id):
@@ -25,30 +26,23 @@ class UserId(Base):
         return user
 
     def put(self, user_id):
-        try:
-            params = self.check_user_params(request.json)
-            for key,value in params.items():
-                sql = "UPDATE users SET {} = %s WHERE user_id =%s".format(key)
-                record = (value, user_id)
-                self.base_write(sql, record)
-            return "ok"
-        except Exception as error:
-            print(error)
-            return "error"
+        params = self.check_user_params(request.json)
+        for key, value in params.items():
+            sql = "UPDATE users SET {} = %s WHERE user_id =%s".format(key)
+            record = (value, user_id)
+            self.base_write(sql, record)
+        return "ok"
 
     def delete(self, user_id):
-        try:
-            sql = """DELETE from users WHERE user_id =%s"""
-            record = (user_id,)
-            self.base_write(sql, record)
+        sql = """DELETE from users WHERE user_id =%s"""
+        record = (user_id,)
+        if self.base_write(sql, record):
             return "ok"
-        except Exception as error:
-            print(error)
-            return "error"
+        return "error"
 
     def check_user_params(self, params):
         allowed_user_columns = ['email', 'login', 'password', 'user_name', 'age', 'sex', 'preferences', 'bio', 'avatar',
-                        'latitude', 'longitude', 'status', 'notification', 'tags']
+                                'latitude', 'longitude', 'status', 'notification', 'tags']
         if "tags" in params:
             tag = Tags()
             tag.manage_tags(params["tags"])
