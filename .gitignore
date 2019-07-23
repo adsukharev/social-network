@@ -16,3 +16,4 @@ backend/__pycache__/
 backend/db/__pycache__/
 backend/app/__pycache__/
 backend/app/resources/__pycache__/
+backend/app/resources/loginPage/__pycache__/
