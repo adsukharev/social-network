@@ -1,24 +1,30 @@
-from app.resources.Common.Base import Base
+from app.resources.Common.UsersCommon import UsersCommon
 from flask import request
 from .Tags import Tags
 
 
-class UserId(Base):
+class UserId(UsersCommon):
 
     def get(self, user_id):
         sql = """
-                SELECT  u.user_id, u.login, l.likes, h.history
+                SELECT  u.user_id, u.login, u.email, u.user_name, u.age, u.sex, u.preferences,
+                        u.bio, u.avatar ,l.likes, h.history, t.tags
                 FROM users u
-                JOIN (
+                LEFT JOIN (
                     SELECT to_like_fk, array_agg(from_like_fk) as likes
                     FROM likes
                     GROUP BY 1
                     ) l ON u.user_id = l.to_like_fk
-                JOIN (
+                LEFT JOIN (
                     SELECT to_history_fk, array_agg(from_history_fk) as history
                     FROM history
                     GROUP BY 1
                     ) h ON u.user_id = h.to_history_fk
+                LEFT JOIN (
+                    SELECT user_id as user_id_fk, array_agg(tag_id) as tags
+                    FROM users_tags
+                    GROUP BY 1
+                    ) t ON u.user_id = t.user_id_fk
                 WHERE user_id = %s
             ;"""
         record = (user_id,)
@@ -26,9 +32,11 @@ class UserId(Base):
         return user
 
     def put(self, user_id):
-        params = self.check_user_params(request.json)
+        params = self.check_user_params_add_handle_tags(request.json)
         for key, value in params.items():
             sql = "UPDATE users SET {} = %s WHERE user_id =%s".format(key)
+            if key == "password":
+                value = self.to_hash(value)
             record = (value, user_id)
             self.base_write(sql, record)
         return "ok"
@@ -40,7 +48,7 @@ class UserId(Base):
             return "ok"
         return "error"
 
-    def check_user_params(self, params):
+    def check_user_params_add_handle_tags(self, params):
         allowed_user_columns = ['email', 'login', 'password', 'user_name', 'age', 'sex', 'preferences', 'bio', 'avatar',
                                 'latitude', 'longitude', 'status', 'notification', 'tags']
         if "tags" in params:

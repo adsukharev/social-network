@@ -1,5 +1,6 @@
 from app.resources.Common.Base import Base
 import psycopg2.errors
+from flask import session
 
 
 class Tags(Base):
@@ -32,11 +33,10 @@ class Tags(Base):
                 self.base_write(sql, item)
             except (Exception, psycopg2.Error):
                 print(psycopg2.Error)
-        return 1
+        return "ok"
 
     def __delete_users_tags(self):
-        # todo: id from session
-        user_id = 1
+        user_id = session['user_id']
         sql = """DELETE from users_tags WHERE user_id =%s"""
         record = (user_id,)
         self.base_write(sql, record)
@@ -51,8 +51,7 @@ class Tags(Base):
         return tag_ids
 
     def __add_tags_to_db_users_tags(self, tag_ids):
-        # todo: id from session
-        user_id = 1
+        user_id = session['user_id']
         sql = '''
                 INSERT INTO users_tags (user_id, tag_id)
                 VALUES (%s, %s)

@@ -20,8 +20,8 @@ class SingUp(UsersCommon):
         email = request.json['email']
         login = request.json['login']
         name = request.json['name']
-        password = self.to_hash(request.json['password'].encode())
-        token = self.to_hash((email+login).encode())
+        password = self.to_hash(request.json['password'])
+        token = self.to_hash((email+login))
 
         record = (email, login, password, name, token)
         sql = '''INSERT INTO users (email, login, password, user_name, token)
@@ -57,6 +57,8 @@ class SingUp(UsersCommon):
                  WHERE login = %s
                 ;'''
         token_dict = self.base_get_one(sql, record)
+        if not token_dict:
+            return 0
         if token_dict['token'] == token:
             return 1
         else:

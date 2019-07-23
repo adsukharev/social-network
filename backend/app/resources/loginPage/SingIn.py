@@ -1,26 +1,30 @@
 from app.resources.Common.UsersCommon import UsersCommon
-from flask import request
+from flask import request, session
 
 
-class SingUp(UsersCommon):
+class SingIn(UsersCommon):
 
     def post(self):
         login = request.json['login']
-        password_request = self.to_hash(request.json['password'].encode())
+        password_request = self.to_hash(request.json['password'])
+        # todo: GPS
         result = self.__check_login_password_status(login, password_request)
+        # todo: if res == "ok": func add_gps
         return result
 
     def __check_login_password_status(self, login, password_request):
-        sql = '''SELECT password, status FROM users
+        sql = '''SELECT user_id, password, status FROM users
                  WHERE login = %s
                 ;'''
         record = (login,)
-        password_status = self.base_get_one(sql, record)
-        if not password_status['password']:
+        user_data = self.base_get_one(sql, record)
+        if not user_data:
             return "Login does not exist"
-        if not password_status['status']:
+        if not user_data['status']:
             return "You are not confirmed email address"
-        if password_request != password_status['password']:
+        if password_request != user_data['password']:
             return "Invalid Passport"
-        return "Ok"
+        session['login'] = login
+        session['user_id'] = user_data['user_id']
+        return "ok"
 

@@ -1,12 +1,11 @@
 from app.resources.Common.Base import Base
-from flask import request
+from flask import request, session
 
 
 class History(Base):
 
     def post(self):
-        # todo: id from session
-        from_history_id = 3
+        from_history_id = session['user_id']
         to_history_id = request.json["to_history_id"]
         record = (from_history_id, to_history_id)
         sql = '''INSERT INTO history (from_history_fk, to_history_fk)

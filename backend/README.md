@@ -64,7 +64,7 @@ POST     /api/history -> add history to user
 
 it's required one key 'to_history_id'.
 
-Meaning: ID пользователя, к которому зашли на страницу. ID того, кто зашел, я возьму из сессии.
+Meaning: to_history_id - ID пользователя, к которому зашли на страницу. ID того, кто зашел, я возьму из сессии.
 
 Example:
 ```
@@ -84,7 +84,7 @@ DELETE  /api/likes -> add dislike to user
 
 For POST it's required one key 'to_like_id'.
 
-Meaning: ID пользователя, которого лайкнули. ID того, кто лайкнул, я возьму из сессии.
+Meaning: to_like_id - ID пользователя, которого лайкнули. ID того, кто лайкнул, я возьму из сессии.
 
 Example:
 ```
