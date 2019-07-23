@@ -1,4 +1,4 @@
-from .Base import Base
+from app.resources.Common.Base import Base
 from flask import request
 
 

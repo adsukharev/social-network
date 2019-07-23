@@ -1,10 +1,11 @@
-from .Base import Base
+from app.resources.Common.UsersCommon import UsersCommon
 from flask import request, current_app
 from flask_mail import Mail, Message
 
 
-class SingUp(Base):
+class SingUp(UsersCommon):
 
+    # when user follow the link in email to activate account
     def get(self):
         token = request.args["token"]
         login = request.args["login"]
@@ -29,13 +30,6 @@ class SingUp(Base):
             self.__send_email_confirmation(email, login, name, token)
             return "We have sent an email confirmation "
         return "Email or login already exist"
-
-    @staticmethod
-    def to_hash(request_password):
-        import hashlib
-        hash_object = hashlib.sha256(request_password)
-        token = hash_object.hexdigest()
-        return token
 
     def __send_email_confirmation(self, email, login, name, token):
         mail = Mail(current_app)

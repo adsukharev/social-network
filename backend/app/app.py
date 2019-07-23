@@ -6,7 +6,7 @@ from .resources.Users import Users
 from .resources.UserId import UserId
 from .resources.History import History
 from .resources.Likes import Likes
-from .resources.SingUp import SingUp
+from app.resources.loginPage.SingUp import SingUp
 
 #api
 api_bp = Blueprint('api', __name__)
