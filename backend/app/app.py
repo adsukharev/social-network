@@ -1,5 +1,6 @@
 from flask import Blueprint, Flask
 from flask_restful import Api
+# from .config import Config
 from .config import Config, mail_settings
 
 from .resources.Users import Users
@@ -18,7 +19,7 @@ app = Flask(__name__)
 app.config.from_object(Config)
 app.register_blueprint(api_bp, url_prefix='/api')
 app.config.update(mail_settings)
-app.secret_key = b'dude this is a terrible key'
+# app.secret_key = b'dude this is a terrible key'
 
 # Route
 api.add_resource(SignUp, '/sign_up')

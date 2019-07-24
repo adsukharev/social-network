@@ -19,7 +19,7 @@ class SignUp(UsersCommon):
     def post(self):
         email = request.json['email']
         login = request.json['login']
-        name = request.json['name']
+        name = request.json['user_name']
         password = self.to_hash(request.json['password'])
         token = self.to_hash((email+login))
 
@@ -51,6 +51,7 @@ class SignUp(UsersCommon):
             mail.send(msg)
         except Exception as error:
             print(error)
+            return "error"
 
     def __check_email_token(self, record, token):
         sql = '''SELECT token FROM users

@@ -29,7 +29,7 @@ Example for POST:
     "email": "test@user.ru",
     "login": "test1",
     "password": "wertyq123",
-    "name": "Olega1"
+    "user_name": "Olega1"
 }
  ```
  

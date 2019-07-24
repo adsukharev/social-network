@@ -16,8 +16,8 @@ def start_db_with_docker():
 def start_db():
         connection, cursor = start_connection()
         # add tables
-        cursor.execute(Models.tags)
         cursor.execute(Models.users)
+        cursor.execute(Models.tags)
         cursor.execute(Models.users_tags)
         cursor.execute(Models.history)
         cursor.execute(Models.likes)
@@ -31,21 +31,3 @@ def start_db():
         print("Tables created successfully in PostgreSQL ")
         cursor.close()
         connection.close()
-        print("PostgreSQL connection is closed")
-
-
-# def insert_data():
-#     print('Insertions started')
-#     connection, cursor = start_connection()
-#     cursor.execute(Models.insert_user1, Models.record_insert_user1)
-#     cursor.execute(Models.insert_user2, Models.record_insert_user2)
-#     cursor.execute(Models.insert_tag1, Models.record_insert_tags1)
-#     cursor.execute(Models.insert_tag2, Models.record_insert_tags2)
-#     cursor.execute(Models.insert_tag3, Models.record_insert_tags3)
-#     cursor.execute(Models.insert_common, Models.record_insert_common1)
-#     cursor.execute(Models.insert_common2,  Models.record_insert_common2)
-#     connection.commit()
-#     count = cursor.rowcount
-#     print(count, ": inserted  successfully in PostgreSQL ")
-#     cursor.close()
-#     connection.close()
