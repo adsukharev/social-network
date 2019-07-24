@@ -23,8 +23,9 @@ class UserId(UsersCommon):
                       GROUP BY 1
                       ) h ON u.user_id = h.to_history_fk
                 LEFT JOIN (
-                     SELECT user_id as user_id_fk, array_agg(tag_id) as tags
+                     SELECT user_id as user_id_fk, array_agg(tags.tag_name) as tags
                      FROM users_tags
+                     JOIN  tags USING (tag_id)
                      GROUP BY 1
                      ) t ON u.user_id = t.user_id_fk
                 WHERE u.user_id = %s

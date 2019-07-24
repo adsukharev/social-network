@@ -34,7 +34,7 @@ class SignUp(UsersCommon):
     def __send_email_confirmation(self, email, login, name, token):
         mail = Mail(current_app)
         #todo: change link to docker-machine
-        link = "http://localhost:5000/api/sing_up?token={}&login={}".format(token, login)
+        link = "http://localhost:5000/api/sign_up?token={}&login={}".format(token, login)
         html = """  <h3>Hello {}!<h3>
                     <p>Thank you for joining our service.</p>
                     <p>Check your login: {}</p>
