@@ -38,6 +38,21 @@ docker-machine create --driver virtualbox Matcha
 eval $(docker-machine env Matcha)
 ```
 
+#### Setup Env Vars
+create file .env in this file write down:
+
+```
+POSTGRES_DB=matchaDB
+POSTGRES_USER=user
+POSTGRES_PASSWORD=user
+POSTGRES_SERVICE=postgres
+POSTGRES_PORT=5432
+PYTHONPATH=$PYTHONPATH:/usr/src/backend
+
+EMAIL_USER={your gmail}@gmail.com
+EMAIL_PASSWORD={your password from gmail}
+```
+
 ## Build and Run
 
 ```
