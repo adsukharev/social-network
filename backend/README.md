@@ -11,12 +11,15 @@ Schemas are in backend/db/models.py
 
 ```
 GET     /api/users -> get all users
-POST    /api/users -> add a new user
 ```
 
+### Sign Up
+```
+POST     /api/sign_up
+```
 **NOTE:**
 
-These keys are required to create a user:
+These keys are required to sign up a user:
 ```
 email, login, password, name
 ```
@@ -29,6 +32,24 @@ Example for POST:
     "name": "Olega1"
 }
  ```
+ 
+ ### Sign In
+```
+POST     /api/sign_in
+```
+**NOTE:**
+
+These keys are required to sign in a user:
+```
+login, password
+```
+Example for POST:
+```
+{
+    "login": "test1",
+    "password": "wertyq123",
+}
+ ```
 
 ### Users_id
 
@@ -39,7 +60,7 @@ PUT     /api/users/<user_id> -> update user's data
 
 **NOTE:**
 
-Columns that can be changed
+Columns that can be changed in PUT
 ```
 ['email', 'login', 'password', 'user_name', 'age', 'sex', 'preferences', 'bio', 'avatar',
  'latitude', 'longitude', 'status', 'notification', 'tags']
