@@ -63,7 +63,7 @@ class UserId(UsersCommon):
         #          WHERE user_id = %s
         #      ;"""
         record = (user_id,)
-        user = self.base_get_limited_all(sql, record)
+        user = self.base_get_one(sql, record)
         return user
 
     def put(self, user_id):
