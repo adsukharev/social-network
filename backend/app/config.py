@@ -4,6 +4,7 @@ import os
 class Config:
     DEBUG = True
     # SECRET_KEY = os.environ['SECRET_KEY']
+    # JWT_SECRET_KEY = 'dude this is a very terrible key'
 
 mail_settings = {
         "MAIL_SERVER": 'smtp.gmail.com',
