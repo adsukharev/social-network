@@ -2,7 +2,7 @@ from app.resources.Common.UsersCommon import UsersCommon
 from flask import request, session
 
 
-class SingIn(UsersCommon):
+class SignIn(UsersCommon):
 
     def post(self):
         login = request.json['login']

@@ -3,7 +3,7 @@ from flask import request, current_app
 from flask_mail import Mail, Message
 
 
-class SingUp(UsersCommon):
+class SignUp(UsersCommon):
 
     # when user follow the link in email to activate account
     def get(self):
