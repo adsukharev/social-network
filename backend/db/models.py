@@ -10,7 +10,7 @@ class Models:
                 sex             VARCHAR(8),
                 preferences     VARCHAR(32)     DEFAULT 'bisexual',
                 bio             TEXT,
-                avatar          VARCHAR(1024)[],
+                avatar          TEXT[],
                 latitude        REAL,
                 longitude       REAL,
                 token           VARCHAR(1024),

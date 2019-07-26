@@ -50,6 +50,13 @@ Example for POST:
     "password": "wertyq123",
 }
  ```
+ In the response you get token:
+ ```
+ {
+    "message": "ok",
+    "access_token": "eyJ0eXAiOiJK"
+}
+```
 
 ### Users_id
 
@@ -74,6 +81,12 @@ Example for PUT:
     "tags": ["sport", "fashion"]
 }
 ```
+
+### Images
+```
+DELETE  /api/images/<image_id> -> delete one of five images
+```
+
 
 ### History
 

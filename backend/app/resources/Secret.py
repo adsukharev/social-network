@@ -5,5 +5,5 @@ class SecretResource(Base):
     @jwt_required
     def get(self):
         return {
-            'answer': 42
+            'answer': "42"
         }

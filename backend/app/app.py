@@ -1,6 +1,7 @@
 from flask import Blueprint, Flask
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 
 from .config import Config, mail_settings
 
@@ -10,6 +11,7 @@ from .resources.History import History
 from .resources.Likes import Likes
 from .resources.loginPage.SignUp import SignUp
 from .resources.loginPage.SignIn import SignIn
+from .resources.Images import Images
 
 from .resources.Secret import SecretResource
 
@@ -23,7 +25,8 @@ app.config.from_object(Config)
 app.register_blueprint(api_bp, url_prefix='/api')
 app.config.update(mail_settings)
 app.secret_key = b'dude this is a terrible key'
-app.config['JWT_SECRET_KEY'] = 'jwt-secret-string'
+CORS(app)
+# app.config['JWT_SECRET_KEY'] = 'jwt-secret-string'
 jwt = JWTManager(app)
 
 # Route
@@ -33,5 +36,6 @@ api.add_resource(Users, '/users')
 api.add_resource(UserId, '/users/<user_id>')
 api.add_resource(History, '/history')
 api.add_resource(Likes, '/likes')
+api.add_resource(Images, '/images/<image_id>')
 
 api.add_resource(SecretResource, '/secret')

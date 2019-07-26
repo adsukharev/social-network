@@ -7,4 +7,5 @@ psycopg2-binary==2.8.3
 flask_restful==0.3.6
 Flask-Mail
 flask-jwt-extended
+flask-cors
 

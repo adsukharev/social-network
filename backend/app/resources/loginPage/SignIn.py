@@ -11,7 +11,6 @@ class SignIn(UsersCommon):
         # todo: GPS
         result = self.__check_login_password_status(login, password_request)
         # todo: if res == "ok": func add_gps
-        # todo: create token should be change in another func
         result_obj = self.__create_token(result, login)
         return result_obj
 
@@ -36,11 +35,11 @@ class SignIn(UsersCommon):
         if result == "ok":
             access_token = create_access_token(identity=login, expires_delta=False)
             result_obj = {
-                'status': result,
+                'message': result,
                 'access_token': access_token
             }
         else:
             result_obj = {
-                'status': result
+                'message': result
             }
         return result_obj

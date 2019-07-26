@@ -1,5 +1,6 @@
-from app.resources.Common.UsersCommon import UsersCommon
 from flask import request
+from app.resources.Common.UsersCommon import UsersCommon
+from .Images import Images
 from .Tags import Tags
 
 
@@ -34,16 +35,6 @@ class UserId(UsersCommon):
         user = self.base_get_one(sql, record)
         return user
 
-    def put(self, user_id):
-        params = self.check_user_params_add_handle_tags(request.json)
-        for key, value in params.items():
-            sql = "UPDATE users SET {} = %s WHERE user_id =%s".format(key)
-            if key == "password":
-                value = self.to_hash(value)
-            record = (value, user_id)
-            self.base_write(sql, record)
-        return "ok"
-
     def delete(self, user_id):
         sql = """DELETE from users WHERE user_id =%s"""
         record = (user_id,)
@@ -51,14 +42,45 @@ class UserId(UsersCommon):
             return "ok"
         return "error"
 
-    def check_user_params_add_handle_tags(self, params):
-        allowed_user_columns = ['email', 'login', 'password', 'user_name', 'age', 'sex', 'preferences', 'bio', 'avatar',
-                                'latitude', 'longitude', 'status', 'notification', 'tags']
-        if "tags" in params:
-            tag = Tags()
-            tag.manage_tags(params["tags"])
-            del params["tags"]
+    def put(self, user_id):
+        req_params = dict(request.form)
+        params = self.__manage_user_params(req_params, user_id)
+        if isinstance(params, str):
+            return {'error': params}
+        self.__write_userdata_to_db(params, user_id)
+        return "ok"
+
+    def __manage_user_params(self, params, user_id):
+        checked_params = self.check_user_params(params)
+        checked_tags_params = self.__handle_tags(checked_params)
+        image_obj = Images()
+        result_image = image_obj.handle_images(request.files, user_id)
+        if result_image != "ok":
+            return result_image
+        return checked_tags_params
+
+    @staticmethod
+    def check_user_params(params):
+        allowed_user_columns = ['email', 'login', 'password', 'user_name', 'age', 'sex', 'preferences', 'bio',
+                                'latitude', 'longitude', 'notification', 'tags']
         for key in params.copy():
             if key not in allowed_user_columns:
                 del params[key]
         return params
+
+    @staticmethod
+    def __handle_tags(params):
+        if "tags" in params:
+            tag = Tags()
+            tag.manage_tags(params["tags"])
+            del params["tags"]
+        return params
+
+    def __write_userdata_to_db(self, params, user_id):
+        for key, value in params.items():
+            sql = "UPDATE users SET {} = %s WHERE user_id =%s".format(key)
+            if key == "password":
+                value = self.to_hash(value)
+            record = (value, user_id)
+            self.base_write(sql, record)
+
