@@ -34,6 +34,7 @@ class SignIn(UsersCommon):
         return "ok"
 
     def __create_token(self, login):
+        # todo: change to id
         access_token = create_access_token(identity=login, expires_delta=False)
         result_obj = {
             'message': "ok",

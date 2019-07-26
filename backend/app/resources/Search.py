@@ -5,6 +5,7 @@ from flask import request
 class Search(Base):
 
     # recommendation
+    # send tags
     def get(self):
         pass
 

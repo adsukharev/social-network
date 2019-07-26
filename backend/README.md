@@ -48,6 +48,8 @@ Example for POST:
 {
     "login": "test1",
     "password": "wertyq123",
+    long
+    lat
 }
  ```
  In the response you get token:
@@ -91,7 +93,8 @@ DELETE  /api/images/<image_id> -> delete one of five images
 ### History
 
 ```
-POST     /api/history -> add history to user
+GET     /api/history/<login> -> get user
+POST    /api/history -> add history to user
 ```
 
 **NOTE:**
@@ -133,4 +136,9 @@ The same for dislike but change key to: "to_dislike_id"
 
 ```
 GET     /api/rating -> get rating
+```
+
+### Tags
+```
+GET     /api/tags -> get rating
 ```

@@ -13,6 +13,7 @@ class Likes(Base):
         rating = Rating()
         if not rating.inc_like(to_like_id):
             return "increase like in rating error"
+        # todo: sent email to to_like_id
         return "ok"
 
     def __add_like(self, to_like_id):
