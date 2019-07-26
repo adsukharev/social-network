@@ -1,4 +1,4 @@
-from flask import request, current_app, session, flash
+from flask import current_app, session
 import os
 import base64
 from werkzeug.utils import secure_filename
@@ -54,7 +54,9 @@ class Images(Base):
         # sql = "UPDATE users SET avatar = %s WHERE user_id =%s"
         sql = "UPDATE users SET avatar = array_append(avatar, %s) WHERE user_id = %s;"
         record = (filename, self.user_id)
-        self.base_write(sql, record)
+        if self.base_write(sql, record):
+            return "ok"
+        return "error"
 
     @staticmethod
     def get_image_base64(path):
@@ -73,6 +75,6 @@ class Images(Base):
         user_id = session['user_id']
         sql = "UPDATE users SET avatar = array_remove(avatar, avatar[%s]) WHERE user_id = %s;"
         record = (image_id, user_id)
-        self.base_write(sql, record)
-        flash("asd")
-        return "ok"
+        if self.base_write(sql, record):
+            return "ok"
+        return "error"

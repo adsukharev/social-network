@@ -1,6 +1,6 @@
 from app.resources.Common.UsersCommon import UsersCommon
 from flask import request, session
-from flask_jwt_extended import create_access_token, create_refresh_token
+from flask_jwt_extended import create_access_token
 
 
 class SignIn(UsersCommon):
@@ -8,10 +8,11 @@ class SignIn(UsersCommon):
     def post(self):
         login = request.json['login']
         password_request = self.to_hash(request.json['password'])
-        # todo: GPS
         result = self.__check_login_password_status(login, password_request)
+        if result != "ok":
+            return {'message': result}
         # todo: if res == "ok": func add_gps
-        result_obj = self.__create_token(result, login)
+        result_obj = self.__create_token(login)
         return result_obj
 
     def __check_login_password_status(self, login, password_request):
@@ -30,16 +31,10 @@ class SignIn(UsersCommon):
         session['user_id'] = user_data['user_id']
         return "ok"
 
-
-    def __create_token(self, result, login):
-        if result == "ok":
-            access_token = create_access_token(identity=login, expires_delta=False)
-            result_obj = {
-                'message': result,
-                'access_token': access_token
-            }
-        else:
-            result_obj = {
-                'message': result
-            }
+    def __create_token(self, login):
+        access_token = create_access_token(identity=login, expires_delta=False)
+        result_obj = {
+            'message': "ok",
+            'access_token': access_token
+        }
         return result_obj

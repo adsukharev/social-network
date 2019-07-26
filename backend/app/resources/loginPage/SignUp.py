@@ -1,6 +1,7 @@
 from app.resources.Common.UsersCommon import UsersCommon
 from flask import request, current_app
 from flask_mail import Mail, Message
+from app.resources.Rating import Rating
 
 
 class SignUp(UsersCommon):
@@ -14,7 +15,13 @@ class SignUp(UsersCommon):
             return "incorrect token"
         # todo:redirect to index.html
         self.__change_user_status(record)
+        # add user to rating
+        user_id = self.get_user_id(record)
+        rating = Rating()
+        if not rating.create_user(user_id):
+            return "can't add user to rating"
         return "Activated"
+
 
     def post(self):
         email = request.json['email']
@@ -68,3 +75,10 @@ class SignUp(UsersCommon):
     def __change_user_status(self, record):
         sql = "UPDATE users SET status = '1' WHERE login =%s"
         self.base_write(sql, record)
+
+    def get_user_id(self, record):
+        sql = '''SELECT user_id FROM users
+                 WHERE login = %s
+                ;'''
+        user_id = self.base_get_one(sql, record)
+        return user_id['user_id']

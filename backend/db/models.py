@@ -47,7 +47,7 @@ class Models:
     rating = '''
                 CREATE TABLE IF NOT EXISTS rating(
                 rating_id       SERIAL      NOT NULL PRIMARY KEY,
-                user_fk         INT         NOT NULL REFERENCES users(user_id),
+                user_fk         INT         NOT NULL UNIQUE      REFERENCES users(user_id),
                 sumLikes        SMALLINT    DEFAULT 0
                 );'''
 

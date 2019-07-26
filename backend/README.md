@@ -128,3 +128,9 @@ Example:
 ```
 
 The same for dislike but change key to: "to_dislike_id"
+
+### Rating
+
+```
+GET     /api/rating -> get rating
+```

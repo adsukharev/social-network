@@ -2,7 +2,6 @@ from flask import Blueprint, Flask
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
-
 from .config import Config, mail_settings
 
 from .resources.Users import Users
@@ -12,6 +11,7 @@ from .resources.Likes import Likes
 from .resources.loginPage.SignUp import SignUp
 from .resources.loginPage.SignIn import SignIn
 from .resources.Images import Images
+from .resources.Rating import Rating
 
 from .resources.Secret import SecretResource
 
@@ -37,5 +37,6 @@ api.add_resource(UserId, '/users/<user_id>')
 api.add_resource(History, '/history')
 api.add_resource(Likes, '/likes')
 api.add_resource(Images, '/images/<image_id>')
+api.add_resource(Rating, '/rating')
 
 api.add_resource(SecretResource, '/secret')
