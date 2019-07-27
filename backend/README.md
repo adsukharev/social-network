@@ -41,15 +41,15 @@ POST     /api/sign_in
 
 These keys are required to sign in a user:
 ```
-login, password
+login, password, latitude (can be empty), longitude (can be empty)
 ```
 Example for POST:
 ```
 {
     "login": "test1",
     "password": "wertyq123",
-    long
-    lat
+    "latitude": "55.7116063",
+    "longitude": "37.738073"
 }
  ```
  In the response you get token:

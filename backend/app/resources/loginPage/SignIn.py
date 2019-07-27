@@ -1,6 +1,7 @@
 from app.resources.Common.UsersCommon import UsersCommon
 from flask import request, session
 from flask_jwt_extended import create_access_token
+import geoip2.database
 
 
 class SignIn(UsersCommon):
@@ -12,8 +13,8 @@ class SignIn(UsersCommon):
         if result != "ok":
             return {'message': result}
         # todo: func add_gps
-        # if not self.__add_location();
-        #   return {'message': 'error in adding location'}
+        if not self.__add_location():
+          return {'message': 'error in adding location'}
         result_obj = self.__create_token(login)
         return result_obj
 
@@ -29,7 +30,7 @@ class SignIn(UsersCommon):
             return "You are not confirmed email address"
         if password_request != user_data['password']:
             return "Invalid Passport"
-        session['login'] = login
+        # session['login'] = login
         session['user_id'] = user_data['user_id']
         return "ok"
 
@@ -43,12 +44,33 @@ class SignIn(UsersCommon):
         return result_obj
 
     def __add_location(self):
+        latitude, longitude = self.__get_location()
         sql = "UPDATE users SET latitude = %s, longitude = %s WHERE user_id =%s"
-        pass
+        record = (latitude, longitude, session['user_id'])
+        res =  self.base_write(sql, record)
+        return res
 
     def __get_location(self):
-        if 'latitude' in request.json['latitude']:
-            latitude = request.json['latitude']
-            longitude = request.json['longitude']
-        # if latitude == '' or longitude == '':
-        #
+        try:
+            if self.__check_location():
+                latitude = request.json['latitude']
+                longitude = request.json['longitude']
+            else:
+                reader = geoip2.database.Reader('./GeoLite2/GeoLite2-City.mmdb')
+                ip = str(request.remote_addr)
+                response = reader.city(ip)
+                latitude = response.location.latitude
+                longitude = response.location.longitude
+                reader.close()
+        except Exception as e:
+            print(e)
+            latitude = 55.7116423
+            longitude = 37.738213
+        finally:
+            return float(latitude), float(longitude)
+
+    def __check_location(self):
+        if 'latitude' in request.json and 'longitude' in request.json:
+            if request.json['latitude'] != '' and request.json['longitude'] != '':
+                return 1
+        return 0
