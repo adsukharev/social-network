@@ -1,5 +1,7 @@
 FROM python:3.7-slim
-
+RUN apt-get update
+RUN apt-get install -y wget tar
 WORKDIR /usr/src/backend
 COPY requirements.txt .
 RUN pip install --upgrade pip --no-cache-dir -r requirements.txt
+RUN wget https://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz

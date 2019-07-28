@@ -7,12 +7,6 @@ Schemas are in backend/db/models.py
 
 ## Endpoints
 
-### Users
-
-```
-GET     /api/users -> get all users
-```
-
 ### Sign Up
 ```
 POST     /api/sign_up
@@ -52,7 +46,7 @@ Example for POST:
     "longitude": "37.738073"
 }
  ```
- In the response you get token:
+ In the response you will get a token:
  ```
  {
     "message": "ok",
@@ -60,11 +54,13 @@ Example for POST:
 }
 ```
 
-### Users_id
+### Users
 
 ```
-GET     /api/users/<user_id> -> get one user
+GET     /api/users -> get all users
+GET     /api/users/<user_id> -> get one user by id
 PUT     /api/users/<user_id> -> update user's data
+GET     /api/user_login/<login> -> get one user by login
 ```
 
 **NOTE:**
@@ -72,7 +68,7 @@ PUT     /api/users/<user_id> -> update user's data
 Columns that can be changed in PUT
 ```
 ['email', 'login', 'password', 'user_name', 'age', 'sex', 'preferences', 'bio', 'avatar',
- 'latitude', 'longitude', 'status', 'notification', 'tags']
+ 'latitude', 'longitude', 'notification', 'tags']
 ```
 Tags must be in an array, even if there is only one value.
 
@@ -140,5 +136,5 @@ GET     /api/rating -> get rating
 
 ### Tags
 ```
-GET     /api/tags -> get rating
+GET     /api/tags -> get tags
 ```

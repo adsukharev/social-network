@@ -15,7 +15,7 @@ class SignIn(UsersCommon):
         # todo: func add_gps
         if not self.__add_location():
           return {'message': 'error in adding location'}
-        result_obj = self.__create_token(login)
+        result_obj = self.__create_token()
         return result_obj
 
     def __check_login_password_status(self, login, password_request):
@@ -30,13 +30,12 @@ class SignIn(UsersCommon):
             return "You are not confirmed email address"
         if password_request != user_data['password']:
             return "Invalid Passport"
-        # session['login'] = login
+        session['login'] = login
         session['user_id'] = user_data['user_id']
         return "ok"
 
-    def __create_token(self, login):
-        # todo: change to id
-        access_token = create_access_token(identity=login, expires_delta=False)
+    def __create_token(self):
+        access_token = create_access_token(identity=session['user_id'], expires_delta=False)
         result_obj = {
             'message': "ok",
             'access_token': access_token
@@ -47,8 +46,9 @@ class SignIn(UsersCommon):
         latitude, longitude = self.__get_location()
         sql = "UPDATE users SET latitude = %s, longitude = %s WHERE user_id =%s"
         record = (latitude, longitude, session['user_id'])
-        res =  self.base_write(sql, record)
-        return res
+        if self.base_write(sql, record) == "ok":
+            return 1
+        return 0
 
     def __get_location(self):
         try:

@@ -4,15 +4,15 @@ from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 from .config import Config, mail_settings
 
-from .resources.Users import Users
-from .resources.UserId import UserId
-from .resources.History import History
-from .resources.Likes import Likes
+from app.resources.Users.Users import Users
+from app.resources.Users.UserId import UserId
+from app.resources.Users.UserLogin import UserLogin
+from app.resources.Profile.History import History
+from app.resources.Profile.Likes import Likes
+from app.resources.Profile.Images import Images
 from .resources.loginPage.SignUp import SignUp
 from .resources.loginPage.SignIn import SignIn
-from .resources.Images import Images
 from .resources.Rating import Rating
-
 from .resources.Secret import SecretResource
 
 #api
@@ -34,6 +34,7 @@ api.add_resource(SignUp, '/sign_up')
 api.add_resource(SignIn, '/sign_in')
 api.add_resource(Users, '/users')
 api.add_resource(UserId, '/users/<user_id>')
+api.add_resource(UserLogin, '/user_login/<login>')
 api.add_resource(History, '/history')
 api.add_resource(Likes, '/likes')
 api.add_resource(Images, '/images/<image_id>')

@@ -43,19 +43,19 @@ class Base(Resource):
             connection, cursor = start_connection()
             cursor.execute(sql, record)
             close_connection(connection, cursor)
-            return 1
+            return "ok"
 
         except (Exception, psycopg2.Error):
             print(psycopg2.Error)
-            return 0
+            return "error"
 
     def base_write_many(self, sql, record):
         try:
             connection, cursor = start_connection()
             cursor.executemany(sql, record)
             close_connection(connection, cursor)
-            return 1
+            return "ok"
 
         except (Exception, psycopg2.Error):
             print(psycopg2.Error)
-            return 0
+            return "error"

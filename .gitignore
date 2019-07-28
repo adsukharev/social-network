@@ -11,6 +11,9 @@ frontend/node_modules
 # Env vars
 .env
 
+# db_GPS
+backend/GeoLite
+
 # Cache
 backend/__pycache__/
 backend/db/__pycache__/

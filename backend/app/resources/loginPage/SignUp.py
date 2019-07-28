@@ -1,6 +1,6 @@
 from app.resources.Common.UsersCommon import UsersCommon
-from flask import request, current_app
-from flask_mail import Mail, Message
+from flask import request
+from app.resources.Email import Email
 from app.resources.Rating import Rating
 
 
@@ -18,7 +18,7 @@ class SignUp(UsersCommon):
         # add user to rating
         user_id = self.get_user_id(record)
         rating = Rating()
-        if not rating.create_user(user_id):
+        if rating.create_user(user_id) == "error":
             return "can't add user to rating"
         return "Activated"
 
@@ -33,32 +33,11 @@ class SignUp(UsersCommon):
         record = (email, login, password, name, token)
         sql = '''INSERT INTO users (email, login, password, user_name, token)
                  VALUES (%s, %s, %s, %s, %s);'''
-        if self.base_write(sql, record):
-            self.__send_email_confirmation(email, login, name, token)
-            return "We have sent an email confirmation "
+        if self.base_write(sql, record) == "ok":
+            email = Email()
+            res = email.send_email_confirmation(email, login, name, token)
+            return res
         return "Email or login already exist"
-
-    def __send_email_confirmation(self, email, login, name, token):
-        mail = Mail(current_app)
-        #todo: change link to docker-machine
-        link = "http://localhost:5000/api/sign_up?token={}&login={}".format(token, login)
-        html = """  <h3>Hello {}!<h3>
-                    <p>Thank you for joining our service.</p>
-                    <p>Check your login: {}</p>
-                    <p>To activate your account click the link below.</p>
-                    <a href={}>Activate</a>
-                """.format(name, login, link)
-        msg = Message(
-            subject = "Matcha Confirmation",
-            sender=current_app.config.get("MAIL_USERNAME"),
-            recipients=[email],
-            html = html
-        )
-        try:
-            mail.send(msg)
-        except Exception as error:
-            print(error)
-            return "error"
 
     def __check_email_token(self, record, token):
         sql = '''SELECT token FROM users
