@@ -14,9 +14,6 @@ frontend/node_modules
 # db_GPS
 backend/GeoLite2
 
-$ pics
-backend/user_images/
-
 # Cache
 backend/__pycache__/
 backend/db/__pycache__/
