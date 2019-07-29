@@ -19,7 +19,7 @@
 <script>
     window.sendPhoto = async function sendPhoto() {
         const file = document.querySelector('[type=file]').files[0];
-        const url = "http://localhost:5000/api/users/1";
+        const url = "http://localhost:5000/api/users/4";
         const formData = new FormData();
         formData.append('avatar', file);
         formData.append('test', "asd");

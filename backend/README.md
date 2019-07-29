@@ -11,7 +11,6 @@ Schemas are in backend/db/models.py
 ```
 POST     /api/sign_up
 ```
-**NOTE:**
 
 These keys are required to sign up a user:
 ```
@@ -31,7 +30,6 @@ Example for POST:
 ```
 POST     /api/sign_in
 ```
-**NOTE:**
 
 These keys are required to sign in a user:
 ```
@@ -63,7 +61,35 @@ PUT     /api/users/<user_id> -> update user's data
 GET     /api/user_login/<login> -> get one user by login
 ```
 
-**NOTE:**
+Response for getting one user:
+```
+    "user_id": 4,
+    "login": "test",
+    "email": "mr.andrey.sd@gmail.com",
+    "user_name": "myName",
+    "age": 25,
+    "sex": male,
+    "preferences": "bisexual",
+    "bio": "I like swimming",
+    "avatar": [
+        "life.jpg",
+        "vietnam.jpg"
+    ],
+    "likes": [
+       "login1",
+       "login2"
+    ],
+    "history": [
+        "login1",
+        "login2"
+    ],
+    "tags": [
+        "sport",
+        "chess"
+    ]
+}
+
+```
 
 Columns that can be changed in PUT
 ```
@@ -85,15 +111,11 @@ Example for PUT:
 DELETE  /api/images/<image_id> -> delete one of five images
 ```
 
-
 ### History
 
 ```
-GET     /api/history/<login> -> get user
 POST    /api/history -> add history to user
 ```
-
-**NOTE:**
 
 it's required one key 'to_history_id'.
 
@@ -113,8 +135,6 @@ POST    /api/likes -> add like to user
 DELETE  /api/likes -> add dislike to user
 ```
 
-**NOTE:**
-
 For POST it's required one key 'to_like_id'.
 
 Meaning: to_like_id - ID пользователя, которого лайкнули. ID того, кто лайкнул, я возьму из сессии.
@@ -132,6 +152,17 @@ The same for dislike but change key to: "to_dislike_id"
 
 ```
 GET     /api/rating -> get rating
+```
+Response:
+```
+{
+    "user_id": 4,
+    "login": "test",
+    "user_name": "Olega",
+    "avatar": "life.jpg",
+    "sumlikes": 8
+}
+
 ```
 
 ### Tags

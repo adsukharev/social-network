@@ -9,6 +9,7 @@ from app.resources.Users.UserId import UserId
 from app.resources.Users.UserLogin import UserLogin
 from app.resources.Profile.History import History
 from app.resources.Profile.Likes import Likes
+from app.resources.Profile.Tags import Tags
 from app.resources.Profile.Images import Images
 from .resources.loginPage.SignUp import SignUp
 from .resources.loginPage.SignIn import SignIn
@@ -39,5 +40,6 @@ api.add_resource(History, '/history')
 api.add_resource(Likes, '/likes')
 api.add_resource(Images, '/images/<image_id>')
 api.add_resource(Rating, '/rating')
+api.add_resource(Tags, '/tags')
 
 api.add_resource(SecretResource, '/secret')

@@ -5,12 +5,13 @@ from flask import session, current_app
 class Email:
 
     def manage_notification(self, user_id, action):
-        sql = "SELECT email, user_name FROM users WHERE user_id = %s;"
-        record = (user_id,)
-        base = Base()
-        user = base.base_get_one(sql, record)
-        res = self.__send_email_notification(user['email'], user['user_name'], action)
-        return res
+        # sql = "SELECT email, user_name FROM users WHERE user_id = %s;"
+        # record = (user_id,)
+        # base = Base()
+        # user = base.base_get_one(sql, record)
+        # res = self.__send_email_notification(user['email'], user['user_name'], action)
+        # return res
+        return "ok"
 
     def __send_email_notification(self, email, name, action):
         from_who = session['login']

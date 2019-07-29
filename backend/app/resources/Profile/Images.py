@@ -14,7 +14,7 @@ class Images(Base):
         self.user_id = user_id
         self.files = request_files
         if not self.__check_image_exist():
-            return "image does not exist"
+            return "ok"
         image = self.files['avatar']
         if not self.__image_validation(image):
             return "image does not valid"

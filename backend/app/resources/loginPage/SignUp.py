@@ -13,7 +13,7 @@ class SignUp(UsersCommon):
         record = (login,)
         if not self.__check_email_token(record, token):
             return "incorrect token"
-        # todo:redirect to index.html
+        # todo:redirect to images.html
         self.__change_user_status(record)
         # add user to rating
         user_id = self.get_user_id(record)
@@ -34,8 +34,8 @@ class SignUp(UsersCommon):
         sql = '''INSERT INTO users (email, login, password, user_name, token)
                  VALUES (%s, %s, %s, %s, %s);'''
         if self.base_write(sql, record) == "ok":
-            email = Email()
-            res = email.send_email_confirmation(email, login, name, token)
+            email_obj = Email()
+            res = email_obj.send_email_confirmation(email, login, name, token)
             return res
         return "Email or login already exist"
 

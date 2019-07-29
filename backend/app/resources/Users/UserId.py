@@ -41,7 +41,6 @@ class UserId(UsersCommon):
         res = self.base_write(sql, record)
         return res
 
-
     def put(self, user_id):
         req_params = dict(request.form)
         params = self.__manage_user_params(req_params, user_id)
@@ -52,12 +51,12 @@ class UserId(UsersCommon):
 
     def __manage_user_params(self, params, user_id):
         checked_params = self.check_user_params(params)
-        checked_tags_params = self.__handle_tags(checked_params)
+        res = self.__handle_tags(checked_params)
         image_obj = Images()
         result_image = image_obj.handle_images(request.files, user_id)
-        if result_image != "ok":
+        if result_image != "ok" :
             return result_image
-        return checked_tags_params
+        return res
 
     @staticmethod
     def check_user_params(params):
@@ -71,8 +70,8 @@ class UserId(UsersCommon):
     @staticmethod
     def __handle_tags(params):
         if "tags" in params:
-            tag = Tags()
-            tag.manage_tags(params["tags"])
+            tag_obj = Tags()
+            tag_obj.manage_tags(params["tags"])
             del params["tags"]
         return params
 
@@ -83,4 +82,3 @@ class UserId(UsersCommon):
                 value = self.to_hash(value)
             record = (value, user_id)
             self.base_write(sql, record)
-
