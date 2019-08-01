@@ -12,9 +12,8 @@ class Base(Resource):
             items = cursor.fetchone()
             close_connection(connection, cursor)
             return items
-
-        except (Exception, psycopg2.Error):
-            print("Base_getOne", psycopg2.Error)
+        except Exception as e:
+            print(e)
 
     def base_get_all(self, sql):
         try:
@@ -23,9 +22,8 @@ class Base(Resource):
             items = cursor.fetchall()
             close_connection(connection, cursor)
             return items
-
-        except (Exception, psycopg2.Error):
-            print("Base_get_all", psycopg2.Error)
+        except Exception as e:
+            print(e)
 
     def base_get_limited_all(self, sql, record):
         try:
@@ -34,9 +32,8 @@ class Base(Resource):
             items = cursor.fetchall()
             close_connection(connection, cursor)
             return items
-
-        except (Exception, psycopg2.Error):
-            print(psycopg2.Error)
+        except Exception as e:
+            print(e)
 
     def base_write(self, sql, record):
         try:
@@ -44,9 +41,8 @@ class Base(Resource):
             cursor.execute(sql, record)
             close_connection(connection, cursor)
             return "ok"
-
-        except (Exception, psycopg2.Error):
-            print(psycopg2.Error)
+        except Exception as e:
+            print(e)
             return "error"
 
     def base_write_many(self, sql, record):
@@ -55,7 +51,6 @@ class Base(Resource):
             cursor.executemany(sql, record)
             close_connection(connection, cursor)
             return "ok"
-
-        except (Exception, psycopg2.Error):
-            print(psycopg2.Error)
+        except Exception as e:
+            print(e)
             return "error"

@@ -15,7 +15,8 @@ class Models:
                 longitude       REAL,
                 token           VARCHAR(1024),
                 status          BOOLEAN         NOT NULL DEFAULT '0',
-                notification    BOOLEAN         NOT NULL DEFAULT '1'
+                notification    BOOLEAN         NOT NULL DEFAULT '1',
+                fake            BOOLEAN         NOT NULL DEFAULT '0'
                 );'''
 
     tags = '''

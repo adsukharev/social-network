@@ -71,6 +71,7 @@ Response for getting one user:
     "sex": male,
     "preferences": "bisexual",
     "bio": "I like swimming",
+    "rating: 234,
     "avatar": [
         "life.jpg",
         "vietnam.jpg"
@@ -114,39 +115,15 @@ DELETE  /api/images/<image_id> -> delete one of five images
 ### History
 
 ```
-POST    /api/history -> add history to user
-```
-
-it's required one key 'to_history_id'.
-
-Meaning: to_history_id - ID пользователя, к которому зашли на страницу. ID того, кто зашел, я возьму из сессии.
-
-Example:
-```
-{
-    "to_history_id": 2
-}
+POST    /api/history/<user_id> -> add history to user
 ```
 
 ### Likes
 
 ```
-POST    /api/likes -> add like to user
-DELETE  /api/likes -> add dislike to user
+POST    /api/likes/<user_id> -> add like to user
+DELETE  /api/likes/<user_id> -> add dislike to user
 ```
-
-For POST it's required one key 'to_like_id'.
-
-Meaning: to_like_id - ID пользователя, которого лайкнули. ID того, кто лайкнул, я возьму из сессии.
-
-Example:
-```
-{
-    "to_like_id": 2
-}
-```
-
-The same for dislike but change key to: "to_dislike_id"
 
 ### Rating
 
@@ -168,4 +145,46 @@ Response:
 ### Tags
 ```
 GET     /api/tags -> get tags
+```
+### Search
+
+```
+GET     /api/search -> get recommended users
+POST    /api/search -> get detailed users
+```
+
+Example POST request
+```
+{
+    "age": [20, 32],
+    "sumLikes": [1, 3],
+    "sex": "male",
+    "preferences": "getero",
+    "location": 1,
+    "tags": [
+       "sport"
+    ]
+}
+```
+Example POST response
+```
+[
+    {
+        "user_id": 2,
+        "user_name": "Vika",
+        "age": 23,
+        "sex": "female",
+        "preferences": "getero",
+         "sumlikes": 10,
+        "tags": [
+           "sport",  "yoga"
+        ]
+    }
+]
+```
+
+### Fake
+
+```
+POST     /api/fake/<user_id> report fake account
 ```

@@ -14,6 +14,9 @@ from app.resources.Profile.Images import Images
 from .resources.loginPage.SignUp import SignUp
 from .resources.loginPage.SignIn import SignIn
 from .resources.Rating import Rating
+from .resources.Search import Search
+from .resources.Profile.Fake import Fake
+
 from .resources.Secret import SecretResource
 
 #api
@@ -36,10 +39,12 @@ api.add_resource(SignIn, '/sign_in')
 api.add_resource(Users, '/users')
 api.add_resource(UserId, '/users/<user_id>')
 api.add_resource(UserLogin, '/user_login/<login>')
-api.add_resource(History, '/history')
-api.add_resource(Likes, '/likes')
+api.add_resource(History, '/history/<to_history_id>')
+api.add_resource(Likes, '/likes/<to_like_id>')
 api.add_resource(Images, '/images/<image_id>')
 api.add_resource(Rating, '/rating')
 api.add_resource(Tags, '/tags')
+api.add_resource(Search, '/search')
+api.add_resource(Fake, '/fake/<user_id>')
 
 api.add_resource(SecretResource, '/secret')

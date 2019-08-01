@@ -24,3 +24,9 @@ class Rating(Base):
         record = (to_like_id, )
         res = self.base_write(sql, record)
         return res
+
+    def decrease_like(self, to_like_id):
+        sql = '''UPDATE rating SET sumLikes = sumLikes - 1 WHERE user_fk = %s;'''
+        record = (to_like_id,)
+        res = self.base_write(sql, record)
+        return res
