@@ -6,7 +6,7 @@ from flask import request, session
 class Search(Base):
 
     sql = """
-                    SELECT  user_id, user_name, age, sex, preferences, r.sumLikes, t.tags
+                    SELECT  user_id, user_name, age, sex, avatar, preferences, r.sumLikes, t.tags
                     FROM    users u
                     JOIN rating r ON r.user_fk = u.user_id
                     LEFT JOIN (

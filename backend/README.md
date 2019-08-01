@@ -167,6 +167,7 @@ if ok:
         "user_name": "Vika",
         "age": 23,
         "sex": "female",
+        "avatar": kek.png,
         "preferences": "getero",
          "sumlikes": 10,
         "tags": [
@@ -197,6 +198,7 @@ Example POST response
         "user_name": "Vika",
         "age": 23,
         "sex": "female",
+        "avatar": kek.png,
         "preferences": "getero",
          "sumlikes": 10,
         "tags": [
