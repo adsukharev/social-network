@@ -4,7 +4,7 @@ from app.resources.Common.Base import Base
 class Rating(Base):
 
     def get(self):
-        sql = '''   SELECT u.user_id, u.login, u.user_name, u.avatar[1], r.sumlikes
+        sql = '''   SELECT u.user_id, u.login, u.user_name, u.avatar[1], r.sumLikes
                     FROM users u
                     JOIN rating r ON r.user_fk = u.user_id
                     ORDER BY r.sumlikes DESC 

@@ -6,8 +6,9 @@ class Users(Base):
 
     def get(self):
         sql = """
-                SELECT  u.*, l.likes, h.history, t.tags
+                SELECT  u.*, r.sumLikes, l.likes, h.history, t.tags
                 FROM users u
+                JOIN rating r ON r.user_fk = u.user_id
                 LEFT JOIN (
                       SELECT likes.to_like_fk, array_agg(u.login) as likes
                       FROM likes

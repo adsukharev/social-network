@@ -68,8 +68,8 @@ Response for getting one user:
     "email": "mr.andrey.sd@gmail.com",
     "user_name": "myName",
     "age": 25,
-    "sex": male,
-    "preferences": "bisexual",
+    "sex": male,                -> 2 types: male, female
+    "preferences": "bisexual",  -> 3 types: bisexual, gomo, getero
     "bio": "I like swimming",
     "rating: 234,
     "avatar": [
@@ -151,6 +151,29 @@ GET     /api/tags -> get tags
 ```
 GET     /api/search -> get recommended users
 POST    /api/search -> get detailed users
+```
+
+to recommend people user has to fill all fields in profile, if not you get the following response
+```
+{
+    "message": "error"
+}
+```
+if ok:
+```
+[
+    {
+        "user_id": 2,
+        "user_name": "Vika",
+        "age": 23,
+        "sex": "female",
+        "preferences": "getero",
+         "sumlikes": 10,
+        "tags": [
+           "sport",  "yoga"
+        ]
+    }
+]
 ```
 
 Example POST request

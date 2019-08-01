@@ -1,5 +1,6 @@
 from .Base import Base
 
+
 class UsersCommon(Base):
 
     @staticmethod
@@ -8,3 +9,6 @@ class UsersCommon(Base):
         hash_object = hashlib.sha256(request_password.encode())
         token = hash_object.hexdigest()
         return token
+    #
+    # def get_user(self):
+    #     sql = "SELECT * from users;"

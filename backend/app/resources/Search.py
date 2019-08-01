@@ -1,31 +1,98 @@
+from app.resources.Users.UserId import UserId
 from app.resources.Common.Base import Base
 from flask import request, session
 
 
 class Search(Base):
 
+    sql = """
+                    SELECT  user_id, user_name, age, sex, preferences, r.sumLikes, t.tags
+                    FROM    users u
+                    JOIN rating r ON r.user_fk = u.user_id
+                    LEFT JOIN (
+                        SELECT user_id as user_id_fk, array_agg(tags.tag_name) as tags
+                        FROM users_tags
+                        JOIN  tags USING (tag_id)
+                        GROUP BY 1
+                        ) t ON u.user_id = t.user_id_fk
+                    WHERE   u.user_id != %s
+                            {}
+                    ;"""
+
     # recommendation
-    # send tags
     def get(self):
-        pass
+        user_obj = UserId()
+        user = dict(user_obj.get(session['user_id']))
+        checker = self.__check_full_profile(user)
+        if checker == "error":
+            return {"message": "error"}
+        sql_recommendation = self.__make_recomendation(user)
+        sql = self.sql.format(sql_recommendation)
+        record = (session['user_id'],)
+        users = self.base_get_limited_all(sql, record)
+        return users
+
+    def __check_full_profile(self, user):
+        needed_cols = ['age', 'sex', 'preferences', 'tags']
+        try:
+            for key in needed_cols:
+                if not user[key]:
+                    return "error"
+            return "ok"
+        except:
+            return "error"
+
+    def __make_recomendation(self, user):
+        sql_recommendation = "AND (u.preferences = '{}'".format(user['preferences'])
+        sql_sex = self.__recommend_sql_sex(user['preferences'], user['sex'])
+        sql_age = " AND (u.age BETWEEN {} AND {}) ".format(user['age'] - 5, user['age'] + 5)
+        sql_location = self.__recomend_sql_location(user['latitude'], user['longitude'])
+        sql_rating = " AND (r.sumLikes BETWEEN {} AND {}) ".format(user['sumlikes'] - 10, user['sumlikes'] + 10)
+        sql_tags = self.__recommend_sql_tags(user['tags'])
+        sql_recommendation += sql_sex
+        sql_recommendation += sql_age
+        sql_recommendation += sql_location
+        sql_recommendation += sql_rating
+        sql_recommendation += sql_tags
+        sql_recommendation += ")"
+        return sql_recommendation
+
+    def __recommend_sql_tags(self, tags):
+        sql_tags = "AND (t.tags @> '{"
+        start = " OR t.tags @> '{"
+        end = "}'"
+        sql_tags += tags[0] + end
+        for i in range(1, len(tags)):
+            sql = start + tags[i] + end
+            sql_tags += sql
+        sql_tags += ")"
+        return sql_tags
+
+    def __recomend_sql_location(self, latitude, longitude):
+        res = """ 
+                AND (u.latitude BETWEEN {} AND {})
+                AND (u.longitude BETWEEN {} AND {})
+            """.format(latitude - 0.3, latitude + 0.3, longitude - 0.3, longitude + 0.3)
+        return res
+
+    def __recommend_sql_sex(self, preferences, sex):
+        getero = {
+            "male": " AND u.sex = 'female' ",
+            "female": " AND u.sex = 'male' "
+        }
+        if preferences == "gomo":
+            res = " AND u.sex = '{}' ".format(sex)
+        elif preferences == "getero":
+            res = getero.get(sex)
+        else:
+            res = " AND (u.sex = 'male' OR u.sex = 'female')"
+        return res
 
     # search with user's input
     def post(self):
+        # todo: block condition
         sql_condition = self.__make_sql()
-        sql = """
-                SELECT  user_id, user_name, age, sex, preferences, r.sumLikes, t.tags
-                FROM    users u
-                JOIN rating r ON r.user_fk = u.user_id
-                LEFT JOIN (
-                     SELECT user_id as user_id_fk, array_agg(tags.tag_name) as tags
-                     FROM users_tags
-                     JOIN  tags USING (tag_id)
-                     GROUP BY 1
-                     ) t ON u.user_id = t.user_id_fk
-                WHERE   u.user_id != %s
-                        {}
-                ;""".format(sql_condition)
-        # print(sql)
+        sql = self.sql.format(sql_condition)
         record = (session['user_id'],)
         users = self.base_get_limited_all(sql, record)
         return users
