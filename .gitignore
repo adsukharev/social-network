@@ -8,9 +8,6 @@
 # Front
 frontend/node_modules
 
-# Env vars
-.env
-
 # db_GPS
 backend/GeoLite2
 

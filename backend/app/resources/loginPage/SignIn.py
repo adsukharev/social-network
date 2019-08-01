@@ -12,19 +12,15 @@ class SignIn(UsersCommon):
         result = self.__check_login_password_status(login, password_request)
         if result != "ok":
             return {'message': result}
-        # todo: func add_gps
         if not self.__add_location():
             return {'message': 'error in adding location'}
         result_obj = self.__create_token()
         return result_obj
 
     def __check_login_password_status(self, login, password_request):
-        sql = '''SELECT user_id, password, status FROM users
-                 WHERE login = %s
-                ;'''
-        # sql = '''SELECT user_id, password, status, fake FROM users
-        #                  WHERE login = %s
-        #                 ;'''
+        sql = '''SELECT user_id, password, status, fake FROM users
+                         WHERE login = %s
+                        ;'''
         record = (login,)
         user_data = self.base_get_one(sql, record)
         if not user_data:
@@ -33,8 +29,8 @@ class SignIn(UsersCommon):
             return "You are not confirmed email address"
         if password_request != user_data['password']:
             return "Invalid Passport"
-        # if user_data['fake']:
-        #     return "Your account is blocked"
+        if user_data['fake']:
+            return "Your account is blocked"
         session['login'] = login
         session['user_id'] = user_data['user_id']
         return "ok"

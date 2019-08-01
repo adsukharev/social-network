@@ -5,9 +5,9 @@ class UserLogin(UsersCommon):
 
     def get(self, login):
         sql = """
-                SELECT  u.user_id, u.login, u.email, u.user_name, u.age, u.sex, u.preferences,
-                        u.bio, u.avatar ,l.likes, h.history, t.tags
+                SELECT  u.*, r.sumLikes, l.likes, h.history, t.tags
                 FROM users u
+                LEFT JOIN rating r ON r.user_fk = u.user_id
                 LEFT JOIN (
                       SELECT likes.to_like_fk, array_agg(u.login) as likes
                       FROM likes
@@ -26,7 +26,6 @@ class UserLogin(UsersCommon):
                      JOIN  tags USING (tag_id)
                      GROUP BY 1
                      ) t ON u.user_id = t.user_id_fk
-                WHERE u.login = %s
             ;"""
         record = (login,)
         user = self.base_get_one(sql, record)

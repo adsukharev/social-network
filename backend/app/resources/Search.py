@@ -15,7 +15,7 @@ class Search(Base):
                         JOIN  tags USING (tag_id)
                         GROUP BY 1
                         ) t ON u.user_id = t.user_id_fk
-                    WHERE   u.user_id != %s
+                    WHERE   u.user_id != %s AND u.fake == '0'
                             {}
                     ;"""
 

@@ -10,7 +10,7 @@ class UserId(UsersCommon):
         sql = """
                 SELECT  u.*, r.sumLikes, l.likes, h.history, t.tags
                 FROM users u
-                JOIN rating r ON r.user_fk = u.user_id
+                LEFT JOIN rating r ON r.user_fk = u.user_id
                 LEFT JOIN (
                       SELECT likes.to_like_fk, array_agg(u.login) as likes
                       FROM likes
@@ -36,7 +36,7 @@ class UserId(UsersCommon):
         return user
 
     def delete(self, user_id):
-        sql = """DELETE from users WHERE user_id =%s"""
+        sql = """DELETE from users WHERE user_id = %s"""
         record = (user_id,)
         res = self.base_write(sql, record)
         return res
@@ -52,7 +52,7 @@ class UserId(UsersCommon):
 
     def __manage_user_params(self, params, user_id):
         checked_params = self.check_user_params(params)
-        res = self.__handle_tags(checked_params)
+        res = self.handle_tags(checked_params)
         image_obj = Images()
         result_image = image_obj.handle_images(request.files, user_id)
         if result_image != "ok" :
@@ -69,7 +69,7 @@ class UserId(UsersCommon):
         return params
 
     @staticmethod
-    def __handle_tags(params):
+    def handle_tags(params):
         if "tags" in params:
             tag_obj = Tags()
             tag_obj.manage_tags(params["tags"])

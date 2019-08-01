@@ -22,7 +22,6 @@ class SignUp(UsersCommon):
             return "can't add user to rating"
         return "Activated"
 
-
     def post(self):
         email = request.json['email']
         login = request.json['login']

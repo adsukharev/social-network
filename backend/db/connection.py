@@ -12,14 +12,15 @@ def start_connection():
         cursor = connection.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         return connection, cursor
 
-    except (Exception, psycopg2.Error):
-        print(psycopg2.Error)
+    except Exception as e:
+        print(e)
         return 0
+
 
 def close_connection(connection, cursor):
     try:
         connection.commit()
         cursor.close()
         connection.close()
-    except (Exception, psycopg2.Error):
-        print(psycopg2.Error)
+    except Exception as e:
+        print(e)
