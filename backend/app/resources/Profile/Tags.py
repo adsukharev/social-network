@@ -10,13 +10,13 @@ class Tags(Base):
         tags = self.base_get_all(sql)
         return tags
 
-    def manage_tags(self, tags):
+    def manage_tags(self, tags, sess=0):
         try:
             tags_set = self.__tags_in_set(tags)
             self.__add_tags_to_db_tags(tags_set)
-            self.__delete_users_tags()
+            self.__delete_users_tags(sess)
             tag_ids = self.__get_tag_id(tags_set)
-            self.__add_tags_to_db_users_tags(tag_ids)
+            self.__add_tags_to_db_users_tags(tag_ids, sess)
             return "ok"
         except Exception as error:
             print(error)
@@ -40,8 +40,11 @@ class Tags(Base):
                 print(psycopg2.Error)
         return "ok"
 
-    def __delete_users_tags(self):
-        user_id = session['user_id']
+    def __delete_users_tags(self, sess):
+        if sess:
+            user_id = sess
+        else:
+            user_id = session['user_id']
         sql = """DELETE from users_tags WHERE user_id =%s"""
         record = (user_id,)
         res = self.base_write(sql, record)
@@ -55,8 +58,11 @@ class Tags(Base):
             tag_ids.append(tag_id['tag_id'])
         return tag_ids
 
-    def __add_tags_to_db_users_tags(self, tag_ids):
-        user_id = session['user_id']
+    def __add_tags_to_db_users_tags(self, tag_ids, sess):
+        if sess:
+            user_id = sess
+        else:
+            user_id = session['user_id']
         sql = '''
                 INSERT INTO users_tags (user_id, tag_id)
                 VALUES (%s, %s)

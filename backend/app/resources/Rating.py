@@ -16,7 +16,7 @@ class Rating(Base):
         sql = '''INSERT INTO rating (user_fk)
                  VALUES (%s);'''
         record = (user_id,)
-        res =  self.base_write(sql, record)
+        res = self.base_write(sql, record)
         return res
 
     def inc_like(self, to_like_id):

@@ -2,6 +2,7 @@ import hashlib
 import psycopg2
 import psycopg2.extras
 from flask import session
+from app.app import app
 from db.database_config import Database
 from db.connection import start_connection, close_connection
 from app.resources.Common.UsersCommon import UsersCommon
@@ -9,7 +10,8 @@ from app.resources.Profile.Likes import Likes
 from app.resources.Profile.History import History
 from app.resources.Profile.Tags import Tags
 from app.resources.Rating import Rating
-from app.resources.Users.UserId import UserId
+# from app.resources.Users.UserId import UserId
+
 
 password = UsersCommon.to_hash('123Wertyq')
 users = [
@@ -25,7 +27,8 @@ users = [
         'latitude': 55.7116423,
         'longitude': 37.738213,
         'status': '1',
-        'tags': ['sport', 'computer', 'pool']
+        'tags': ['sport', 'computer', 'pool'],
+        'sumlikes': 5
     },
     {
         'email': "test2@mail.ru",
@@ -39,7 +42,8 @@ users = [
         'latitude': 55.7116423,
         'longitude': 37.738213,
         'status': '1',
-        'tags': ['sport', 'chess', 'pascal']
+        'tags': ['sport', 'chess', 'pascal'],
+        'sumlikes': 7
     },
     {
         'email': "test3@mail.ru",
@@ -53,7 +57,8 @@ users = [
         'latitude': 55.7116423,
         'longitude': 37.738213,
         'status': '1',
-        'tags': ['gays', 'yoga', 'makeup']
+        'tags': ['gays', 'yoga', 'makeup'],
+        'sumlikes': 2
     },
     {
         'email': "test4@mail.ru",
@@ -67,7 +72,8 @@ users = [
         'latitude': 55.7116423,
         'longitude': 37.738213,
         'status': '1',
-        'tags': ['chess', 'yoga', 'pascal']
+        'tags': ['chess', 'yoga', 'pascal'],
+        'sumlikes': 14
     },
     {
         'email': "test5@mail.ru",
@@ -81,7 +87,8 @@ users = [
         'latitude': 55.7116423,
         'longitude': 37.738213,
         'status': '1',
-        'tags': ['computer', 'trip', 'yoga']
+        'tags': ['computer', 'trip', 'yoga'],
+        'sumlikes': 4
     },
     {
         'email': "test6@mail.ru",
@@ -95,7 +102,8 @@ users = [
         'latitude': 55.7116423,
         'longitude': 37.738213,
         'status': '1',
-        'tags': ['sport', 'chess', 'pascal']
+        'tags': ['sport', 'chess', 'pascal'],
+        'sumlikes': 10
     },
     {
         'email': "test7@mail.ru",
@@ -109,21 +117,83 @@ users = [
         'latitude': 55.7116423,
         'longitude': 37.738213,
         'status': '1',
-        'tags': ['trip', 'makeup', 'computer']
+        'tags': ['trip', 'makeup', 'computer'],
+        'sumlikes': 7
     },
     {
         'email': "test8@mail.ru",
         'login': 'test8',
         'password': password,
-        'user_name': 'Olesya',
-        'age': 25,
+        'user_name': 'Katya',
+        'age': 18,
         'sex': 'female',
         'preferences': 'getero',
-        'avatar': ['pic7.png'],
+        'avatar': ['pic8.png'],
         'latitude': 55.7116423,
         'longitude': 37.738213,
         'status': '1',
-        'tags': ['trip', 'makeup', 'computer']
+        'tags': ['sport', 'makeup', 'pool'],
+        'sumlikes': 3
+    },
+    {
+        'email': "test9@mail.ru",
+        'login': 'test9',
+        'password': password,
+        'user_name': 'Lena',
+        'age': 21,
+        'sex': 'female',
+        'preferences': 'gomo',
+        'avatar': ['pic9.png'],
+        'latitude': 55.7116423,
+        'longitude': 37.738213,
+        'status': '1',
+        'tags': ['gays', 'pool', 'computer'],
+        'sumlikes': 11
+    },
+    {
+        'email': "test10@mail.ru",
+        'login': 'test10',
+        'password': password,
+        'user_name': 'Masha',
+        'age': 26,
+        'sex': 'female',
+        'preferences': 'gomo',
+        'avatar': ['pic10.png'],
+        'latitude': 55.7116423,
+        'longitude': 37.738213,
+        'status': '1',
+        'tags': ['pascal', 'yoga', 'sport'],
+        'sumlikes': 0
+    },
+    {
+        'email': "test11@mail.ru",
+        'login': 'test11',
+        'password': password,
+        'user_name': 'Oksana',
+        'age': 30,
+        'sex': 'female',
+        'preferences': 'bisexual',
+        'avatar': ['pic11.png'],
+        'latitude': 55.7116423,
+        'longitude': 37.738213,
+        'status': '1',
+        'tags': ['trip', 'yoga', 'pool'],
+        'sumlikes': 6
+    },
+    {
+        'email': "test12@mail.ru",
+        'login': 'test12',
+        'password': password,
+        'user_name': 'Nastya',
+        'age': 24,
+        'sex': 'female',
+        'preferences': 'bisexual',
+        'avatar': ['pic12.png'],
+        'latitude': 55.7116423,
+        'longitude': 37.738213,
+        'status': '1',
+        'tags': ['makeup', 'computer', 'chess'],
+        'sumlikes': 13
     }
 
 ]
@@ -140,23 +210,25 @@ def create_user(user):
     connection.commit()
 
 
-def create_rating(i):
+def create_rating(user_id):
     rating = Rating()
-    rating.create_user(i)
+    rating.create_user(user_id)
 
 
-def create_like(i):
-    like = Likes()
-    like.post(i)
+def create_like(sumlikes, user_id):
+    rating = Rating()
+    for i in range(sumlikes):
+        rating.inc_like(user_id)
 
 
-def create_history():
+def create_history(user_id):
     history = History()
-    history.post(i)
+    history.post(user_id)
 
 
-def create_tags(user):
-    UserId.handle_tags(user)
+def create_tags(user, user_id):
+    tags = Tags()
+    tags.manage_tags(user['tags'], user_id)
 
 
 i = 0
@@ -166,13 +238,11 @@ try:
         i += 1
         create_user(user)
         create_rating(i)
-        create_tags(user)
+        create_tags(user, i)
+        create_like(user['sumlikes'], i)
+
+
 except Exception as e:
     print(e)
 finally:
     close_connection(connection, cursor)
-
-    # session['user_id'] = i
-    # create_rating(i)
-    # create_like(i)
-    # create_history(i)

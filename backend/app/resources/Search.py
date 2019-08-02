@@ -15,7 +15,7 @@ class Search(Base):
                         JOIN  tags USING (tag_id)
                         GROUP BY 1
                         ) t ON u.user_id = t.user_id_fk
-                    WHERE   u.user_id != %s AND u.fake == '0'
+                    WHERE   u.user_id != %s AND u.fake = '0'
                             {}
                     ;"""
 
@@ -28,6 +28,7 @@ class Search(Base):
             return {"message": "error"}
         sql_recommendation = self.__make_recomendation(user)
         sql = self.sql.format(sql_recommendation)
+        print(sql)
         record = (session['user_id'],)
         users = self.base_get_limited_all(sql, record)
         return users
@@ -47,7 +48,7 @@ class Search(Base):
         sql_sex = self.__recommend_sql_sex(user['preferences'], user['sex'])
         sql_age = " AND (u.age BETWEEN {} AND {}) ".format(user['age'] - 5, user['age'] + 5)
         sql_location = self.__recomend_sql_location(user['latitude'], user['longitude'])
-        sql_rating = " AND (r.sumLikes BETWEEN {} AND {}) ".format(user['sumlikes'] - 10, user['sumlikes'] + 10)
+        sql_rating = " AND (r.sumLikes BETWEEN {} AND {}) ".format(user['sumlikes'] - 15, user['sumlikes'] + 15)
         sql_tags = self.__recommend_sql_tags(user['tags'])
         sql_recommendation += sql_sex
         sql_recommendation += sql_age
@@ -85,7 +86,7 @@ class Search(Base):
         elif preferences == "getero":
             res = getero.get(sex)
         else:
-            res = " AND (u.sex = 'male' OR u.sex = 'female')"
+            res = " "
         return res
 
     # search with user's input

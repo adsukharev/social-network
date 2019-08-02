@@ -42,7 +42,6 @@ class UserId(UsersCommon):
         return res
 
     def put(self, user_id):
-        print(user_id)
         req_params = dict(request.form)
         params = self.__manage_user_params(req_params, user_id)
         if isinstance(params, str):
