@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form id="upload" method="post">
+    Select image to upload:
+    <input type="file" name="photo">
+    <button type="submit" onclick="sendPhoto();return false;" value="ok" name="upload">Send photo</button>
+     <button type="submit" onclick="getPhoto();return false;" value="ok" name="get">Get photo</button>
+    <img id="image1" src="">
+</form>
+
+</body>
+
+<script>
+    window.sendPhoto = async function sendPhoto() {
+        const file = document.querySelector('[type=file]').files[0];
+        const url = "http://localhost:5000/api/users/4";
+        const formData = new FormData();
+        formData.append('avatar', file);
+        formData.append('test', "asd");
+
+        try {
+            let res = await fetch(url, {
+                method: 'PUT',
+                body: formData
+            });
+            let data = await res.json();
+            console.log(data);
+        } catch (e) {
+            console.log(e.message);
+        }
+    };
+
+    window.getPhoto = async function getPhoto() {
+        const url = "http://localhost:5000/api/users/1";
+        try {
+            let res = await fetch(url, {});
+            let data = await res.json();
+            console.log(data['avatar']);
+            createImage(data['avatar'])
+        } catch (e) {
+            console.log(e.message);
+        }
+    };
+    function createImage(images) {
+        let path = "../backend/user_images/";
+        path += images[0];
+        const imageObj = document.getElementById('image1');
+        imageObj.src = path
+
+    }
+
+
+</script>
+</html>

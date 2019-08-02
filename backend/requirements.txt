@@ -4,4 +4,9 @@ itsdangerous==1.1.0
 MarkupSafe==1.1.1
 Werkzeug==0.15.4
 psycopg2-binary==2.8.3
+flask_restful==0.3.6
+Flask-Mail
+flask-jwt-extended
+flask-cors
+geoip2
 

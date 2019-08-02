@@ -10,8 +10,12 @@
 # Front
 frontend/node_modules
 
-# Cache
+# db_GPS
+backend/GeoLite2
 
+# Cache
 backend/__pycache__/
 backend/db/__pycache__/
 backend/app/__pycache__/
+backend/app/resources/__pycache__/
+backend/app/resources/loginPage/__pycache__/

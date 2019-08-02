@@ -38,14 +38,26 @@ docker-machine create --driver virtualbox Matcha
 eval $(docker-machine env Matcha)
 ```
 
+#### Setup HOST
+if you use docker-machine or your host is differ from "localhost" change in .env variable HOST
+
+
 ## Build and Run
 
 ```
 git clone https://github.com/AndreiSukharev/Matcha.git matcha
 cd matcha
-docker-compose up --build -d
+docker-compose up
+sh dbGPS.sh
 front: http://localhost:3000
 check backend: http://localhost:5000
+```
+
+## Test
+
+Create test users:
+```
+docker exec flask bash -c "python test_entity.py"
 ```
 
 #### Note Docker
@@ -53,11 +65,11 @@ check backend: http://localhost:5000
 Run postgres client:
 
 ```
-docker exec -it postgres psql matchaDB bbashiri
+docker exec -it postgres psql matchaDB user
 ```
 Enter in container:
 ```
-docker exec -it {container name} bash
+docker exec -it flask bash
 ```
 Remove all:
 ```
