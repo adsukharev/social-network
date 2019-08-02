@@ -184,7 +184,7 @@ Example POST request
     "sumLikes": [1, 3],
     "sex": "male",
     "preferences": "getero",
-    "location": 1,
+    "location": 1, -> 1 - search closest location, 0 - search everywhere
     "tags": [
        "sport"
     ]
