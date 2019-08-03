@@ -1,46 +1,35 @@
-import React from 'react'
-import { Feed } from 'semantic-ui-react'
-import imageSrc from '../../images/elliot.jpg';
+import React from 'react';
+import {Message, Grid} from 'semantic-ui-react';
 
-const Notifications = () => (
-    <Feed style={{ width: "50%", margin: "auto"}}>
-        <Feed.Event>
-            <Feed.Label image={imageSrc} />
-            <Feed.Content>
-                <Feed.Date>Сегодня</Feed.Date>
-                <Feed.Summary>
-                     <a>Jenny Hess</a> посетил Вашу страницу.
-                </Feed.Summary>
-            </Feed.Content>
-        </Feed.Event>
-        <Feed.Event>
-            <Feed.Label image={imageSrc} />
-            <Feed.Content>
-                <Feed.Date>3 days ago</Feed.Date>
-                <Feed.Summary>
-                    <a>Jenny Hess</a> оценил Ваш профиль.
-                </Feed.Summary>
-            </Feed.Content>
-        </Feed.Event>
-        <Feed.Event>
-            <Feed.Label image={imageSrc} />
-            <Feed.Content>
-                <Feed.Date>3 days ago</Feed.Date>
-                <Feed.Summary>
-                    <a>Jenny Hess</a> оценил Ваш профиль.
-                </Feed.Summary>
-            </Feed.Content>
-        </Feed.Event>
-        <Feed.Event>
-            <Feed.Label image={imageSrc} />
-            <Feed.Content>
-                <Feed.Date>3 days ago</Feed.Date>
-                <Feed.Summary>
-                    <a>Jenny Hess</a> оценил Ваш профиль.
-                </Feed.Summary>
-            </Feed.Content>
-        </Feed.Event>
-    </Feed>
-)
-
-export default Notifications;
+export default function Notification() {
+    return (
+        <div>
+            <Grid divided="vertically">
+                <Grid.Row columns={3}>
+                    <Grid.Column/>
+                    <Grid.Column>
+                        <p/>
+                        <Message>
+                            <Message.Header>New like</Message.Header>
+                            <p>
+                                <b>Jane</b> liked your.
+                            </p>
+                        </Message>
+                        <Message>
+                            <Message.Header>New message</Message.Header>
+                            <p>
+                                <b>Tolik</b> left you a message.
+                            </p>
+                        </Message>
+                        <Message>
+                            <Message.Header>New view</Message.Header>
+                            <p>
+                                <b>Tolik</b> viewed your page.
+                            </p>
+                        </Message>
+                    </Grid.Column>
+                </Grid.Row>
+            </Grid>
+        </div>
+    );
+}
