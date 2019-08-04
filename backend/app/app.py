@@ -1,9 +1,10 @@
-from flask import Blueprint, Flask
+from flask import Blueprint, Flask, render_template
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 from flask_socketio import SocketIO
 from .config import Config, mail_settings
+import os
 
 from app.resources.Users.Users import Users
 from app.resources.Users.UserId import UserId
@@ -17,7 +18,8 @@ from .resources.loginPage.SignIn import SignIn
 from .resources.Rating import Rating
 from .resources.Search import Search
 from .resources.Profile.Fake import Fake
-from .resources.Chat import Chat
+from app.resources.Chat.Chat import Chat
+from app.resources.Chat.ChatSocket import ChatSocket
 from .resources.Secret import SecretResource
 
 #api
@@ -25,7 +27,8 @@ api_bp = Blueprint('api', __name__)
 api = Api(api_bp)
 
 #app
-app = Flask(__name__)
+template_dir = os.path.abspath('front_test')
+app = Flask(__name__, template_folder=template_dir)
 app.config.from_object(Config)
 app.register_blueprint(api_bp, url_prefix='/api')
 app.config.update(mail_settings)
@@ -48,8 +51,14 @@ api.add_resource(Rating, '/rating')
 api.add_resource(Tags, '/tags')
 api.add_resource(Search, '/search')
 api.add_resource(Fake, '/fake/<user_id>')
+api.add_resource(Chat, '/chats')
 
 api.add_resource(SecretResource, '/secret')
 
 # chat
-socketio.on_namespace(Chat('/chat'))
+socketio.on_namespace(ChatSocket('/chat'))
+
+
+@app.route('/')
+def sessions():
+    return render_template('socket.html')

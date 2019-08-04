@@ -211,5 +211,30 @@ Example POST response
 ### Fake
 
 ```
-POST     /api/fake/<user_id> report fake account
+POST     /api/fake/<user_id> -> report fake account
+```
+
+### Chats
+
+```
+GET     /api/chats  -> get chats of the user
+POST    /api/chats/<chat_id>  -> join the certain chat
+```
+Example GET response
+```
+[
+    {
+        "chat_name": "test7+test6",
+        "chat_id": 3
+    },
+    {
+        "chat_name": "test7+test2",
+        "chat_id": 5
+    }
+]
+```
+
+Example POST response
+```
+
 ```
