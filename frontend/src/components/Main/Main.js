@@ -6,6 +6,8 @@ import Match from '../Match/Match';
 import Notifications from '../Notifications/Notifications';
 import Top from '../Top/Top';
 import Recommendations from "../Recommendations/Recommendations";
+import Registration from "../Auth/Registration";
+import Login from "../Auth/Login";
 
 
 export default function Main() {

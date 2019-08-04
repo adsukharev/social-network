@@ -6,26 +6,13 @@ const sortOptions = [
     {key: 'age', text: 'age', value: 'age'},
     {key: 'rating', text: 'rating', value: 'rating'},
     {key: 'city', text: 'city', value: 'city'},
-]
+];
 
 export default function Match() {
     return (
         <div>
             <h1>Search</h1>
-            <Grid divided='vertically'>
-                <Grid.Row columns={4}>
-                    <Grid.Column/>
-                    <Grid.Column unstackable widths={4}>
-                        <Select placeholder='Sort' control={Select} options={sortOptions}/>
-                    </Grid.Column>
-                    <Grid.Column>
-                        <div className="ui icon input">
-                            <input type="text" placeholder="Search users..."/>
-                            <i className="inverted circular search link icon"/>
-                        </div>
-                    </Grid.Column>
-                </Grid.Row>
-            </Grid>
+
             <Form>
 
                 <Form.Group unstackable widths={5}>
