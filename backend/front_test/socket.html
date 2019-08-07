@@ -4,51 +4,111 @@
     <meta charset="UTF-8">
     <title>socket</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
+<h2>Messages</h2>
  <h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
  <div class="message_holder"></div>
 
-<form action="">
-    <input type="text" class="username" placeholder="User Name"/>
+<h2>Send messages</h2>
+<form id="mess" action="">
     <input type="text" class="message" placeholder="Messages"/>
-    <input type="number" class="room" placeholder="room"/>
     <input type="submit"/>
 </form>
 
+<h2>Get messages of chat</h2>
+ <form id="messForm" action="">
+    <input type="text" class="chatid" placeholder="chatid"/>
+    <button id="btnMess">Get messages</button>
+</form>
+
+<h2>Choose room (chat id)</h2>
+ <form id="roomForm" action="">
+    <input type="number" class="room" placeholder="room"/>
+     <button id ='btnRoom'>Join Chat</button>
+ </form>
+
+<h2>Get all chats of the user</h2>
+  <form id="CharsForm" action="">
+    <button id="btnChats">Get chats of the User</button>
+</form>
+
+<a href="/">login</a>
 </body>
 <script>
-    channel = '/chat';
+
+    const channel = '/api/socket';
     let socket = io.connect('http://' + document.domain + ':' + location.port + channel);
     socket.on('connect', function () {
-        socket.emit('join', {
-            user_name: 'User Connected',
-            room: 1
-        }, (resp) => console.log(resp));
-        const form = $('form').on('submit', function (e) {
+        socket.emit('join', '0', (resp) => console.log(resp));
+        const form = $('#mess').on('submit', function (e) {
             e.preventDefault();
-            let user_name = $('input.username').val();
-            let user_input = $('input.message').val();
-            let chat_number = $('input.room').val();
+            let text = $('input.message').val();
+            let chat_id = $('input.room').val();
             socket.emit('message', {
-                user_name: user_name,
-                message: user_input,
-                room: chat_number
+                text: text,
+                chat_id: chat_id
             });
             $('input.message').val('').focus()
-        })
+        });
+        $(document).ready(function() {
+            $("#btnRoom").click(function (e) {
+                e.preventDefault();
+                let chat_id = $('input.room').val();
+                socket.emit('join', chat_id);
+            })
+        });
     });
     socket.on('my_response', function (msg) {
         console.log(msg);
-        if (typeof msg.user_name !== 'undefined') {
+        if (typeof msg.login !== 'undefined') {
             $('h3').remove();
-            $('div.message_holder').append('<div><b style="color: #000">' + msg.user_name + '</b> ' + msg.message + '</div>')
+            $('div.message_holder').append('<div><b style="color: #000">' + msg.login + '</b> ' + msg.message + '</div>')
         }
     });
-    socket.on('connection_response', function (msg) {
-      console.log(msg)
-    })
+    socket.on('notification', function (msg) {
+        console.log(msg);
+         alert(msg);
+    });
+    $(document).ready(function () {
+        $("#btnMess").click(async function (e) {
+            e.preventDefault();
+            const chatid = $('input.chatid').val();
+            const url = '/api/chats/' + chatid;
+            try {
+                let res = await fetch(url, {
+                    headers: {
+                        'Accept': 'application/json',
+                    },
+                    method: 'GET'
+                });
+                const response = await res.json();
+                console.log(response);
+            } catch (e) {
+                console.log(e.message);
+            }
+        })
+    });
+    $(document).ready(function () {
+        $("#btnChats").click(async function (e) {
+            e.preventDefault();
+            const url = '/api/chats';
+            try {
+                let res = await fetch(url, {
+                    headers: {
+                        'Accept': 'application/json',
+                    },
+                    method: 'GET'
+                });
+                const response = await res.json();
+                console.log(response);
+            } catch (e) {
+                console.log(e.message);
+            }
+        })
+    });
+
 </script>
 </html>

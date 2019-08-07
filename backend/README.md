@@ -39,7 +39,7 @@ Example for POST:
 ```
 {
     "login": "test1",
-    "password": "wertyq123",
+    "password": "123Wertyq",
     "latitude": "55.7116063",
     "longitude": "37.738073"
 }
@@ -218,7 +218,7 @@ POST     /api/fake/<user_id> -> report fake account
 
 ```
 GET     /api/chats  -> get chats of the user
-POST    /api/chats/<chat_id>  -> join the certain chat
+GET    /api/chats/<chat_id>  -> get the certain chat wiht messages
 ```
 Example GET response
 ```
@@ -234,7 +234,7 @@ Example GET response
 ]
 ```
 
-Example POST response
+Example GET <chat_id>  response
 ```
 
 ```

@@ -1,7 +1,7 @@
 from app.resources.Common.Base import Base
 from flask import session
 from app.resources.Rating import Rating
-from app.resources.Chat.Chat import Chat
+from app.resources.Chat.Chats import Chats
 
 
 class Likes(Base):
@@ -22,7 +22,7 @@ class Likes(Base):
         res = self.base_write(sql, record)
         if res == "error":
             return res
-        chat = Chat()
+        chat = Chats()
         res = chat.manage_chat(from_like_id, to_like_id)
         return res
 

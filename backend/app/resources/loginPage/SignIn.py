@@ -7,15 +7,19 @@ import geoip2.database
 class SignIn(UsersCommon):
 
     def post(self):
-        login = request.json['login']
-        password_request = self.to_hash(request.json['password'])
-        result = self.__check_login_password_status(login, password_request)
-        if result != "ok":
-            return {'message': result}
-        if not self.__add_location():
-            return {'message': 'error in adding location'}
-        result_obj = self.__create_token()
-        return result_obj
+        try:
+            login = request.json['login']
+            password_request = self.to_hash(request.json['password'])
+            result = self.__check_login_password_status(login, password_request)
+            if result != "ok":
+                return {'message': result}
+            if not self.__add_location():
+                return {'message': 'error in adding location'}
+            result_obj = self.__create_token()
+            return result_obj
+        except Exception as e:
+            print(e)
+            return e
 
     def __check_login_password_status(self, login, password_request):
         sql = '''SELECT user_id, password, status, fake FROM users

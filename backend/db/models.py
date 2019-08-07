@@ -1,4 +1,5 @@
 class Models:
+
     users = '''
                 CREATE TABLE IF NOT EXISTS users(
                 user_id         SERIAL          NOT NULL PRIMARY KEY,
@@ -16,7 +17,9 @@ class Models:
                 token           VARCHAR(1024),
                 status          BOOLEAN         NOT NULL DEFAULT '0',
                 notification    BOOLEAN         NOT NULL DEFAULT '1',
-                fake            BOOLEAN         NOT NULL DEFAULT '0'
+                fake            BOOLEAN         NOT NULL DEFAULT '0',
+                online          VARCHAR(32)     NOT NULL DEFAULT 'online',
+                room            VARCHAR(1024)
                 );'''
 
     tags = '''
@@ -52,14 +55,6 @@ class Models:
                 sumLikes        SMALLINT    DEFAULT 0
                 );'''
 
-    messages = '''
-                 CREATE TABLE IF NOT EXISTS messages(
-                 message_id     SERIAL          NOT NULL PRIMARY KEY,
-                 creation_date  VARCHAR(64)     DEFAULT TO_CHAR(CURRENT_TIMESTAMP,'YYYY-MM-DD HH24:MI:SS'),
-                 text           TEXT            NOT NULL,
-                 author         INT             NOT NULL REFERENCES users(user_id)
-                 );'''
-
     chats = '''
                 CREATE TABLE IF NOT EXISTS chats(
                 chat_id        SERIAL          NOT NULL PRIMARY KEY,
@@ -77,83 +72,10 @@ class Models:
                  chat_id     INT REFERENCES chats (chat_id),
                  message_id  INT REFERENCES messages (message_id)
                 );'''
-
-    """
-        SELECT  u.user_id, u.login, l.likes, h.history
-        FROM users u
-        JOIN (
-            SELECT to_like_fk, array_agg(from_like_fk) as likes
-            FROM likes
-            GROUP BY 1
-            ) l ON u.user_id = l.to_like_fk
-        JOIN (
-            SELECT to_history_fk, array_agg(from_history_fk) as history
-            FROM history
-            GROUP BY 1
-            ) h ON u.user_id = h.to_history_fk
-        WHERE user_id = 2
-        ;
-
-            
-            
-                    FROM users
-                    JOIN likes on (users.user_id = likes.to_like_fk)
-                    JOIN history on (users.user_id = history.to_history_fk)
-                    WHERE user_id = 2
-                    GROUP BY users.user_id
-                    ;
-    """
-
-    # location = '''
-    #                 CREATE TABLE IF NOT EXISTS location(
-    #                 location_id    SERIAL          NOT NULL PRIMARY KEY,
-    #                 location_name  VARCHAR(1014)     NOT NULL
-    #                 );'''
-
-    # SELECT u.user_id, u.login
-    # FROM users u
-    # JOIN users_tags ut on (i.user_id = ut.user_id);
-
-    # select to_char(creationdate, 'YYYY-MM-DD HH24:MI:SS') as time from messages;
-    # INSERT INTO users (login) VALUES ('Oleg');
-    # INSERT INTO messages (text, author) values ('asd', 1);
-    # insert_user1 = '''
-    #             INSERT INTO users (login)
-    #             VALUES (%s)
-    #             ;'''
-    # record_insert_user1 = ("olega",)
-    #
-    # insert_user2 = '''
-    #             INSERT INTO users (login)
-    #             VALUES (%s)
-    #             ;'''
-    # record_insert_user2 = ("kolyan",)
-    #
-    # insert_tag1 = '''
-    #             INSERT INTO tags (tag_name)
-    #             VALUES (%s)
-    #             ;'''
-    # record_insert_tags1 = ("sport",)
-    #
-    # insert_tag2 = '''
-    #               INSERT INTO tags (tag_name)
-    #               VALUES (%s)
-    #               ;'''
-    # record_insert_tags2 = ("yoga",)
-    #
-    # insert_tag3 = '''
-    #               INSERT INTO tags (tag_name)
-    #               VALUES (%s)
-    #               ;'''
-    # record_insert_tags3 = ("books",)
-    #
-    # insert_common = '''
-    #               INSERT INTO users_tags (user_id, tag_id)
-    #               VALUES (%s,%s)
-    #               ;'''
-    # record_insert_common1 = (1,2,)
-    # insert_common2 = '''
-    #               INSERT INTO users_tags (user_id, tag_id)
-    #               VALUES (%s, %s)
-    #               ;'''
-    # record_insert_common2 = (1,3,)
+    messages = '''
+                 CREATE TABLE IF NOT EXISTS messages(
+                 message_id     SERIAL          NOT NULL PRIMARY KEY,
+                 creation_date  VARCHAR(64)     NOT NULL,
+                 text           TEXT            NOT NULL,
+                 author         INT             NOT NULL REFERENCES users(user_id)
+                 );'''

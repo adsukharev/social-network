@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>chats</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+</head>
+<body>
+<form id="chatsForm" action="">
+    <input type="text" class="chatid" placeholder="chatid"/>
+    <button id="btnChats" type="submit">Get chats</button>
+</form>
+<a href="/chat">chat</a>
+<a href="/">login</a>
+</body>
+
+<script>
+    $(document).ready(function () {
+        $("#btnChats").click(async function (e) {
+            e.preventDefault();
+            const chatid = $('input.chatid').val();
+            const url = '/api/chats/' + chatid;
+            try {
+                let res = await fetch(url, {
+                    headers: {
+                        'Accept': 'application/json',
+                    },
+                    method: 'GET'
+                });
+                const response = await res.json();
+                console.log(response);
+            } catch (e) {
+                console.log(e.message);
+            }
+        })
+    });
+</script>
+</html>

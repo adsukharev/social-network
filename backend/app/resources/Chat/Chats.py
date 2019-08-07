@@ -2,7 +2,7 @@ from app.resources.Common.Base import Base
 from flask import session
 
 
-class Chat(Base):
+class Chats(Base):
 
     from_like = ''
     to_like = ''
@@ -33,8 +33,8 @@ class Chat(Base):
     def __add_row_to_chat_users_db(self, chatid):
         sql = '''INSERT INTO chat_users (chat_id, user_id)
                  VALUES (%s, %s);'''
-        record_from = (chatid, self.from_like,)
-        record_to = (chatid, self.to_like,)
+        record_from = (chatid, self.from_like)
+        record_to = (chatid, self.to_like)
         if not self.base_write(sql, record_from):
             return 'error'
         if not self.base_write(sql, record_to):

@@ -18,7 +18,8 @@ from .resources.loginPage.SignIn import SignIn
 from .resources.Rating import Rating
 from .resources.Search import Search
 from .resources.Profile.Fake import Fake
-from app.resources.Chat.Chat import Chat
+from app.resources.Chat.Chats import Chats
+from app.resources.Chat.ChatId import ChatId
 from app.resources.Chat.ChatSocket import ChatSocket
 from .resources.Secret import SecretResource
 
@@ -51,14 +52,25 @@ api.add_resource(Rating, '/rating')
 api.add_resource(Tags, '/tags')
 api.add_resource(Search, '/search')
 api.add_resource(Fake, '/fake/<user_id>')
-api.add_resource(Chat, '/chats')
+api.add_resource(Chats, '/chats')
+api.add_resource(ChatId, '/chats/<chat_id>')
 
 api.add_resource(SecretResource, '/secret')
 
 # chat
-socketio.on_namespace(ChatSocket('/chat'))
+socketio.on_namespace(ChatSocket('/api/socket'))
+
+
+@app.route('/chat')
+def socket():
+    return render_template('socket.html')
+
+
+@app.route('/chats')
+def chats():
+    return render_template('chats.html')
 
 
 @app.route('/')
-def sessions():
-    return render_template('socket.html')
+def login():
+    return render_template('login.html')
