@@ -61,14 +61,14 @@
             })
         });
     });
-    socket.on('my_response', function (msg) {
+    socket.on('receive_message', function (msg) {
         console.log(msg);
         if (typeof msg.login !== 'undefined') {
             $('h3').remove();
             $('div.message_holder').append('<div><b style="color: #000">' + msg.login + '</b> ' + msg.message + '</div>')
         }
     });
-    socket.on('notification', function (msg) {
+    socket.on('notification_message', function (msg) {
         console.log(msg);
          alert(msg);
     });

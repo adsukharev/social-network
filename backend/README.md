@@ -218,7 +218,7 @@ POST     /api/fake/<user_id> -> report fake account
 
 ```
 GET     /api/chats  -> get chats of the user
-GET    /api/chats/<chat_id>  -> get the certain chat wiht messages
+GET    /api/chats/<chat_id>  -> get the certain chat with messages
 ```
 Example GET response
 ```
@@ -236,5 +236,42 @@ Example GET response
 
 Example GET <chat_id>  response
 ```
+[
+    {
+        "creation_date": "2019-08-07 15:34:07",
+        "text": "asdad",
+        "author": "test1"
+    },
+    {
+        "creation_date": "2019-08-07 15:34:11",
+        "text": "asdd",
+        "author": "test2"
+    }
+]
+```
 
+### Socket
+
+```
+/api/socket -> path to socket
+    
+```
+Events
+
+on:
+
+```
+'connect' -> connect to socket
+'receive_message' -> get message from server to another user
+'notification_message' -> notificate about message another user
+'notification_like' -> notificate about like another user
+'notification_history' -> notificate about history another user
+
+```
+
+emit:
+
+```
+'join' -> join the chat
+'message' -> send message 
 ```

@@ -6,7 +6,7 @@ class ChatId(Base):
 
     def get(self, chat_id):
 
-        sql = """   SELECT m.creation_date, m.text, u.login
+        sql = """   SELECT m.creation_date, m.text, u.login as author
                     FROM messages as m
                     JOIN chat_messages cm USING (message_id)
                     JOIN users u ON u.user_id = m.author

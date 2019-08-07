@@ -53,9 +53,9 @@ class ChatSocket(Namespace, Base):
                'message': data['text']}
         self.notificate_socket(room, mes)
         print("sent to room:", room)
-        emit('my_response', mes, room=room)
+        emit('receive_message', mes, room=room)
 
-    def notificate_socket(self, chat_id, mes):
+    def notificate_message(self, chat_id, mes):
         user_id = session['user_id']
         sql = """   SELECT room 
                     FROM users
