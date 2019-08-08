@@ -79,3 +79,40 @@ class SignIn(UsersCommon):
             if request.json['latitude'] != '' and request.json['longitude'] != '':
                 return 1
         return 0
+
+    # forgot password
+    def put(self):
+        email = request.json['email']
+        if not self.__check_email(email):
+            return "Invalid Email"
+        new_pass = self.__create_new_password()
+        res = self.__add_new_password_to_db(new_pass, email)
+        if res == 'error':
+            return res
+        from app.resources.Email import Email
+        res = Email.send_new_password(email, new_pass)
+        return res
+
+    def __check_email(self, email):
+        sql = '''SELECT email FROM users
+                 WHERE email = %s
+                  ;'''
+        record = (email,)
+        user_email = self.base_get_one(sql, record)
+        if user_email['email'] == email:
+            return True
+        return False
+
+    def __create_new_password(self):
+        import random
+        password_string = "jkhTVY147"
+        new_pass = ''.join(random.choice(password_string) for i in range(12))
+        return new_pass
+
+    def __add_new_password_to_db(self, new_pass, email):
+        password_hashed = self.to_hash(new_pass)
+        sql = "UPDATE users SET password = %s WHERE email =%s;"
+        record = (password_hashed, email)
+        res = self.base_write(sql, record)
+        return res
+

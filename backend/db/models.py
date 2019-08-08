@@ -29,28 +29,28 @@ class Models:
 
     users_tags = '''
                 CREATE TABLE IF NOT EXISTS users_tags(
-                user_id     INT REFERENCES users (user_id),
-                tag_id      INT REFERENCES tags (tag_id)
+                user_id     INT REFERENCES users (user_id) ON DELETE CASCADE,
+                tag_id      INT REFERENCES tags (tag_id) ON DELETE CASCADE
                 );'''
 
     history = '''
                 CREATE TABLE IF NOT EXISTS history(
                 history_id          SERIAL  NOT NULL PRIMARY KEY,
-                from_history_fk     INT     NOT NULL REFERENCES users (user_id),
-                to_history_fk       INT     NOT NULL REFERENCES users (user_id)
+                from_history_fk     INT     NOT NULL REFERENCES users (user_id) ON DELETE CASCADE,
+                to_history_fk       INT     NOT NULL REFERENCES users (user_id) ON DELETE CASCADE
                 );'''
 
     likes = '''
                 CREATE TABLE IF NOT EXISTS likes(
                 like_id         SERIAL  NOT NULL PRIMARY KEY,
-                from_like_fk    INT     NOT NULL REFERENCES users (user_id),
-                to_like_fk      INT     NOT NULL REFERENCES users (user_id)
+                from_like_fk    INT     NOT NULL REFERENCES users (user_id) ON DELETE CASCADE,
+                to_like_fk      INT     NOT NULL REFERENCES users (user_id) ON DELETE CASCADE
                 );'''
 
     rating = '''
                 CREATE TABLE IF NOT EXISTS rating(
                 rating_id       SERIAL      NOT NULL PRIMARY KEY,
-                user_fk         INT         NOT NULL UNIQUE      REFERENCES users(user_id) ON DELETE CASCADE,
+                user_fk         INT         NOT NULL UNIQUE  REFERENCES users(user_id) ON DELETE CASCADE,
                 sumLikes        SMALLINT    DEFAULT 0
                 );'''
 
@@ -62,21 +62,21 @@ class Models:
 
     chat_users = '''
                 CREATE TABLE IF NOT EXISTS chat_users(
-                 chat_id     INT REFERENCES chats (chat_id),
-                 user_id     INT REFERENCES users (user_id)
+                 chat_id     INT REFERENCES chats (chat_id) ON DELETE CASCADE,
+                 user_id     INT REFERENCES users (user_id) ON DELETE CASCADE
                 );'''
 
     chat_messages = '''
                 CREATE TABLE IF NOT EXISTS chat_messages(
-                 chat_id     INT REFERENCES chats (chat_id),
-                 message_id  INT REFERENCES messages (message_id)
+                 chat_id     INT REFERENCES chats (chat_id) ON DELETE CASCADE,
+                 message_id  INT REFERENCES messages (message_id) ON DELETE CASCADE
                 );'''
     messages = '''
                  CREATE TABLE IF NOT EXISTS messages(
                  message_id     SERIAL          NOT NULL PRIMARY KEY,
                  creation_date  VARCHAR(64)     NOT NULL,
                  text           TEXT            NOT NULL,
-                 author         INT             NOT NULL REFERENCES users(user_id)
+                 author         INT             NOT NULL REFERENCES users(user_id) ON DELETE CASCADE
                  );'''
     token_revokes = '''
                 CREATE TABLE IF NOT EXISTS token_revokes(

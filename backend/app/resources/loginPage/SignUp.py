@@ -33,8 +33,7 @@ class SignUp(UsersCommon):
         sql = '''INSERT INTO users (email, login, password, user_name, token)
                  VALUES (%s, %s, %s, %s, %s);'''
         if self.base_write(sql, record) == "ok":
-            email_obj = Email()
-            res = email_obj.send_email_confirmation(email, login, name, token)
+            res = Email.send_email_confirmation(email, login, name, token)
             return res
         return "Email or login already exist"
 
@@ -51,7 +50,7 @@ class SignUp(UsersCommon):
             return 0
 
     def __change_user_status(self, record):
-        sql = "UPDATE users SET status = '1' WHERE login =%s"
+        sql = "UPDATE users SET status = '1' WHERE login =%s;"
         self.base_write(sql, record)
 
     def get_user_id(self, record):

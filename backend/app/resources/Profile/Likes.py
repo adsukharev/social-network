@@ -24,18 +24,23 @@ class Likes(Base):
             return res
         chat = Chats()
         res = chat.manage_chat(from_like_id, to_like_id)
+        # todo:notificate
         return res
 
     def delete(self, to_like_id):
         if self.__delete_like(to_like_id) == "error":
             return "delete like error"
         rating = Rating()
-        res = rating.decrease_like(to_like_id)
+        rating.decrease_like(to_like_id)
+        chat_obj = Chats()
+        from_like_id = session['user_id']
+        res = chat_obj.manage_chat_to_delete(from_like_id, to_like_id)
+        # todo:notificate
         return res
 
     def __delete_like(self, to_like_id):
         sql = """DELETE from likes
-                 WHERE from_like_fk = %s AND to_like_fk = %s"""
+                 WHERE from_like_fk = %s AND to_like_fk = %s;"""
         from_like_id = session['user_id']
         record = (from_like_id, to_like_id)
         res = self.base_write(sql, record)

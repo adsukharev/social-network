@@ -3,7 +3,6 @@ from flask import session
 
 
 class Chats(Base):
-
     from_like = ''
     to_like = ''
 
@@ -61,7 +60,6 @@ class Chats(Base):
         chat = self.base_get_one(sql, record)
         return chat
 
-
     def __check_likes_to_create_chat(self):
         to_like_inverse = self.from_like
         from_like_inverse = self.to_like
@@ -74,3 +72,31 @@ class Chats(Base):
         user = self.base_get_one(sql, record)
         return user
 
+    def manage_chat_to_delete(self, from_like_id, to_like_id):
+        self.from_like = from_like_id
+        self.to_like = to_like_id
+        chat_id = self.__check_chat_if_exists()
+        if not chat_id:
+            return False
+        res = self.__delete_chat(chat_id)
+        return res
+
+    def __check_chat_if_exists(self):
+        sql = """   SELECT chat_id
+                    FROM chat_users cu
+                    WHERE user_id = %s or user_id = %s
+                    GROUP BY chat_id
+                    HAVING count(user_id) > 1;
+                    ;"""
+        record = (self.from_like, self.to_like)
+        chat = self.base_get_one(sql, record)
+        if not chat:
+            return False
+        return chat['chat_id']
+
+    def __delete_chat(self, chat_id):
+        sql = """   DELETE from chats
+                    WHERE chat_id = %s;"""
+        record = (chat_id,)
+        res = self.base_write(sql, record)
+        return res

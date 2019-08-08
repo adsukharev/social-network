@@ -26,9 +26,10 @@ Example for POST:
 }
  ```
  
- ### Sign In
+ ### Sign In, Forgot Password
 ```
-POST     /api/signin
+POST     /api/signin -> Sign In
+PUT     /api/signin - > Forgot Password
 ```
 
 These keys are required to sign in a user:
@@ -52,9 +53,32 @@ Example for POST:
 }
 ```
 
+Example PUT:
+```
+{
+    "email": test@mail.ru
+}
+```
+Response if ok:
+```
+We have sent new passport to your email
+```
+
  ### Log out
 ```
 DELETE     /api/logout
+```
+
+ 
+ 
+ ### Check Authorization
+```
+GET     /api/secret
+```
+Request Header:
+```
+Key                 Value
+Authorization       Bearer eyJ0eXAiOiJK(token)
 ```
 
 ### Users
