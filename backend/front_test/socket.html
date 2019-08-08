@@ -42,7 +42,6 @@
     const channel = '/api/socket';
     let socket = io.connect('http://' + document.domain + ':' + location.port + channel);
     socket.on('connect', function () {
-        socket.emit('join', '0', (resp) => console.log(resp));
         const form = $('#mess').on('submit', function (e) {
             e.preventDefault();
             let text = $('input.message').val();

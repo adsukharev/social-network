@@ -6,6 +6,7 @@ from flask_socketio import SocketIO
 from .config import Config, mail_settings
 import os
 
+from app.resources.Common.Base import Base
 from app.resources.Users.Users import Users
 from app.resources.Users.UserId import UserId
 from app.resources.Users.UserLogin import UserLogin
@@ -15,6 +16,7 @@ from app.resources.Profile.Tags import Tags
 from app.resources.Profile.Images import Images
 from .resources.loginPage.SignUp import SignUp
 from .resources.loginPage.SignIn import SignIn
+from .resources.loginPage.LogOut import LogOut
 from .resources.Rating import Rating
 from .resources.Search import Search
 from .resources.Profile.Fake import Fake
@@ -35,13 +37,13 @@ app.register_blueprint(api_bp, url_prefix='/api')
 app.config.update(mail_settings)
 # app.secret_key = b'dude this is a terrible key'
 CORS(app)
-# app.config['JWT_SECRET_KEY'] = 'jwt-secret-string'
 jwt = JWTManager(app)
 socketio = SocketIO(app)
 
 # Route
-api.add_resource(SignUp, '/sign_up')
-api.add_resource(SignIn, '/sign_in')
+api.add_resource(SignUp, '/signup')
+api.add_resource(SignIn, '/signin')
+api.add_resource(LogOut, '/logout')
 api.add_resource(Users, '/users')
 api.add_resource(UserId, '/users/<user_id>')
 api.add_resource(UserLogin, '/user_login/<login>')
@@ -59,6 +61,17 @@ api.add_resource(SecretResource, '/secret')
 
 # chat
 socketio.on_namespace(ChatSocket('/api/socket'))
+
+# token revoke
+@jwt.token_in_blacklist_loader
+def check_if_token_in_blacklist(decrypted_token):
+    jti = decrypted_token['jti']
+    sql = "SELECT token FROM token_revokes WHERE token = %s;"
+    record = (jti,)
+    token = Base.base_get_one(sql, record)
+    if not token:
+        return False
+    return True
 
 
 @app.route('/chat')

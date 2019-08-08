@@ -1,5 +1,4 @@
 class Models:
-
     users = '''
                 CREATE TABLE IF NOT EXISTS users(
                 user_id         SERIAL          NOT NULL PRIMARY KEY,
@@ -79,3 +78,8 @@ class Models:
                  text           TEXT            NOT NULL,
                  author         INT             NOT NULL REFERENCES users(user_id)
                  );'''
+    token_revokes = '''
+                CREATE TABLE IF NOT EXISTS token_revokes(
+                 token_id    SERIAL             NOT NULL PRIMARY KEY,
+                 token      VARCHAR(1024)       NOT NULL
+                );'''

@@ -9,7 +9,7 @@ Schemas are in backend/db/models.py
 
 ### Sign Up
 ```
-POST     /api/sign_up
+POST     /api/signup
 ```
 
 These keys are required to sign up a user:
@@ -28,7 +28,7 @@ Example for POST:
  
  ### Sign In
 ```
-POST     /api/sign_in
+POST     /api/signin
 ```
 
 These keys are required to sign in a user:
@@ -50,6 +50,11 @@ Example for POST:
     "message": "ok",
     "access_token": "eyJ0eXAiOiJK"
 }
+```
+
+ ### Log out
+```
+DELETE     /api/logout
 ```
 
 ### Users

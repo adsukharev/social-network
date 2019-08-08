@@ -1,5 +1,5 @@
 # Matcha
-Dating website
+Social network for dating
 
 Full specification: https://cdn.intra.42.fr/pdf/pdf/968/matcha.en.pdf
 
