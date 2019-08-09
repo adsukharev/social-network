@@ -9,4 +9,6 @@ Flask-Mail
 flask-jwt-extended
 flask-cors
 geoip2
-
+flask-socketio
+gevent
+rauth

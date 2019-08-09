@@ -3,10 +3,13 @@ import os
 
 class Config:
     DEBUG = True
-    # SECRET_KEY = os.environ['SECRET_KEY']
-    # JWT_SECRET_KEY = 'dude this is a very terrible key'
+    SECRET_KEY = os.environ['SECRET_KEY']
+    JWT_SECRET_KEY = 'dude this is a very terrible key'
+    JWT_BLACKLIST_TOKEN_CHECKS = ['access']
+    JWT_BLACKLIST_ENABLED = True
     UPLOAD_FOLDER = '/usr/src/backend/user_images'
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024
+
 
 mail_settings = {
         "MAIL_SERVER": 'smtp.gmail.com',
@@ -15,4 +18,9 @@ mail_settings = {
         "MAIL_USE_SSL": True,
         "MAIL_USERNAME": os.environ['EMAIL_USER'],
         "MAIL_PASSWORD": os.environ['EMAIL_PASSWORD']
+}
+
+FACEBOOK = {
+    'id': '532470077295016',
+    'secret': '6b9844087159d342e6741f57f63aa737'
 }

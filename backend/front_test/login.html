@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+</head>
+<body>
+<a href="/chat">chat</a>
+<form id="formLogin" action="">
+    <input type="text" class="username" placeholder="login"/>
+    <button id="login" type="submit">login</button>
+</form>
+<br>
+<form id="facebookForm" action="">
+    <button id="facebookBtn">Login with Facebook</button>
+</form>
+
+
+</body>
+
+<script>
+    $(document).ready(function () {
+        $("#login").click(async function (e) {
+            e.preventDefault();
+            let username = $('input.username').val();
+            const jsObj = {
+                login: username,
+                password: "123Wertyq"
+            };
+            const json = JSON.stringify(jsObj);
+            const url = '/api/sign_in';
+            console.log(json);
+            try {
+                let res = await fetch(url, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    method: 'POST',
+                    body: json
+                });
+                const response = await res.json();
+                console.log(response);
+            } catch (e) {
+                console.log(e.message);
+            }
+        })
+    });
+
+    $(document).ready(function () {
+        $("#facebookBtn").click(async function (e) {
+            e.preventDefault();
+            const url = '/api/oauth';
+            try {
+                await fetch(url, {
+                    method: 'POST',
+                });
+            } catch (e) {
+                console.log(e.message);
+            }
+        })
+    });
+</script>
+</html>
