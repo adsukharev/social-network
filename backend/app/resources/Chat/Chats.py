@@ -49,7 +49,6 @@ class Chats(Base):
         if not self.base_write(sql, record):
             return 'error'
         chat = self.__get_chatId(chat_name)
-        print("chatid: ", chat)
         if not chat:
             return 'error'
         return chat['chat_id']

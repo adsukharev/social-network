@@ -69,6 +69,11 @@ We have sent new passport to your email
 DELETE     /api/logout
 ```
 
+ ### OAuth
+```
+GET     /api/oauth
+```
+
  
  
  ### Check Authorization

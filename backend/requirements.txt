@@ -11,4 +11,4 @@ flask-cors
 geoip2
 flask-socketio
 gevent
-
+rauth

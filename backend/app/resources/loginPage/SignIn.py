@@ -13,9 +13,9 @@ class SignIn(UsersCommon):
             result = self.__check_login_password_status(login, password_request)
             if result != "ok":
                 return {'message': result}
-            if not self.__add_location():
+            if not self.add_location():
                 return {'message': 'error in adding location'}
-            result_obj = self.__create_token()
+            result_obj = self.create_token()
             return result_obj
         except Exception as e:
             print(e)
@@ -39,7 +39,7 @@ class SignIn(UsersCommon):
         session['user_id'] = user_data['user_id']
         return "ok"
 
-    def __create_token(self):
+    def create_token(self):
         access_token = create_access_token(identity=session['user_id'], expires_delta=False)
         result_obj = {
             'message': "ok",
@@ -47,17 +47,17 @@ class SignIn(UsersCommon):
         }
         return result_obj
 
-    def __add_location(self):
-        latitude, longitude = self.__get_location()
+    def add_location(self):
+        latitude, longitude = self.get_location()
         sql = "UPDATE users SET latitude = %s, longitude = %s WHERE user_id =%s"
         record = (latitude, longitude, session['user_id'])
         if self.base_write(sql, record) == "ok":
             return 1
         return 0
 
-    def __get_location(self):
+    def get_location(self):
         try:
-            if self.__check_location():
+            if self.check_location():
                 latitude = request.json['latitude']
                 longitude = request.json['longitude']
             else:
@@ -74,7 +74,7 @@ class SignIn(UsersCommon):
         finally:
             return float(latitude), float(longitude)
 
-    def __check_location(self):
+    def check_location(self):
         if 'latitude' in request.json and 'longitude' in request.json:
             if request.json['latitude'] != '' and request.json['longitude'] != '':
                 return 1

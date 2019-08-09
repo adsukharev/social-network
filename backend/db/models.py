@@ -2,9 +2,10 @@ class Models:
     users = '''
                 CREATE TABLE IF NOT EXISTS users(
                 user_id         SERIAL          NOT NULL PRIMARY KEY,
-                email           VARCHAR(64)     NOT NULL UNIQUE,
+                email           VARCHAR(64)     UNIQUE,
                 login           VARCHAR (64)    NOT NULL UNIQUE,
-                password        VARCHAR(1024)   NOT NULL,
+                password        VARCHAR(1024),
+                social_id       VARCHAR (64),
                 user_name       VARCHAR(64)     NOT NULL,
                 age             SMALLINT,
                 sex             VARCHAR(8),

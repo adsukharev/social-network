@@ -7,11 +7,17 @@
 
 </head>
 <body>
+<a href="/chat">chat</a>
 <form id="formLogin" action="">
     <input type="text" class="username" placeholder="login"/>
     <button id="login" type="submit">login</button>
 </form>
-<a href="/chat">chat</a>
+<br>
+<form id="facebookForm" action="">
+    <button id="facebookBtn">Login with Facebook</button>
+</form>
+
+
 </body>
 
 <script>
@@ -37,6 +43,20 @@
                 });
                 const response = await res.json();
                 console.log(response);
+            } catch (e) {
+                console.log(e.message);
+            }
+        })
+    });
+
+    $(document).ready(function () {
+        $("#facebookBtn").click(async function (e) {
+            e.preventDefault();
+            const url = '/api/oauth';
+            try {
+                await fetch(url, {
+                    method: 'POST',
+                });
             } catch (e) {
                 console.log(e.message);
             }
