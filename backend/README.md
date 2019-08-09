@@ -71,7 +71,14 @@ DELETE     /api/logout
 
  ### OAuth
 ```
-GET     /api/oauth
+POST    /api/oauth -redirect to facebook
+GET     /api/oauth - callback from facebook
+```
+
+request from GET:
+```
+"message": "ok",
+"access_token": "eyJ0eXAiOiJK"
 ```
 
  
