@@ -112,11 +112,17 @@ Response for getting one user:
     "sex": male,                -> 2 types: male, female
     "preferences": "bisexual",  -> 3 types: bisexual, gomo, getero
     "bio": "I like swimming",
-    "rating: 234,
     "avatar": [
         "life.jpg",
         "vietnam.jpg"
     ],
+    "notification": true,
+    "fake": false,
+    "latitude": 55.7116,
+    "longitude": 37.7382,
+    "online": "online",
+    "room": "asdas2342ddsa",
+    "sumlikes": 6,
     "likes": [
        "login1",
        "login2"
