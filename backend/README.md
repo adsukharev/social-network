@@ -9,7 +9,7 @@ Schemas are in backend/db/models.py
 
 ### Sign Up
 ```
-POST     /api/sign_up
+POST     /api/signup
 ```
 
 These keys are required to sign up a user:
@@ -26,9 +26,10 @@ Example for POST:
 }
  ```
  
- ### Sign In
+ ### Sign In, Forgot Password
 ```
-POST     /api/sign_in
+POST     /api/signin -> Sign In
+PUT     /api/signin - > Forgot Password
 ```
 
 These keys are required to sign in a user:
@@ -39,7 +40,7 @@ Example for POST:
 ```
 {
     "login": "test1",
-    "password": "wertyq123",
+    "password": "123Wertyq",
     "latitude": "55.7116063",
     "longitude": "37.738073"
 }
@@ -50,6 +51,46 @@ Example for POST:
     "message": "ok",
     "access_token": "eyJ0eXAiOiJK"
 }
+```
+
+Example PUT:
+```
+{
+    "email": test@mail.ru
+}
+```
+Response if ok:
+```
+We have sent new passport to your email
+```
+
+ ### Log out
+```
+DELETE     /api/logout
+```
+
+ ### OAuth
+```
+POST    /api/oauth -redirect to facebook
+GET     /api/oauth - callback from facebook
+```
+
+request from GET:
+```
+"message": "ok",
+"access_token": "eyJ0eXAiOiJK"
+```
+
+ 
+ 
+ ### Check Authorization
+```
+GET     /api/secret
+```
+Request Header:
+```
+Key                 Value
+Authorization       Bearer eyJ0eXAiOiJK(token)
 ```
 
 ### Users
@@ -71,11 +112,17 @@ Response for getting one user:
     "sex": male,                -> 2 types: male, female
     "preferences": "bisexual",  -> 3 types: bisexual, gomo, getero
     "bio": "I like swimming",
-    "rating: 234,
     "avatar": [
         "life.jpg",
         "vietnam.jpg"
     ],
+    "notification": true,
+    "fake": false,
+    "latitude": 55.7116,
+    "longitude": 37.7382,
+    "online": "online",
+    "room": "asdas2342ddsa",
+    "sumlikes": 6,
     "likes": [
        "login1",
        "login2"
@@ -211,5 +258,67 @@ Example POST response
 ### Fake
 
 ```
-POST     /api/fake/<user_id> report fake account
+POST     /api/fake/<user_id> -> report fake account
+```
+
+### Chats
+
+```
+GET     /api/chats  -> get chats of the user
+GET    /api/chats/<chat_id>  -> get the certain chat with messages
+```
+Example GET response
+```
+[
+    {
+        "chat_name": "test7+test6",
+        "chat_id": 3
+    },
+    {
+        "chat_name": "test7+test2",
+        "chat_id": 5
+    }
+]
+```
+
+Example GET <chat_id>  response
+```
+[
+    {
+        "creation_date": "2019-08-07 15:34:07",
+        "text": "asdad",
+        "author": "test1"
+    },
+    {
+        "creation_date": "2019-08-07 15:34:11",
+        "text": "asdd",
+        "author": "test2"
+    }
+]
+```
+
+### Socket
+
+```
+/api/socket -> path to socket
+    
+```
+Events
+
+on:
+
+```
+'connect' -> connect to socket
+'receive_message' -> get message from server to another user
+'notification_message' -> notificate about message another user
+'notification_like' -> notificate about like another user
+'notification_history' -> notificate about history another user
+
+```
+
+emit:
+
+```
+'join' -> join the chat
+'message' -> send message 
 ```

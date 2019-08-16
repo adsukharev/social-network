@@ -27,6 +27,7 @@ class Users(Base):
                      JOIN  tags USING (tag_id)
                      GROUP BY 1
                      ) t ON u.user_id = t.user_id_fk
+                ORDER BY u.user_id
             ;"""
         users = self.base_get_all(sql)
         return users

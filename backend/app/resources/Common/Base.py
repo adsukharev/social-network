@@ -5,7 +5,8 @@ from db.connection import start_connection, close_connection
 
 class Base(Resource):
 
-    def base_get_one(self, sql, record):
+    @staticmethod
+    def base_get_one(sql, record):
         try:
             connection, cursor = start_connection()
             cursor.execute(sql, record)
@@ -15,7 +16,8 @@ class Base(Resource):
         except Exception as e:
             print(e)
 
-    def base_get_all(self, sql):
+    @staticmethod
+    def base_get_all(sql):
         try:
             connection, cursor = start_connection()
             cursor.execute(sql)
@@ -25,7 +27,8 @@ class Base(Resource):
         except Exception as e:
             print(e)
 
-    def base_get_limited_all(self, sql, record):
+    @staticmethod
+    def base_get_limited_all(sql, record):
         try:
             connection, cursor = start_connection()
             cursor.execute(sql, record)
@@ -35,7 +38,8 @@ class Base(Resource):
         except Exception as e:
             print(e)
 
-    def base_write(self, sql, record):
+    @staticmethod
+    def base_write(sql, record):
         try:
             connection, cursor = start_connection()
             cursor.execute(sql, record)
@@ -45,7 +49,8 @@ class Base(Resource):
             print(e)
             return "error"
 
-    def base_write_many(self, sql, record):
+    @staticmethod
+    def base_write_many(sql, record):
         try:
             connection, cursor = start_connection()
             cursor.executemany(sql, record)
