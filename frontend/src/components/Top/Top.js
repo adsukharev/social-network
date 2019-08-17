@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {Form, Card, Select, Image, Icon} from 'semantic-ui-react';
 import axios from 'axios';
-import CardContent from "semantic-ui-react/dist/commonjs/views/Card/CardContent";
 
 export default function Top() {
 const [isLoad, setLoad] = useState(false);
