@@ -14,7 +14,7 @@ export default function Main() {
     return(
         <Fragment>
             <Switch>
-                <Route path={'/top'} render={Top}/>
+                <Route path={'/top'} component={Top}/>
                 <Route path={'/notifications'} component={Notifications}/>
                 <Route path={'/match'} component={Match}/>
                 <Route path={'/recommendations'} component={Recommendations}/>

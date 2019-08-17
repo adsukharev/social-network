@@ -40,16 +40,26 @@ const orientationOptions = [
 export default function ChangeProfileModal(props) {
   const [user, setUser] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
-  useEffect(() =>{
+  useEffect(() => {
     const getUserData = async () => {
-      await axios('http://localhost/5000/api/users/1').then((userData) =>
-        setUser(userData)
-      ).catch(e => {
-        console.log(e);
+      await axios('http://localhost:5000/api/users/1', {
       })
+        .then(data => {
+          console.log(data.data);
+          setUser(data.data);
+          setIsLoaded(true);
+        });
+        // .then(userData => {
+        //
+        //   console.log(userData);
+        //
+        // }
+      // ).catch(e => {
+      //   console.log(e);
+      // })
     };
     getUserData();
-  });
+  }, []);
 
   return (
     isLoaded &&
@@ -175,7 +185,7 @@ export default function ChangeProfileModal(props) {
             <p>{ user.city }</p>
             <p>{user.tags}</p>
             <p>{ user.bio } </p>
-            <p><b>{ user.rating.length }</b></p>
+            {/*<p><b>{ user.rating.length }</b></p>*/}
           </Grid.Column>
         </Grid.Row>
       </Grid>
@@ -184,13 +194,13 @@ export default function ChangeProfileModal(props) {
         <Form.Field control={Button}>
           <Statistic size='tiny' color='green'>
             <Statistic.Label>Просмотры</Statistic.Label>
-            <Statistic.Value><b>{ user.history.length }</b></Statistic.Value>
+            {/*<Statistic.Value><b>{ user.history.length }</b></Statistic.Value>*/}
           </Statistic>
         </Form.Field>
         <Form.Field control={Button}>
           <Statistic size='tiny' color='red'>
             <Statistic.Label>Лайки</Statistic.Label>
-            <Statistic.Value><b>{ user.likes.likes }</b></Statistic.Value>
+            {/*<Statistic.Value><b>{ user.likes.likes }</b></Statistic.Value>*/}
           </Statistic>
         </Form.Field>
       </Form.Group>

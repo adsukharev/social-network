@@ -7,12 +7,10 @@ import Registration from "../Auth/Registration";
 
 export default function Skeleton() {
     const [activeItem, setActiveItem] = useState('Моя страница');
+
     const handleItemClick = (e, {name}) => setActiveItem(name);
     return (
         <Router>
-
-          <Route exact path={'/signin'} component={Login} />
-          <Route exact path={'/signup'} component={Registration} />
           <Route path={'/'} render={ () => {
             return(
             <Fragment>

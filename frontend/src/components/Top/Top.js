@@ -1,77 +1,45 @@
-import React from 'react'
-import {Form, Card, Select, Image, Icon} from 'semantic-ui-react'
+import React, { useState, useEffect } from 'react';
+import {Form, Card, Select, Image, Icon} from 'semantic-ui-react';
+import axios from 'axios';
+import CardContent from "semantic-ui-react/dist/commonjs/views/Card/CardContent";
 
-const sortOptions = [
-    {key: 'tags', text: 'tags', value: 'tags'},
-    {key: 'age', text: 'age', value: 'age'},
-    {key: 'rating', text: 'rating', value: 'rating'},
-    {key: 'city', text: 'city', value: 'city'},
-]
+export default function Top() {
+const [isLoad, setLoad] = useState(false);
+const [topArray, setTopArray] = useState([]);
+useEffect(() => {
+   axios('http://localhost:5000/api/rating')
+     .then((data) => {
+         setTopArray(data.data);
+         setLoad(true);
+         console.log(data)
+     })
+}, []);
 
-const src = 'http://img.dailymail.co.uk/i/pix/2007/07_03/nasa1R3107_1000x1000.jpg';
-
-export default function sortSelect() {
+const rating = topArray.map((user) => {
+      return (
+<Card key={user.user_id}>
+    <Image src={user.avatar}
+    />
+    <Card.Content>
+        <Card.Header>
+            {user.login}
+        </Card.Header>
+        <Card.Meta>
+            {user.user_name}
+        </Card.Meta>
+        <Card.Description>
+            {user.sumlikes}
+        </Card.Description>
+    </Card.Content>
+</Card>
+      );
+  }
+);
     return (
-        <Form>
-            <Form.Group unstackable widths={4}>
-                <Form.Field/>
-                <Select placeholder='Sort' control={Select} options={sortOptions}/>
-            </Form.Group>
-
-            <Form.Group unstackable widths={4}>
-                <Form.Field/>
-                <Card.Group itemsPerRow={5}>
-                    <Card color='red' image={src}/>
-
-                    <Card>
-                        <Image
-                            src='http://dusha.center/system/articles/images/000/000/304/medium/36860398_1954448124587546_4498033461424029696_n.jpg?1533477225'
-                            wrapped
-                            ui={false}/>
-                        <Card.Content>
-                            <Card.Header>Tolik</Card.Header>
-                            <Card.Meta>
-                                <span className='date'>92</span>
-                            </Card.Meta>
-                            <Card.Description>
-                                Ufa city
-                            </Card.Description>
-                        </Card.Content>
-                        <Card.Content extra>
-                            <a><Icon name='top'/> Top 666</a>
-                        </Card.Content>
-                        <Card.Content extra>
-                            <a><Icon name='like'/>22 Likes</a>
-                        </Card.Content>
-                    </Card>
-
-                    <Card>
-                        <Image src='https://avatarko.ru/img/kartinka/1/pozitiv_smailik.jpg' wrapped
-                               ui={false}/>
-                        <Card.Content>
-                            <Card.Header>Ne Tolik</Card.Header>
-                            <Card.Meta>
-                                <span className='date'>22</span>
-                            </Card.Meta>
-                            <Card.Description>
-                                UEFA city
-                            </Card.Description>
-                        </Card.Content>
-                        <Card.Content extra>
-                            <a><Icon name='top'/> Top 1</a>
-                        </Card.Content>
-                        <Card.Content extra>
-                            <a><Icon name='like'/>922 Likes</a>
-                        </Card.Content>
-                    </Card>
-
-                    <Card color='orange' image={src}/>
-                    <Card color='yellow' image={src}/>
-                    <Card color='olive' image={src}/>
-
-                </Card.Group>
-            </Form.Group>
-        </Form>
-    )
-        ;
+        isLoad &&  <Card.Group style={{
+            margin: '20px 20px 20px 157px',
+        }} itemsPerRow={5}>
+                {rating}
+          </Card.Group>
+    );
 }

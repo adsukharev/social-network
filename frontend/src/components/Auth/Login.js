@@ -29,7 +29,7 @@ export default function Login(props) {
                 Authorization: `Bearer ${token}`,
             };
         }
-        fetch('http://localhost:3020/resource/secret', { headers }).then((res) => {
+        fetch('http://localhost:5000/api/secret', { headers }).then((res) => {
             if (res.status === 200) {
                 goHome();
             }
