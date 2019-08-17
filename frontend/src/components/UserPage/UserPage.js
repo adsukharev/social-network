@@ -40,7 +40,6 @@ const orientationOptions = [
 export default function ChangeProfileModal(props) {
   const [user, setUser] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
-<<<<<<< HEAD
   useEffect(() => {
     const getUserData = async () => {
       await axios('http://localhost:5000/api/users/1', {
@@ -61,18 +60,6 @@ export default function ChangeProfileModal(props) {
     };
     getUserData();
   }, []);
-=======
-  useEffect(() =>{
-    const getUserData = async () => {
-      await axios('http://localhost/5000/api/users/1').then((userData) =>
-        setUser(userData)
-      ).catch(e => {
-        console.log(e);
-      })
-    };
-    getUserData();
-  });
->>>>>>> d86433e5211550c755c2b66147aba6691bcc0a0c
 
   return (
     isLoaded &&
@@ -198,11 +185,8 @@ export default function ChangeProfileModal(props) {
             <p>{ user.city }</p>
             <p>{user.tags}</p>
             <p>{ user.bio } </p>
-<<<<<<< HEAD
+
             {/*<p><b>{ user.rating.length }</b></p>*/}
-=======
-            <p><b>{ user.rating.length }</b></p>
->>>>>>> d86433e5211550c755c2b66147aba6691bcc0a0c
           </Grid.Column>
         </Grid.Row>
       </Grid>
@@ -211,21 +195,13 @@ export default function ChangeProfileModal(props) {
         <Form.Field control={Button}>
           <Statistic size='tiny' color='green'>
             <Statistic.Label>Просмотры</Statistic.Label>
-<<<<<<< HEAD
             {/*<Statistic.Value><b>{ user.history.length }</b></Statistic.Value>*/}
-=======
-            <Statistic.Value><b>{ user.history.length }</b></Statistic.Value>
->>>>>>> d86433e5211550c755c2b66147aba6691bcc0a0c
           </Statistic>
         </Form.Field>
         <Form.Field control={Button}>
           <Statistic size='tiny' color='red'>
             <Statistic.Label>Лайки</Statistic.Label>
-<<<<<<< HEAD
             {/*<Statistic.Value><b>{ user.likes.likes }</b></Statistic.Value>*/}
-=======
-            <Statistic.Value><b>{ user.likes.likes }</b></Statistic.Value>
->>>>>>> d86433e5211550c755c2b66147aba6691bcc0a0c
           </Statistic>
         </Form.Field>
       </Form.Group>
