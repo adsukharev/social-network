@@ -2,10 +2,12 @@ from flask import request
 from app.resources.Common.UsersCommon import UsersCommon
 from app.resources.Profile.Images import Images
 from app.resources.Profile.Tags import Tags
+from flask_jwt_extended import jwt_required
 
 
 class UserId(UsersCommon):
 
+    @jwt_required
     def get(self, user_id):
         sql = """
                 SELECT  u.*, r.sumLikes, l.likes, h.history, t.tags
@@ -35,12 +37,14 @@ class UserId(UsersCommon):
         user = self.base_get_one(sql, record)
         return user
 
+    @jwt_required
     def delete(self, user_id):
         sql = """DELETE from users WHERE user_id = %s"""
         record = (user_id,)
         res = self.base_write(sql, record)
         return res
 
+    @jwt_required
     def put(self, user_id):
         req_params = dict(request.form)
         params = self.__manage_user_params(req_params, user_id)

@@ -1,8 +1,10 @@
 from app.resources.Common.Base import Base
+from flask_jwt_extended import jwt_required
 
 
 class Rating(Base):
 
+    @jwt_required
     def get(self):
         sql = '''   SELECT u.user_id, u.login, u.user_name, u.avatar[1], r.sumLikes
                     FROM users u

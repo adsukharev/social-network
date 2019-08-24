@@ -3,6 +3,7 @@ import os
 import base64
 from werkzeug.utils import secure_filename
 from app.resources.Common.Base import Base
+from flask_jwt_extended import jwt_required
 
 
 class Images(Base):
@@ -75,6 +76,7 @@ class Images(Base):
     # def get(self):
     #     get_sql = "SELECT user_id, avatar[1] FROM users WHERE user_id = 2;"
 
+    @jwt_required
     def delete(self, image_id):
         user_id = session['user_id']
         sql = "UPDATE users SET avatar = array_remove(avatar, avatar[%s]) WHERE user_id = %s;"

@@ -1,8 +1,10 @@
 from app.resources.Common.UsersCommon import UsersCommon
+from flask_jwt_extended import jwt_required
 
 
 class UserLogin(UsersCommon):
 
+    @jwt_required
     def get(self, login):
         sql = """
                 SELECT  u.*, r.sumLikes, l.likes, h.history, t.tags

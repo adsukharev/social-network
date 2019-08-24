@@ -1,10 +1,12 @@
 from app.resources.Common.Base import Base
 import psycopg2.errors
 from flask import session
+from flask_jwt_extended import jwt_required
 
 
 class Tags(Base):
 
+    @jwt_required
     def get(self):
         sql = """SELECT tag_name from tags;"""
         tags = self.base_get_all(sql)

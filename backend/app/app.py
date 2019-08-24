@@ -37,7 +37,7 @@ app.config.from_object(Config)
 app.register_blueprint(api_bp, url_prefix='/api')
 app.config.update(mail_settings)
 # app.secret_key = b'dude this is a terrible key'
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 jwt = JWTManager(app)
 socketio = SocketIO(app)
 

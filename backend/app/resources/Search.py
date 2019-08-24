@@ -1,6 +1,7 @@
 from app.resources.Users.UserId import UserId
 from app.resources.Common.Base import Base
 from flask import request, session
+from flask_jwt_extended import jwt_required
 
 
 class Search(Base):
@@ -20,6 +21,7 @@ class Search(Base):
                     ;"""
 
     # recommendation
+    @jwt_required
     def get(self):
         user_obj = UserId()
         user = dict(user_obj.get(session['user_id']))
@@ -90,6 +92,7 @@ class Search(Base):
         return res
 
     # search with user's input
+    @jwt_required
     def post(self):
         # todo: block condition
         sql_condition = self.__make_sql()

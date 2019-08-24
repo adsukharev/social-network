@@ -1,8 +1,8 @@
 <template>
 
-    <div class="collapse navbar-collapse">
-      <div class="navbar-nav">
-        <a class="nav-item nav-link" href="/profile">Profile <span class="sr-only">(current)</span></a>
+    <div class="navbar-expand navbar-dark">
+      <div class="navbar-nav ">
+        <a class="nav-item nav-link" href="/profile">Profile</a>
         <a class="nav-item nav-link" href="/search">Search</a>
         <a class="nav-item nav-link" href="/rating">Rating</a>
         <a class="nav-item nav-link" href="/logout">Log out</a>
@@ -18,6 +18,5 @@
 </script>
 
 <style>
-
 
 </style>

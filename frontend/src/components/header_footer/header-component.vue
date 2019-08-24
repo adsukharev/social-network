@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar navbar-expand-lg bg-header">
-    <a class="navbar-brand" style="font-weight: bold" href="#">Matcha</a>
+    <a class="navbar-brand" href="#">Matcha</a>
     <header-logged v-if="user"></header-logged>
     <header-not-logged v-else></header-not-logged>
   </nav>
@@ -29,6 +29,7 @@
   }
   a {
     color: white;
+    font-weight: bold;
   }
 
 </style>

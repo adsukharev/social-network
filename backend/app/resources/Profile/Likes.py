@@ -2,10 +2,12 @@ from app.resources.Common.Base import Base
 from flask import session
 from app.resources.Rating import Rating
 from app.resources.Chat.Chats import Chats
+from flask_jwt_extended import jwt_required
 
 
 class Likes(Base):
 
+    @jwt_required
     def post(self, to_like_id):
         checker = self.__check_avatar()
         if checker != 'ok':
@@ -30,6 +32,7 @@ class Likes(Base):
         # todo:notificate
         return res
 
+    @jwt_required
     def delete(self, to_like_id):
         checker = self.__check_avatar()
         if checker != 'ok':

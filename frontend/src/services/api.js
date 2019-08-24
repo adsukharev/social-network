@@ -4,6 +4,6 @@ import axios from 'axios';
 const host = process.env.HOST;
 export default () => {
     return axios.create({
-        baseURL: `${host}:3000/api/`
+        baseURL: `http://${host}:5000/api/`
     });
 }
