@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import HelloWorld from '@/components/HelloWorld';
-import Login from '@/components/login-component';
+import Profile from '@/components/profile-component';
+import Forgotten from '@/components/forgotten-component';
 
 Vue.use(Router);
 
@@ -9,13 +9,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'index',
-      component: HelloWorld,
+      name: 'Profile',
+      component: Profile,
     },
     {
-      path: '/login',
-      name: 'Login',
-      component: Login,
+      path: '/forgotten',
+      name: 'Forgotten',
+      component: Forgotten,
     },
   ],
   mode: 'history',

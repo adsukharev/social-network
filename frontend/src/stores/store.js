@@ -4,7 +4,8 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    loggedUser: {}
+    loggedUser: {},
+    forgottenPass: false,
   },
   mutations: {
     loginUser (state, newUserData) {
@@ -12,7 +13,13 @@ const store = new Vuex.Store({
     },
     logoutUser(state) {
       state.loggedUser = {}
-    }
+    },
+    forgottenChange(state){
+      if (state.forgottenPass)
+        state.forgottenPass = false;
+      else
+        state.forgottenPass = true;
+    },
   },
   getters: {
     checkLogged: state => {

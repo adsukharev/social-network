@@ -1,0 +1,54 @@
+<template>
+  <div>
+    <div class="row pt-3">
+      <div class="col-4"></div>
+      <div class="col">
+        <form @submit.prevent>
+
+          <h3>Create an account</h3>
+          <div class="form-group">
+            <input type="email" v-model="loginData.email" class="form-control" id="emailInput" placeholder="Email">
+          </div>
+          <div class="form-group">
+            <input type="text" v-model="loginData.login" class="form-control" id="loginInput" placeholder="Login">
+          </div>
+          <div class="form-group">
+            <input type="text" v-model="loginData.user_name" class="form-control" id="nameInput" placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <input type="password" v-model="loginData.password" class="form-control" id="passwordInput"
+                   placeholder="Password">
+          </div>
+          <button type="submit" class="btn btn-success" @click="signUp">Sign Up</button>
+
+        </form>
+      </div>
+      <div class="col-4"></div>
+    </div>
+  </div>
+</template>
+
+<script>
+  import RegistartionService from '@/services/Registration.js'
+
+  export default {
+    name: 'LoginComponent',
+    data() {
+      return {
+        loginData: {
+          email: '',
+          login: '',
+          user_name: '',
+          password: '',
+        }
+      };
+    },
+    methods: {
+      async signUp() {
+        const res = await RegistartionService.signUp(this.loginData);
+        this.$toasted.info(res);
+      }
+    },
+  };
+</script>
+

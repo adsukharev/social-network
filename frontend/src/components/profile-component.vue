@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div>
     <h1></h1>
   </div>
 </template>
@@ -8,7 +8,7 @@
   import {mapState, mapGetters, mapMutations} from 'vuex';
 
   export default {
-    name: 'HelloWorld',
+    name: 'Profile',
     data() {
       return {
         msg: '',
