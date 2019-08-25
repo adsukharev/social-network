@@ -1,6 +1,6 @@
 <template>
-  <nav class="navbar fixed-bottom navbar-light bg-faded">
-    <a class="navbar-brand" href="#">made by Andrei Sukharev</a>
+  <nav class="navbar fixed-bottom navbar-light bg-faded justify-content-end">
+    <p>made by Andrei Sukharev</p>
   </nav>
 </template>
 
@@ -9,4 +9,8 @@
     name: "FooterComponent"
   }
 </script>
+
+<style scoped>
+
+</style>
 

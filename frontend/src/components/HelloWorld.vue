@@ -1,19 +1,26 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
+    <h1></h1>
   </div>
 </template>
 
 <script>
-  const host = process.env.HOST;
+  import {mapState, mapGetters, mapMutations} from 'vuex';
 
   export default {
     name: 'HelloWorld',
     data() {
       return {
-        msg: host,
+        msg: '',
       };
     },
+    computed: {
+      ...mapGetters([
+        'checkLogged'
+      ])
+    },
+    methods: {},
+
   };
 </script>
 
