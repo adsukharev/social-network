@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './Auth.css';
 import { Link } from 'react-router-dom';
-import serializeJSON from '../serializeJSON';
 import axios from 'axios';
+import api from "../../api";
 axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
 export default function Registration(props) {
@@ -16,36 +16,23 @@ export default function Registration(props) {
   const goHome = () => {
     setLogedIn(true);
   };
-
-
   const sendRegistrationData = async () => {
     if (email !== '' && password !== '' && password2 !== '' && name !== '' && login) {
       if (password2 !== password) {
         alert('Пароли не совпадают!');
       } else {
-        await fetch('http://localhost:5000/api/signup', {
-          mode: 'no-cors',
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
+        await api().post('signup', {
           email: email.toLowerCase(),
           password,
           user_name: name,
           login
-        }),
         })
-          .then(res => res.json())
-          .then(async (data) => {
-            console.log(data);
-            // if (!data.token) {
-            //   alert(data.err);
-            // } else {
-            //   await localStorage.setItem('token', data.token);
-            //   goHome();
-            // }
+          .then(res => {
+            if (res.status === 200) {
+              alert("Письмо с кодом подтверждения было отправлено на Вашу почту!");
+            } else {
+              alert('Что-то пошло не так!');
+            }
           })
           .catch((e) => {
             alert(e);
@@ -62,18 +49,21 @@ export default function Registration(props) {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    let headers = {};
-    if (token) {
-      headers = {
-        Authorization: `Bearer ${token}`,
-      };
-    }
-    fetch('http://localhost:3020/resource/secret', { headers }).then((res) => {
-      if (res.status === 200) {
-        goHome();
+    const checkLogin = async () => {
+      const token = localStorage.getItem('token');
+      let headers = {};
+      if (token) {
+        headers = {
+          Authorization: `Bearer ${token}`,
+        };
       }
-    });
+      await axios('http://localhost:5000/api/secret', {headers}).then((res) => {
+        if (res.status === 200) {
+          goHome();
+        }
+      });
+    };
+    checkLogin();
   }, []);
   return (
     <form onSubmit={handleSubmit} className="DivForAuthForm">

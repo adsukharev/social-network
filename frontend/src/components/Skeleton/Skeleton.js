@@ -4,6 +4,7 @@ import Main from "../Main/Main"
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Login from "../Auth/Login";
 import Registration from "../Auth/Registration";
+import UserContextProvider from "../../contexts/UserContext";
 
 export default function Skeleton() {
     const [activeItem, setActiveItem] = useState('Моя страница');
@@ -11,6 +12,7 @@ export default function Skeleton() {
     const handleItemClick = (e, {name}) => setActiveItem(name);
     return (
         <Router>
+          <UserContextProvider>
           <Route path={'/'} render={ () => {
             return(
             <Fragment>
@@ -18,6 +20,7 @@ export default function Skeleton() {
               <Main  activeItem={activeItem}/>
             </Fragment>)
           }} />
+          </UserContextProvider>
         </Router>
     )
 }
