@@ -5,15 +5,13 @@
       <input class="form-control mr-sm-2" v-model="loginData.password" type="password" placeholder="Password">
       <button class="btn btn-primary" type="submit" @click="sendLogin()">Log in</button>
       <router-link to="/" exact @click.native="forgottenTrue">Forgotten password?</router-link>
-<!--      <a href="/#" @submit.prevent @click="forgottenTrue">Forgotten password?</a>-->
-
     </form>
   </div>
 </template>
 
 <script>
   import RegistartionService from '@/services/Registration.js'
-  import { mapState, mapMutations } from 'vuex';
+  import {mapState, mapMutations} from 'vuex';
 
   export default {
     name: "HeaderNotLogged",
@@ -22,7 +20,12 @@
         loginData: {
           login: 'test1',
           password: '123Wertyq',
-          token: ''
+          latitude: '',
+          longitude: ''
+        },
+        user: {
+          login: 'test1',
+          token: '',
         }
 
       };
@@ -31,17 +34,35 @@
       ...mapMutations([
         'loginUser', 'forgottenTrue', 'forgottenFalse'
       ]),
+      async askLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(this.getLocation);
+        }
+      },
+      getLocation(position) {
+        this.loginData.latitude = position.coords.latitude;
+        this.loginData.longitude = position.coords.longitude;
+      },
+      fillUser(userData) {
+        this.user.token = userData['access_token'];
+        this.user.id = userData['user_id'];
+        this.user.login = this.loginData.login;
+        this.loginUser(this.user);
+      },
+      async changePath(path){
+        if (window.location.pathname !== path){
+          await this.$router.push(path)
+        }
+      },
       async sendLogin() {
         const res = await RegistartionService.signIn(this.loginData);
         if (res.message === "ok") {
           this.forgottenFalse();
-          this.loginData.token = res['access_token'];
-          this.loginUser(this.loginData);
-          this.$router.push({name: 'profile'})
-
+          await this.askLocation();
+          this.fillUser(res);
+          this.changePath('/profile')
         } else {
           this.$toasted.error(res.message);
-
         }
       }
     },

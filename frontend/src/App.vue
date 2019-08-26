@@ -31,6 +31,11 @@
       LoginComponent,
       ForgottenComponent
     },
+    // data() {
+    //   return {
+    //     kek: window.location.pathname
+    // };
+    // },
     computed: {
       ...mapGetters([
         'checkLogged'

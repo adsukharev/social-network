@@ -21,7 +21,7 @@
                    placeholder="Password">
           </div>
           <button type="submit" class="btn btn-success btn-block" @click="signUp">Sign Up</button>
-          <button type="submit" class="btn facebook btn-block" @click="signUp">Continue with Facebook</button>
+          <button type="submit" class="btn facebook btn-block" @click="oauth">Continue with Facebook</button>
 
 
         </form>
@@ -50,6 +50,9 @@
       async signUp() {
         const res = await RegistartionService.signUp(this.loginData);
         this.$toasted.info(res);
+      },
+      async oauth() {
+      //  todo: connect
       }
     },
   };

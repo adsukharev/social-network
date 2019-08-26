@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import SignUp from '../components/loginPage/signup-component';
 import Forgotten from '../components/loginPage/forgotten-component';
-import Profile from '../components/profile-component';
+import Profile from '../components/Profile/profile-component';
 
 Vue.use(Router);
 
