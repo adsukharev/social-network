@@ -4,7 +4,8 @@
       <header-component></header-component>
     </header>
     <main>
-      <router-view v-if="forgottenPass"/>
+      <router-view v-if="checkLogged"/>
+      <forgotten-component v-else-if="forgottenPass"></forgotten-component>
       <login-component v-else></login-component>
     </main>
     <footer>
@@ -17,21 +18,19 @@
 <script>
   import HeaderComponent from './components/header_footer/header-component.vue';
   import FooterComponent from './components/header_footer/footer-component.vue';
-  import LoginComponent from './components/signup-component.vue';
-  import { mapGetters, mapState } from 'vuex';
+  import LoginComponent from './components/loginPage/signup-component.vue';
+  import ForgottenComponent from './components/loginPage/forgotten-component.vue';
+
+  import {mapGetters, mapState} from 'vuex';
 
   export default {
     name: 'App',
     components: {
       HeaderComponent,
       FooterComponent,
-      LoginComponent
+      LoginComponent,
+      ForgottenComponent
     },
-    // data() {
-    //   return {
-    //     forgottenPass: false,
-    //   }
-    // },
     computed: {
       ...mapGetters([
         'checkLogged'

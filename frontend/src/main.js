@@ -5,7 +5,7 @@ import Vue from 'vue';
 // Vue.use(Vuex);
 import store from './stores/store'
 import App from './App';
-import router from './router';
+import router from './router/router';
 import Toasted from 'vue-toasted';
 
 Vue.config.productionTip = false;

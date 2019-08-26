@@ -8,7 +8,7 @@
 
 <script>
   import HeaderLogged from './header-logged.vue'
-  import HeaderNotLogged from './header-not-logged.vue'
+  import HeaderNotLogged from '../loginPage/header-not-logged.vue'
   import { mapGetters } from 'vuex';
 
   export default {

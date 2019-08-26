@@ -14,11 +14,11 @@ const store = new Vuex.Store({
     logoutUser(state) {
       state.loggedUser = {}
     },
-    forgottenChange(state){
-      if (state.forgottenPass)
-        state.forgottenPass = false;
-      else
+    forgottenTrue(state){
         state.forgottenPass = true;
+    },
+    forgottenFalse(state){
+        state.forgottenPass = false;
     },
   },
   getters: {

@@ -13,13 +13,16 @@
             <input type="text" v-model="loginData.login" class="form-control" id="loginInput" placeholder="Login">
           </div>
           <div class="form-group">
-            <input type="text" v-model="loginData.user_name" class="form-control" id="nameInput" placeholder="Your name">
+            <input type="text" v-model="loginData.user_name" class="form-control" id="nameInput"
+                   placeholder="Your name">
           </div>
           <div class="form-group">
             <input type="password" v-model="loginData.password" class="form-control" id="passwordInput"
                    placeholder="Password">
           </div>
-          <button type="submit" class="btn btn-success" @click="signUp">Sign Up</button>
+          <button type="submit" class="btn btn-success btn-block" @click="signUp">Sign Up</button>
+          <button type="submit" class="btn facebook btn-block" @click="signUp">Continue with Facebook</button>
+
 
         </form>
       </div>
@@ -51,4 +54,11 @@
     },
   };
 </script>
+
+<style scoped>
+  .facebook {
+    color: white;
+    background: rgb(63, 88, 146);
+  }
+</style>
 
