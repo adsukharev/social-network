@@ -57,7 +57,7 @@ class UserId(UsersCommon):
         res = self.handle_tags(checked_params)
         image_obj = Images()
         result_image = image_obj.handle_images(request.files, user_id)
-        if result_image != "ok" :
+        if result_image != "ok":
             return result_image
         return res
 

@@ -26,17 +26,18 @@ class UsersService {
     }
 
     static addUser(client, token) {
-        return  api().post('clients', client, { headers: {"Authorization" : `Bearer ${token}`} });
+        return  api().post('users', client, { headers: {"Authorization" : `Bearer ${token}`} });
     }
 
     static deleteUser(id, token) {
-        return api().delete(`clients/${id}`);
+        return api().delete(`users/${id}`);
     }
 
-    // static updateUser(id, data, token) {
-    //     return api().put(`clients/${id}`, data, { headers: {"Authorization" : `Bearer ${token}`,
-    //                                                                     'Content-Type' : 'multipart/form-data'}});
-    // }
+    static updateUser(id, data, token) {
+        // return api().put(`clients/${id}`, data, { headers: {"Authorization" : `Bearer ${token}`,
+        //                                                                 'Content-Type' : 'multipart/form-data'}});
+    return api().put(`users/${id}`, data, { headers: {"Authorization" : `Bearer ${token}`}});
+    }
 
 }
 
