@@ -43,7 +43,8 @@ class SignIn(UsersCommon):
         access_token = create_access_token(identity=session['user_id'], expires_delta=False)
         result_obj = {
             'message': "ok",
-            'access_token': access_token
+            'access_token': access_token,
+            'user_id': session['user_id']
         }
         return result_obj
 

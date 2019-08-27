@@ -49,7 +49,8 @@ Example for POST:
  ```
  {
     "message": "ok",
-    "access_token": "eyJ0eXAiOiJK"
+    "access_token": "eyJ0eXAiOiJK",
+    'user_id': "32"
 }
 ```
 

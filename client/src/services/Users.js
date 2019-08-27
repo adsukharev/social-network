@@ -33,9 +33,11 @@ class UsersService {
         return api().delete(`clients/${id}`);
     }
 
-    static updateUser(id, data, token) {
-        return api().put(`clients/${id}`, data, { headers: {"Authorization" : `Bearer ${token}`} });
-    }
+    // static updateUser(id, data, token) {
+    //     return api().put(`clients/${id}`, data, { headers: {"Authorization" : `Bearer ${token}`,
+    //                                                                     'Content-Type' : 'multipart/form-data'}});
+    // }
+
 }
 
 export default UsersService;

@@ -37,7 +37,6 @@ class UserId(UsersCommon):
         user = self.base_get_one(sql, record)
         return user
 
-    @jwt_required
     def delete(self, user_id):
         sql = """DELETE from users WHERE user_id = %s"""
         record = (user_id,)

@@ -5,7 +5,7 @@ from flask_jwt_extended import jwt_required
 
 class Users(Base):
 
-    @jwt_required
+    # @jwt_required
     def get(self):
         sql = """
                 SELECT  u.*, r.sumLikes, l.likes, h.history, t.tags
