@@ -19,7 +19,6 @@ const UserContextProvider = (props) => {
       },
     })
       .then(res => {
-        console.log(res.data);
         setUserInfo(res.data);
         setIsLoaded(true);
       });

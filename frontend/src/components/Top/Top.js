@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {Form, Card, Select, Image, Icon} from 'semantic-ui-react';
 import axios from 'axios';
+import api from "../../api";
+import {UserContext} from "../../contexts/UserContext";
 
 export default function Top() {
+  const {userInfo, isLoaded} = useContext(UserContext);
 const [isLoad, setLoad] = useState(false);
 const [topArray, setTopArray] = useState([]);
 useEffect(() => {
-   axios('http://localhost:5000/api/rating')
+   api().get('http://localhost:5000/api/rating')
      .then((data) => {
          setTopArray(data.data);
          setLoad(true);
@@ -35,7 +38,7 @@ const rating = topArray.map((user) => {
   }
 );
     return (
-        isLoad &&  <Card.Group style={{
+      isLoaded && userInfo && <Card.Group style={{
             margin: '20px 20px 20px 157px',
         }} itemsPerRow={5}>
                 {rating}

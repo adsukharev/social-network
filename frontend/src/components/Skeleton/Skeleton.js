@@ -6,7 +6,7 @@ import Login from "../Auth/Login";
 import Registration from "../Auth/Registration";
 import UserContextProvider from "../../contexts/UserContext";
 
-export default function Skeleton() {
+export default function Skeleton(props) {
     const [activeItem, setActiveItem] = useState('Моя страница');
 
     const handleItemClick = (e, {name}) => setActiveItem(name);
@@ -16,7 +16,7 @@ export default function Skeleton() {
           <Route path={'/'} render={ () => {
             return(
             <Fragment>
-              <MenuBar  setActiveItem={setActiveItem} activeItem={activeItem} handleItemClick={handleItemClick}/>
+              <MenuBar {...props} setActiveItem={setActiveItem} setLoggedIn={props.setLoggedIn} isLoggedIn={props.isLoggedIn} activeItem={activeItem} handleItemClick={handleItemClick}/>
               <Main  activeItem={activeItem}/>
             </Fragment>)
           }} />

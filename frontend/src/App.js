@@ -8,7 +8,7 @@ import Registration from './components/Auth/Registration';
 import history from './history';
 
 function App() {
-  const [isLoggedIn, setLoggedIn] = useState(true);
+  const [isLoggedIn, setLoggedIn] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -38,7 +38,7 @@ function App() {
                 <Switch>
                   <Route path="/login" render={() => (!isLoggedIn ? <Login setLogedIn={setLoggedIn} /> : <Redirect to="/" />)} />
                   <Route path="/registration" render={() => (!isLoggedIn ? <Registration setLogedIn={setLoggedIn} /> : <Redirect to="/" />)} />
-                  <Route path="/" render={() => (isLoggedIn ? <Skeleton /> : <Redirect to="/login" />)} />
+                  <Route path="/" render={() => (isLoggedIn ? <Skeleton setLoggedIn={setLoggedIn} isLoggedIn={isLoggedIn} /> : <Redirect to="/login" />)} />
                 </Switch>
         </div>
         </Router>

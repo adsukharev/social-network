@@ -24,8 +24,8 @@ export default function Login(props) {
         }).then(data => {
             console.log(data);
             if (data.data.message === 'ok') {
-                props.setLogedIn(true);
                 localStorage.setItem('token', data.data.access_token);
+                props.setLogedIn(true);
             }
         });
     };
