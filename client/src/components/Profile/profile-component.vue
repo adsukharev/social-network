@@ -2,7 +2,7 @@
     <div>
         <div class="row">
             <div class="col-4">
-                <avatar-component :avatar="user.avatar"></avatar-component>
+                <avatar-component :avatar="user.avatar" @addPhoto="getUser"></avatar-component>
             </div>
             <div class="col">
                 <info-component :user="user"></info-component>

@@ -86,7 +86,7 @@ class Images(Base):
             image_64_encode = base64.encodebytes(image_read)
         return image_64_encode
 
-    @jwt_required
+    # @jwt_required
     def delete(self, image_id):
         user_id = session['user_id']
         sql = "UPDATE users SET avatar = array_remove(avatar, avatar[%s]) WHERE user_id = %s;"

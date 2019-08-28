@@ -4,9 +4,10 @@
             <img :src="mainPhoto" style="width:128px;height:150px;">
         </div>
 
-        <form @submit.prevent class="form-inline">
-            <input id="avatarinput" class="btn-sm" type="file" ref="myFile" accept="image/png, image/jpeg" @change="getAvatar">
-            <button class="btn btn-success btn-block" @click="sendPhoto">Add photo</button>
+        <form @submit.prevent class="">
+            <input id="avatarinput" class="btn-sm" type="file" ref="myFile" accept="image/png, image/jpeg"
+                   @change="getAvatar">
+            <button class="btn btn-success btn-block" @click="addPhoto">Add photo</button>
         </form>
     </div>
 </template>
@@ -27,13 +28,13 @@
             };
         },
         computed: {
+            ...mapState([
+                'loggedUser',
+            ]),
         },
         watch: {
             avatar: function (photos) {
-                // const path = '/matcha/client/src/';
-                // const path = '/new/';
                 this.mainPhoto = photos[0];
-                // this.mainPhoto = photos[0];
             },
         },
         methods: {
@@ -42,9 +43,16 @@
                 const file = this.$refs.myFile.files[0];
                 this.data.append('avatar', file);
             },
-            async sendPhoto() {
-                await UserService.updateUser(this.loggedUser.id, this.data, this.loggedUser.token)
-            //    todo: event reload pictures
+            async addPhoto() {
+                if (this.avatar.length <= 5) {
+                    await UserService.updateUser(this.loggedUser.id, this.data, this.loggedUser.token);
+                    this.$refs.myFile.value = '';
+                    this.$emit('addPhoto')
+                }
+                else {
+                    this.$toasted.info("Should be not more than 5 pictures")
+                }
+
             }
         },
     }
@@ -56,6 +64,7 @@
         text-align: center;
         padding: 20px;
     }
+
     img {
         width: 100%;
         height: 100%;

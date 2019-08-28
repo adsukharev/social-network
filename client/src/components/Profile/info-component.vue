@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col">
                 <hr>
-                 <h6 class="headers_profile">Main Information</h6>
+                <h6 class="headers_profile">Main Information</h6>
             </div>
         </div>
 
@@ -22,13 +22,17 @@
                 <p>Age</p>
                 <p>Sex</p>
                 <p>Preferences</p>
+                <p>Tags</p>
                 <p>Biography</p>
+
             </div>
             <div class="col">
                 <p>{{user.age}}</p>
                 <p>{{user.sex}}</p>
                 <p>{{user.preferences}}</p>
+                <p>{{user.tags}}</p>
                 <p>{{user.bio}}</p>
+
             </div>
         </div>
 
