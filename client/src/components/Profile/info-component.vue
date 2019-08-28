@@ -3,10 +3,10 @@
 
         <div class="row">
             <div class="col">
-                {{user.user_name}}
+                {{userProfile.user_name}}
             </div>
             <div class="col">
-                <p>{{user.online}}</p>
+                <p>{{userProfile.online}}</p>
             </div>
         </div>
 
@@ -27,11 +27,11 @@
 
             </div>
             <div class="col">
-                <p>{{user.age}}</p>
-                <p>{{user.sex}}</p>
-                <p>{{user.preferences}}</p>
-                <p>{{user.tags}}</p>
-                <p>{{user.bio}}</p>
+                <p>{{userProfile.age}}</p>
+                <p>{{userProfile.sex}}</p>
+                <p>{{userProfile.preferences}}</p>
+                <p>{{userProfile.tags}}</p>
+                <p>{{userProfile.bio}}</p>
 
             </div>
         </div>
@@ -49,11 +49,14 @@
 
 <script>
     import UserService from '@/services/Users.js';
+    import {mapState, mapGetters, mapMutations} from 'vuex';
 
     export default {
         name: "avatar-component",
-        props: {
-            user: Object
+        computed: {
+            ...mapState([
+                'userProfile'
+            ]),
         },
 
     }

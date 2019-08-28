@@ -2,15 +2,18 @@
     <div>
         <div class="row">
             <div class="col-4">
-                <avatar-component :avatar="user.avatar" @addPhoto="getUser"></avatar-component>
+                <avatar-component @addPhoto="getUser"></avatar-component>
+                <button class="btn btn-block btn-secondary" @click="modalEditProfileChangeState">Edit profile</button>
+                <change-profile-modal-component
+                        @userProfileDataSend="getUser"></change-profile-modal-component>
             </div>
             <div class="col">
-                <info-component :user="user"></info-component>
+                <info-component></info-component>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <photos-component :photos="user.avatar"></photos-component>
+                <photos-component></photos-component>
             </div>
         </div>
         <div class="row">
@@ -30,13 +33,16 @@
     import infoComponent from './info-component.vue';
     import avatarComponent from './avatar-component.vue';
     import photosComponent from './photos-component.vue'
+    import changeProfileModalComponent from './change-profile-modal-component.vue'
+
 
     export default {
         name: 'Profile',
         components: {
             infoComponent,
             avatarComponent,
-            photosComponent
+            photosComponent,
+            changeProfileModalComponent
         },
         data() {
             return {
@@ -45,7 +51,7 @@
         },
         computed: {
             ...mapState([
-                'loggedUser',
+                'loggedUser', 'modalEditProfile', 'userProfile'
             ]),
         },
         created() {
@@ -53,8 +59,12 @@
 
         },
         methods: {
+            ...mapMutations([
+                'modalEditProfileChangeState', 'userProfileChange'
+            ]),
             async getUser() {
                 this.user = await UserService.fetchOneUser(this.loggedUser.id, this.loggedUser.token);
+                this.userProfileChange(this.user);
             },
         }
     };
