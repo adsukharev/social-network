@@ -20,9 +20,6 @@
             };
         },
         computed: {
-            ...mapState([
-                'loggedUser'
-            ]),
         },
 
     }

@@ -45,8 +45,8 @@
         },
         computed: {
             ...mapState([
-                'loggedUser'
-            ])
+                'loggedUser',
+            ]),
         },
         created() {
             this.getUser();

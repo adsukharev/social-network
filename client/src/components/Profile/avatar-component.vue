@@ -27,9 +27,6 @@
             };
         },
         computed: {
-            ...mapState([
-                'loggedUser'
-            ]),
         },
         watch: {
             avatar: function (photos) {

@@ -18,9 +18,13 @@
     name: "HeaderLogged",
     methods: {
       ...mapMutations([
-        'logoutUser'
-      ])
-    },
+              'logoutUser'
+      ]),
+      logout() {
+        // this.$router.push('/');
+        this.logoutUser()
+      },
+    }
   }
 </script>
 

@@ -7,7 +7,7 @@
             <div class="row pt-3">
                 <div class="col-3"></div>
                 <div class="col-6 inside_main">
-                    <router-view v-if="checkLogged"/>
+                    <router-view v-if="loggedUserExist"/>
                     <forgotten-component v-else-if="forgottenPass"></forgotten-component>
                     <login-component v-else></login-component>
                 </div>
@@ -37,19 +37,21 @@
             LoginComponent,
             ForgottenComponent
         },
-        // data() {
-        //   return {
-        //     kek: window.location.pathname
-        // };
-        // },
+        data() {
+            return {
+                checkLogged: false,
+                kek: sessionStorage.getItem('vuex'),
+            };
+        },
         computed: {
-            ...mapGetters([
-                'checkLogged'
-            ]),
             ...mapState([
-                'forgottenPass'
+                'forgottenPass', 'loggedUser',
+            ]),
+            ...mapGetters([
+                'loggedUserExist',
             ]),
         },
+
     };
 </script>
 

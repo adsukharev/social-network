@@ -43,7 +43,7 @@
         this.loginData.latitude = position.coords.latitude;
         this.loginData.longitude = position.coords.longitude;
       },
-      fillUser(userData) {
+      startSession(userData) {
         this.user.token = userData['access_token'];
         this.user.id = userData['user_id'];
         this.user.login = this.loginData.login;
@@ -59,7 +59,7 @@
         if (res.message === "ok") {
           this.forgottenFalse();
           await this.askLocation();
-          this.fillUser(res);
+          this.startSession(res);
           this.changePath('/profile')
         } else {
           this.$toasted.error(res.message);
