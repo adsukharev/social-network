@@ -5,6 +5,7 @@ import axios from 'axios';
 const host = 'localhost';
 export default () => {
     return axios.create({
-        baseURL: `http://${host}:5000/api/`
+        withCredentials: true,
+        baseURL: `http://${host}:5000/api/`,
     });
 }

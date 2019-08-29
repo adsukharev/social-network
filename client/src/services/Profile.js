@@ -16,7 +16,7 @@ class ProfileService {
     static addLike(id, token) {
         return new Promise(async (resolve, reject) => {
             try {
-                const res = await api().post(`likes/${id}`, {headers: {"Authorization": `Bearer ${token}`}});
+                const res = await api().post(`likes/${id}`, '' , {headers: {"Authorization": `Bearer ${token}`}});
                 resolve(res.data)
 
             } catch (err) {
@@ -34,7 +34,7 @@ class ProfileService {
     }
 
     static addHistory(id, token) {
-        return api().post(`history/${id}`, {headers: {"Authorization": `Bearer ${token}`}});
+        return api().post(`history/${id}`, '',{headers: {"Authorization": `Bearer ${token}`}});
     }
 
 }

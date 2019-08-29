@@ -16,7 +16,7 @@ class UsersService {
     static fetchOneUser(id, token) {
         return new Promise(async (resolve, reject) => {
             try {
-            const res = await api().get(`users/${id}`, { headers: {"Authorization" : `Bearer ${token}`} });
+            const res = await api().get(`users/${id}`, { headers: {"Authorization" : `Bearer ${token}`, withCredentials:true}});
                 resolve(res.data)
 
             } catch (err) {

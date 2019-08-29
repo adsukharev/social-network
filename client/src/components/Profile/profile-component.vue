@@ -4,6 +4,7 @@
             <div class="col-4">
                 <avatar-component @addPhoto="getUser"></avatar-component>
                 <button class="btn btn-block btn-secondary" @click="modalEditProfileChangeState">Edit profile</button>
+                <like-component></like-component>
                 <change-profile-modal-component
                         @userProfileDataSend="getUser"></change-profile-modal-component>
             </div>
@@ -34,7 +35,7 @@
     import avatarComponent from './avatar-component.vue';
     import photosComponent from './photos-component.vue'
     import changeProfileModalComponent from './change-profile-modal-component.vue'
-
+    import likeComponent from '../tools/like-component.vue'
 
     export default {
         name: 'Profile',
@@ -42,7 +43,8 @@
             infoComponent,
             avatarComponent,
             photosComponent,
-            changeProfileModalComponent
+            changeProfileModalComponent,
+            likeComponent
         },
         data() {
             return {

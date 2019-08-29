@@ -1,5 +1,5 @@
 from app.resources.Common.Base import Base
-from flask import request
+from flask import request, session
 from flask_jwt_extended import jwt_required
 
 

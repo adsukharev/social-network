@@ -75,9 +75,8 @@
                     dataForSend.append('city', this.userForm.city);
                 if (this.userForm.preferences)
                     dataForSend.append('preferences', this.userForm.preferences);
-                if (this.userForm.tags) {
+                if (this.userForm.tags)
                     dataForSend.append('tags', JSON.stringify(this.userForm.tags));
-                }
                 dataForSend.append('bio', this.userForm.bio);
                 dataForSend.append('notification', this.userForm.notification);
                 return dataForSend

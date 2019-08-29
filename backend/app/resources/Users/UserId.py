@@ -1,4 +1,4 @@
-from flask import request, session
+from flask import request
 from app.resources.Common.UsersCommon import UsersCommon
 from app.resources.Profile.Images import Images
 from app.resources.Profile.Tags import Tags
