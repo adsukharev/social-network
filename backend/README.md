@@ -79,7 +79,8 @@ GET     /api/oauth - callback from facebook
 request from GET:
 ```
 "message": "ok",
-"access_token": "eyJ0eXAiOiJK"
+"access_token": "eyJ0eXAiOiJK",
+'user_id': "32"
 ```
 
  
@@ -114,11 +115,12 @@ Response for getting one user:
     "preferences": "bisexual",  -> 3 types: bisexual, gomo, getero
     "bio": "I like swimming",
     "avatar": [
-        "life.jpg",
-        "vietnam.jpg"
+        "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASAB",
+        "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQSADASDD"
     ],
     "notification": true,
     "fake": false,
+    "city": "Moscow",
     "latitude": 55.7116,
     "longitude": 37.7382,
     "online": "online",
@@ -184,7 +186,7 @@ Response:
     "user_id": 4,
     "login": "test",
     "user_name": "Olega",
-    "avatar": "life.jpg",
+    "avatar": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASAB",
     "sumlikes": 8
 }
 
@@ -215,7 +217,7 @@ if ok:
         "user_name": "Vika",
         "age": 23,
         "sex": "female",
-        "avatar": kek.png,
+        "avatar": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASAB",
         "preferences": "getero",
          "sumlikes": 10,
         "tags": [
@@ -246,7 +248,7 @@ Example POST response
         "user_name": "Vika",
         "age": 23,
         "sex": "female",
-        "avatar": kek.png,
+        "avatar": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASAB",
         "preferences": "getero",
          "sumlikes": 10,
         "tags": [

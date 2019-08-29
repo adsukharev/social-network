@@ -36,7 +36,7 @@ app = Flask(__name__, template_folder=template_dir)
 app.config.from_object(Config)
 app.register_blueprint(api_bp, url_prefix='/api')
 app.config.update(mail_settings)
-# app.secret_key = b'dude this is a terrible key'
+app.secret_key = b'dude this is a terrible key'
 CORS(app, resources={r"/*": {"origins": "*"}})
 app.config['CORS_HEADERS'] = 'Content-Type'
 jwt = JWTManager(app)

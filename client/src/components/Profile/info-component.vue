@@ -19,6 +19,7 @@
 
         <div class="row">
             <div class="col">
+                <p>City</p>
                 <p>Age</p>
                 <p>Sex</p>
                 <p>Preferences</p>
@@ -27,6 +28,7 @@
 
             </div>
             <div class="col">
+                <p>{{userProfile.city}}</p>
                 <p>{{userProfile.age}}</p>
                 <p>{{userProfile.sex}}</p>
                 <p>{{userProfile.preferences}}</p>

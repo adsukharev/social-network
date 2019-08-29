@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, session
 from app.resources.Common.UsersCommon import UsersCommon
 from app.resources.Profile.Images import Images
 from app.resources.Profile.Tags import Tags
@@ -54,7 +54,7 @@ class UserId(UsersCommon):
 
     def __manage_user_params(self, params, user_id):
         checked_params = self.check_user_params(params)
-        res = self.handle_tags(checked_params)
+        res = self.handle_tags(checked_params, user_id)
         image_obj = Images()
         result_image = image_obj.handle_images(request.files, user_id)
         if result_image != "ok":
@@ -63,7 +63,7 @@ class UserId(UsersCommon):
 
     @staticmethod
     def check_user_params(params):
-        allowed_user_columns = ['email', 'login', 'password', 'user_name', 'age', 'sex', 'preferences', 'bio',
+        allowed_user_columns = ['email', 'login', 'password', 'user_name', 'age', 'sex', 'preferences', 'bio', 'city',
                                 'latitude', 'longitude', 'notification', 'tags']
         for key in params.copy():
             if key not in allowed_user_columns:
@@ -71,10 +71,12 @@ class UserId(UsersCommon):
         return params
 
     @staticmethod
-    def handle_tags(params):
+    def handle_tags(params, user_id):
         if "tags" in params:
+            import json
+            tags = json.loads(params['tags'])
             tag_obj = Tags()
-            tag_obj.manage_tags(params["tags"])
+            tag_obj.manage_tags(tags, user_id)
             del params["tags"]
         return params
 

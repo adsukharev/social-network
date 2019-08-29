@@ -50,8 +50,9 @@ class SignIn(UsersCommon):
 
     def add_location(self):
         latitude, longitude = self.get_location()
-        sql = "UPDATE users SET latitude = %s, longitude = %s WHERE user_id =%s"
-        record = (latitude, longitude, session['user_id'])
+        city = 'Moscow'
+        sql = "UPDATE users SET latitude = %s, longitude = %s, city = %s WHERE user_id =%s"
+        record = (latitude, longitude, city, session['user_id'])
         if self.base_write(sql, record) == "ok":
             return 1
         return 0
