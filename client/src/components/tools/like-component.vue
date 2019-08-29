@@ -1,7 +1,7 @@
 <template>
     <div>
-        <button @click="addLike">Like</button>
-        <button>DisLike</button>
+        <button class="btn btn-success" @click="addLike">Like</button>
+        <button class="btn btn-danger" @click="addDislike">Dislike</button>
         {{user.likes}}
     </div>
 </template>
@@ -9,10 +9,12 @@
 <script>
     import {mapState, mapGetters, mapMutations} from 'vuex';
     import ProfileService from '@/services/Profile.js';
-    import UserService from '@/services/Users.js';
 
     export default {
         name: "like-component",
+        props: {
+          user_id: '',
+        },
         data() {
             return {
                 user: {},
@@ -24,16 +26,19 @@
             ]),
         },
         created() {
-            this.fetchUser();
+            // this.fetchUser();
         },
         methods: {
-            async fetchUser() {
-                this.user = await UserService.fetchOneUser('2', this.loggedUser.token);
+            // async fetchUser() {
+            //     this.user = await UserService.fetchOneUser('2', this.loggedUser.token);
+            //
+            // },
+            async addLike() {
+                await ProfileService.addLike(this.user_id, this.loggedUser.token);
 
             },
-            async addLike() {
-                await ProfileService.addLike('2', this.loggedUser.token);
-                this.user = await UserService.fetchOneUser('2', this.loggedUser.token);
+            async addDislike() {
+                await ProfileService.addDislike(this.user_id, this.loggedUser.token);
 
             },
         }

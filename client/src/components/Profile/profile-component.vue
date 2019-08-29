@@ -2,10 +2,9 @@
     <div>
         <div class="row">
             <div class="col-4">
-                <avatar-component @addPhoto="getUser"></avatar-component>
+                <avatar-component :user="user" @addPhoto="getUser"></avatar-component>
                 <button class="btn btn-block btn-secondary" @click="modalEditProfileChangeState">Edit profile</button>
-                <like-component></like-component>
-                <change-profile-modal-component
+                <change-profile-modal-component v-if="loggedUser.id === user.user_id"
                         @userProfileDataSend="getUser"></change-profile-modal-component>
             </div>
             <div class="col">
@@ -17,7 +16,7 @@
                 <photos-component></photos-component>
             </div>
         </div>
-        <div class="row">
+        <div class="row" v-if="loggedUser.id === user.user_id">
             <div class="col">
                 <!--        <likes-info-component></likes-info-component>-->
             </div>
