@@ -64,7 +64,6 @@ export default function EditProfile(props) {
   const { closeModalWindow } = props;
   const { userInfo, isLoaded, changed, setChanged } = useContext(UserContext);
   const [isLoad, setIsLoad] = useState(false);
-  const [redirect, setRedirect] = useState({ redirect: false });
   const [email, setEmail] = useState('');
   const [login, setLogin] = useState('');
   const [userName, setUserName] = useState('');
@@ -86,11 +85,12 @@ export default function EditProfile(props) {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },})
         .then(data => {
+          console.log(data.data);
           let newOpt = data.data.map(item => {
             return ({
-              key: item.tag_name, text: item.tag_name, value: item.tag_name
+              key: item, text: item, value: item
             })
-          })
+          });
           setTagsOptions(newOpt);
         })
         .catch(e => console.log(e));
@@ -139,9 +139,6 @@ export default function EditProfile(props) {
   const submit = async () => {
     const data =  new FormData();
 
-    for (let i = 0; i < tags.length; i++) {
-      data.append('tags', {tag_name: tags[i]});
-    }
     console.log(tags);
     data.append('email', email);
     data.append('login', login);
@@ -153,6 +150,7 @@ export default function EditProfile(props) {
     data.append('notification', notification);
     data.append('password', password);
     data.append('avatar', avatar);
+    data.append('tags', JSON.stringify(tags));
     await api().put(`users/${userInfo.user_id}`, data, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -204,7 +202,6 @@ export default function EditProfile(props) {
           <label htmlFor="tags" className="LabelForDataAboutUser">
             Интересы
             <Select multiple id="tags" defaultValue={tags} options={tagsOptions} onChange={(e, data) => {
-              console.log(data);
               setTags(data.value); }} className="InputForDataAboutUser" />
           </label>
           <label htmlFor="notification" className="LabelForDataAboutUser">

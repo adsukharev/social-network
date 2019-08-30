@@ -1,6 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import api from "../../api";
 
 export default function Chat() {
+  useEffect(() => {
+    api().get('chats', {  headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },}).then(data => console.log(data)).catch(e => console.log(e));
+  });
     return (
         <div>
             <h1>Chat</h1>

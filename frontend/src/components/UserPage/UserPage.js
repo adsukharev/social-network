@@ -9,7 +9,7 @@ import EditProfile from "./EditProfile";
 
 
 export default function ChangeProfileModal(props) {
-  const { userInfo, isLoaded, token, changed } = useContext(UserContext);
+  const {userInfo, isLoaded, token, changed} = useContext(UserContext);
   const [myPage, setMyPage] = useState(false);
   const [thisUser, setThisUser] = useState(userInfo);
   const [changedAvatar, setChangedAvatar] = useState(false);
@@ -23,11 +23,11 @@ export default function ChangeProfileModal(props) {
       })
         .then((data) => {
           setThisUser(data.data);
-          if(data.data.user_id === token.identity) {
+          if (data.data.user_id === token.identity) {
             setMyPage(true);
-            pushHistory();
           } else {
             setMyPage(false);
+            pushHistory();
           }
         })
         .catch(e => {
@@ -51,12 +51,12 @@ export default function ChangeProfileModal(props) {
     })
       .catch((e) => {
         console.log(e);
-        alert('OOps!!')
+        alert('Ops!!')
       })
   };
 
   const setUnLikeToUSer = async () => {
-    await api().delete(`likes${props.location.pathname.substring(6)}`,{}, {
+    await api().delete(`likes${props.location.pathname.substring(6)}`, {}, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       }
@@ -72,7 +72,7 @@ export default function ChangeProfileModal(props) {
   };
 
   const setLikeToUSer = async () => {
-    await api().post(`likes${props.location.pathname.substring(6)}`,{}, {
+    await api().post(`likes${props.location.pathname.substring(6)}`, {}, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       }
@@ -87,16 +87,25 @@ export default function ChangeProfileModal(props) {
       })
   };
   const setFakeToUser = async () => {
-     await api().post(`fake/${props.location.pathname.substring(6)}`)
-       .then((data) => {
-         console.log(data);
-         alert('Вы пожаловались на этого пользователя!');
-       })
-       .catch((e) => {
-         console.log(e);
-         alert('OOps!!')
-       })
+    await api().post(`fake/${props.location.pathname.substring(6)}`)
+      .then((data) => {
+        console.log(data);
+        alert('Вы пожаловались на этого пользователя!');
+      })
+      .catch((e) => {
+        console.log(e);
+        alert('OOps!!')
+      })
   };
+
+  let tags = [];
+  if (thisUser && thisUser.tags) {
+   tags = thisUser.tags.map((item) => {
+      return (
+        <p>{item}</p>
+      )
+    });
+  }
   return (
     isLoaded && thisUser && <Fragment>
       <div className="userpage-container">
@@ -157,7 +166,7 @@ export default function ChangeProfileModal(props) {
             <p>История лайков:</p><p>{thisUser.likes}</p>
           </div> : null}
           {thisUser.tags ? <div className="userpage-information-section">
-            <p>Тэги:</p><p>{thisUser.tags}</p>
+            <p>Тэги:</p><div>{tags}</div>
           </div> : null}
           <div className="userpage-information-section">
             <p>Уведомления:</p><p>{thisUser.notification ? 'Включены' : "Отключены"}</p>
