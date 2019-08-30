@@ -35,7 +35,7 @@
             HeaderComponent,
             FooterComponent,
             LoginComponent,
-            ForgottenComponent
+            ForgottenComponent,
         },
         data() {
             return {

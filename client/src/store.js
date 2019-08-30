@@ -18,7 +18,7 @@ export default new Vuex.Store({
     state: {
         forgottenPass: false,
         loggedUser: {},
-        modalEditProfile: false,
+        // modalEditProfile: false,
         userProfile: {},
     },
     mutations: {
@@ -37,12 +37,12 @@ export default new Vuex.Store({
         userProfileChange(state, newData) {
             state.userProfile = newData
         },
-        modalEditProfileChangeState(state) {
-            if (state.modalEditProfile)
-                state.modalEditProfile = false;
-            else
-                state.modalEditProfile = true;
-        },
+        // modalEditProfileChangeState(state) {
+        //     if (state.modalEditProfile)
+        //         state.modalEditProfile = false;
+        //     else
+        //         state.modalEditProfile = true;
+        // },
     },
     getters: {
         loggedUserExist(state) {

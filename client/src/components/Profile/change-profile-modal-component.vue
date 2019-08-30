@@ -1,16 +1,20 @@
 <template>
 
-    <b-modal v-model="modalEditProfile" no-close-on-esc no-close-on-backdrop>
-        <template slot="modal-header" slot-scope="{ close }">
-            <h5>Edit Profile</h5>
-        </template>
-        <change-profile-form-component @newUserForm="setUserForm"></change-profile-form-component>
-        {{userForm}}
-        <template slot="modal-footer" slot-scope="{ ok, cancel, hide }">
-            <button class="btn btn-danger " @click="modalEditProfileChangeState()">Cancel</button>
-            <button class="btn btn-success " @click="editProfile()">Ok</button>
-        </template>
-    </b-modal>
+    <div>
+        <button class="btn btn-block btn-secondary" @click="showModalProfile = !showModalProfile">Edit profile</button>
+        <b-modal v-model="showModalProfile" no-close-on-esc no-close-on-backdrop>
+            <template slot="modal-header" slot-scope="{ close }">
+                <h5>Edit Profile</h5>
+            </template>
+            <change-profile-form-component @newUserForm="setUserForm"></change-profile-form-component>
+            <template slot="modal-footer" slot-scope="{ ok, cancel, hide }">
+                <button class="btn btn-danger " @click="showModalProfile = !showModalProfile">Cancel</button>
+                <button class="btn btn-success " @click="editProfile()">Ok</button>
+            </template>
+        </b-modal>
+
+    </div>
+
 
 </template>
 
@@ -30,25 +34,26 @@
         data() {
             return {
                 userForm: {},
+                showModalProfile: false,
             };
         },
         computed: {
             ...mapState([
-                'loggedUser', 'userProfile', 'modalEditProfile'
+                'loggedUser', 'userProfile'
             ]),
         },
         watch: {},
         methods: {
             ...mapMutations([
-                'modalEditProfileChangeState', 'userProfileChange'
+                'userProfileChange'
             ]),
             async editProfile() {
                 this.checkForm();
                 const dataForSend = this.createFormData();
                 await UserService.updateUser(this.loggedUser.id, dataForSend, this.loggedUser.token);
-                this.modalEditProfileChangeState();
+                this.showModalProfile = false;
                 this.$toasted.success("Profile is changed");
-                this.$emit('userProfileDataSend')
+                this.$emit('updateUser')
 
             },
             setUserForm(newUserForm) {

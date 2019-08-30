@@ -28,6 +28,7 @@ class UserLogin(UsersCommon):
                      JOIN  tags USING (tag_id)
                      GROUP BY 1
                      ) t ON u.user_id = t.user_id_fk
+                WHERE u.login = %s
             ;"""
         record = (login,)
         user = self.base_get_one(sql, record)

@@ -5,7 +5,7 @@ from flask_jwt_extended import jwt_required
 
 class History(Base):
 
-    @jwt_required
+    # @jwt_required
     def post(self, to_history_id):
         res = self.__add_history(to_history_id)
         return res

@@ -1,12 +1,17 @@
 <template>
     <div>
-
+        <hr>
         <div class="row">
             <div class="col">
                 {{userProfile.user_name}}
             </div>
             <div class="col">
-                <p>{{userProfile.online}}</p>
+                {{userProfile.online}}
+                <button v-if="loggedUser.id !== userProfile.user_id"
+                        class="btn btn-sm btn-outline-dark blockBtn"
+                        @click="blockUser(userProfile.user_id)">Block
+                </button>
+
             </div>
         </div>
 
@@ -32,7 +37,7 @@
                 <p>{{userProfile.age}}</p>
                 <p>{{userProfile.sex}}</p>
                 <p>{{userProfile.preferences}}</p>
-                <p>{{userProfile.tags}}</p>
+                <p>{{String(userProfile.tags)}}</p>
                 <p>{{userProfile.bio}}</p>
 
             </div>
@@ -57,9 +62,14 @@
         name: "avatar-component",
         computed: {
             ...mapState([
-                'userProfile'
+                'userProfile', 'loggedUser'
             ]),
         },
+        methods: {
+            async blockUser(id) {
+                await UserService.fakeUser(id, this.loggedUser.token);
+            }
+        }
 
     }
 </script>
@@ -68,4 +78,9 @@
     .headers_info {
         text-align: end;
     }
+
+    .blockBtn {
+        margin-left: 1em;
+    }
+
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar fixed-bottom navbar-light bg-faded justify-content-end">
+  <nav class="navbar navbar-light bg-faded justify-content-end">
     <p>made by Andrei Sukharev</p>
   </nav>
 </template>

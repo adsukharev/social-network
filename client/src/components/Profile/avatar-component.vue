@@ -1,12 +1,19 @@
 <template>
 
     <div class="image_container">
-        <img :src="mainPhoto" style="width:128px;height:150px;">
-        <div id="buttonsLikes" v-if="loggedUser.id !== user.user_id">
+        <router-link :to="{ name: 'profile', params: { id: user.user_id }}">
+            <img :src="user.avatar[0]" style="width:128px;height:150px;" alt="avatar">
+        </router-link>
+        <div v-if="loggedUser.id !== user.user_id || rating">
+            <p>{{info}}</p>
+            <p>total likes: {{user.sumlikes}}</p>
+        </div>
+        <div v-if="loggedUser.id !== user.user_id" id="buttonsLikes">
             <button class="btn btn-success" @click="addLike">Like</button>
             <button class="btn btn-danger" @click="addDislike">Dislike</button>
         </div>
     </div>
+
 
 </template>
 
@@ -17,23 +24,26 @@
     export default {
         name: "avatar-component",
         props: {
-          user: Object,
+            user: Object,
+            rating: false,
         },
         data() {
             return {
                 data: '',
-                mainPhoto: '',
+                photoMain: '',
             };
         },
+        // watch: {
+        //   user: function (newUser) {
+        //       this.photoMain = newUser.avatar[0]
+        //   }
+        // },
         computed: {
             ...mapState([
-                'loggedUser', 'modalEditProfile', 'userProfile'
-
+                'loggedUser', 'modalEditProfile', 'userProfile',
             ]),
-        },
-        watch: {
-            user: function (newUser) {
-                this.mainPhoto = newUser.avatar[0];
+            info: function () {
+                return this.user.user_name + ', ' + this.user.age
             },
         },
         methods: {
@@ -61,6 +71,7 @@
         height: 100%;
         object-fit: contain;
     }
+
     #buttonsLikes {
         margin-top: 1em;
     }

@@ -2,24 +2,37 @@
     <div>
         <h6 class="headers_profile">All Photos</h6>
         <div class="image_container">
-            <img v-for="photo in userProfile.avatar" :src="photo" style="width:128px;height:150px;">
+            <div class="d-inline-block" v-for="(photo, index) in userProfile.avatar">
+                <img :src="photo">
+                <br>
+                <button class="btn btn-sm btn-secondary" @click="deleteImage(index + 1)">Delete</button>
+            </div>
+
         </div>
     </div>
 </template>
 
 <script>
     import {mapState, mapGetters, mapMutations} from 'vuex';
+    import ProfileService from '@/services/Profile.js';
 
     export default {
         name: "avatar-component",
         data() {
-            return {
-            };
+            return {};
         },
         computed: {
             ...mapState([
-                'userProfile'
+                'userProfile', 'loggedUser'
             ]),
+        },
+        methods: {
+            async deleteImage(i) {
+                await ProfileService.deleteImage(i, this.loggedUser.token);
+                this.$toasted.success("Picture is deleted");
+                this.$emit('updateUser')
+
+            },
         },
 
     }
@@ -29,11 +42,13 @@
     .image_container {
         width: auto;
         text-align: center;
-        padding: 20px;
     }
+
     img {
         width: 100%;
-        height: 100%;
-        object-fit: contain;
+        max-width: 120px;
+        height: auto;
+        margin: 1em;
+
     }
 </style>

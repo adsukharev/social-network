@@ -46,16 +46,14 @@
 
             <div class="form-row">
                 <div class="form-group col">
-                    {{tagsString}}
-                    <label for="tagsInput">Your tags:</label>
-                    <textarea v-model="tagsString"></textarea>
-                </div>
-                <div class="form-group col">
                     <label for="tagsInput">Tag's list:</label>
                     <select id="tagsInput" class="form-control" v-model="selected">
                         <option v-for="tag in allTags">{{tag}}</option>
                     </select>
-                    {{userForm.tags}}
+                </div>
+                <div class="form-group col">
+                    <label for="tagsChosenInput">Your tags:</label>
+                    <textarea id="tagsChosenInput" v-model="tagsString"></textarea>
                 </div>
             </div>
 
@@ -85,7 +83,6 @@
 
     export default {
         name: "change-profile-form-component",
-        components: {},
         data() {
             return {
                 data: '',
@@ -98,7 +95,7 @@
                     city: '',
                     latitude: '',
                     longitude: '',
-                    preferences: [],
+                    preferences: '',
                     tags: [],
                     bio: '',
                     notification: false
@@ -127,6 +124,7 @@
                     } else {
                         this.tagsString += ',' + newValue
                     }
+                    this.selected = '';
                 }
             },
             tagsString: function (newValue) {
@@ -135,7 +133,6 @@
         },
         created() {
             this.userForm = this.userProfile;
-            this.userForm.avatar = '';
             this.userForm.password = '';
             this.tagsString = String(this.userForm.tags);
             this.getTags();

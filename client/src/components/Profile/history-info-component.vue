@@ -1,7 +1,7 @@
 <template>
     <div>
-        <h6 class="headers_profile">People who like you:</h6>
-        <avatar-component v-for="user in usersLiked" :user="user"></avatar-component>
+        <h6 class="headers_profile">People who visited you:</h6>
+        <avatar-component v-for="user in usersHistory" :user="user"></avatar-component>
 
     </div>
 </template>
@@ -12,13 +12,13 @@
     import avatarComponent from './avatar-component.vue';
 
     export default {
-        name: "likes-info-component",
+        name: "history-info-component",
         components: {
             avatarComponent,
         },
         data() {
             return {
-                usersLiked: []
+                usersHistory: []
             }
         },
         computed: {
@@ -27,13 +27,13 @@
             ]),
         },
         created() {
-          this.fetchUsersLiked();
+          this.fetchUsersHistory();
         },
         methods: {
-             fetchUsersLiked() {
-                this.userProfile.likes.forEach( async (login) => {
+             fetchUsersHistory() {
+                this.userProfile.history.forEach( async (login) => {
                     const user = await UserService.fetchOneUserByLogin(login, this.loggedUser.token);
-                    this.usersLiked.push(user);
+                    this.usersHistory.push(user);
                 });
 
             },
