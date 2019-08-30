@@ -186,7 +186,7 @@ Response:
     "user_id": 4,
     "login": "test",
     "user_name": "Olega",
-    "avatar": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASAB",
+    "avatar": ["data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASAB"],
     "sumlikes": 8
 }
 
