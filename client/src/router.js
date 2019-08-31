@@ -4,6 +4,7 @@ import SignUp from './components/loginPage/signup-component';
 import Profile from './components/Profile/profile-component';
 import Rating from './components/Rating/rating-component';
 import Search from './components/Search/search-component';
+import Chat from './components/Chat/chat-component';
 
 
 Vue.use(Router);
@@ -31,6 +32,11 @@ export default new Router({
             path: '/search',
             name: 'search',
             component: Search,
+        },
+        {
+            path: '/chat',
+            name: 'chat',
+            component: Chat,
         },
     ],
 })

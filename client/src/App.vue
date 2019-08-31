@@ -3,7 +3,7 @@
         <header>
             <header-component></header-component>
         </header>
-        <main>
+        <main id="page-container">
             <div class="row pt-3">
                 <div class="col-3"></div>
                 <div class="col-6 inside_main">
@@ -14,9 +14,10 @@
                 <div class="col-3"></div>
             </div>
         </main>
-        <footer>
+        <footer id="footer">
             <footer-component></footer-component>
         </footer>
+
     </div>
 
 </template>
@@ -64,5 +65,19 @@
         border-radius: 20px;
         background-color: white
     }
+
+    #page-container {
+        position: relative;
+        min-height: 100vh;
+        padding-bottom: 1em;
+    }
+
+    /*#footer {*/
+    /*    background-color: rgb(237, 238, 240);*/
+    /*    position: absolute;*/
+    /*    bottom: 0;*/
+    /*    width: 100%;*/
+    /*    height: 2.5rem; !* Footer height *!*/
+    /*}*/
 </style>
 
