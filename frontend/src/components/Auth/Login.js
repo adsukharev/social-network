@@ -5,10 +5,12 @@ import { Link } from 'react-router-dom';
 import LinkButton from '../LinkButton';
 import api from "../../api";
 import axios from 'axios';
+import Geolocation from '../Geolocation';
 
 export default function Login(props) {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
+    const [geoloc, setGeoloc] = useState({});
 
     const goHome = () => {
         props.setLogedIn(true);
@@ -16,12 +18,14 @@ export default function Login(props) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await api().post('signin', {
+        const data = {
             login: login,
             password: password,
-            latitude: "55.7116063",
-            longitude: "37.738073"
-        }).then(data => {
+        };
+        await api().post('signin', data, {
+            headers: { Accept: 'application/json',
+          'Content-Type': 'application/json',
+            }}).then(data => {
             console.log(data);
             if (data.data.message === 'ok') {
                 localStorage.setItem('token', data.data.access_token);
@@ -31,7 +35,11 @@ export default function Login(props) {
     };
 
     useEffect(() => {
+      console.log(geoloc);
+    }, [geoloc]);
+    useEffect(() => {
         const checkLogin = async () => {
+
             const token = localStorage.getItem('token');
             let headers = {};
             if (token) {

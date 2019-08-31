@@ -46,6 +46,7 @@ export default function Top() {
   );
   return (
     isLoaded && userInfo && <div className="rating-container">
+      <h1>Лучшие пользователи</h1>
       <Card.Group style={{
         margin: 'auto', width: '100%', backgroundColor: 'pink'
       }} itemsPerRow={7}>

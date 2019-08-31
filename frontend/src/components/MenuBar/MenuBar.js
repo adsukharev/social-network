@@ -52,7 +52,7 @@ const logout = async () => {
                 </Menu.Item>
 
 
-                <Menu.Item as={Link} to={'notifications'} name='notification'
+                <Menu.Item as={Link} to={'/notifications'} name='notification'
                            active={props.activeItem === 'notification'}
                            onClick={props.handleItemClick}>
                     {/*<Label>1</Label>*/}
@@ -60,7 +60,7 @@ const logout = async () => {
                 </Menu.Item>
 
 
-                <Menu.Item as={Link} to={'login '}  name='logout' active={props.activeItem === 'auth'}
+                <Menu.Item as={Link} to={'/login '}  name='logout' active={props.activeItem === 'auth'}
                            onClick={logout}>
                     {/*<Label>1</Label>*/}
                     Выход

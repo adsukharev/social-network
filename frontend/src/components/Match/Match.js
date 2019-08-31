@@ -85,14 +85,14 @@ const locationOptions = [
 
 export default function Match() {
   const [tagsOptions, setTagsOptions] = useState([]);
-  const [startAge, setStartAge] = useState(18);
-  const [finishAge, setFinishAge] = useState(18);
+  const [startAge, setStartAge] = useState(0);
+  const [finishAge, setFinishAge] = useState(0);
   const [startSumLikes, setStartSumLikes] = useState(0);
   const [finishSumLikes, setFinishSumLikes] = useState(0);
-  const [sex, setSex] = useState('male');
+  const [sex, setSex] = useState('');
   const [preferences, setPreferences] = useState('');
   const [tags, setTags] = useState([]);
-  const [location, setLocation] = useState(1);
+  const [location, setLocation] = useState(0);
   const [searchResult, setSearchResult] = useState([]);
   const [resultGet, setResultGet] = useState(false);
 
@@ -102,7 +102,6 @@ export default function Match() {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },})
         .then(data => {
-          console.log(data.data);
           let newOpt = data.data.map(item => {
             return ({
               key: item, text: item, value: item
@@ -111,34 +110,28 @@ export default function Match() {
           setTagsOptions(newOpt);
         })
         .catch(e => console.log(e));
-        api().get('search', {  headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
-            }})
-          .then((data) => {
-              console.log(data);
-          })
-          .catch(e => {
-              console.log(e);
-          })
     }, []);
 
     const submit = async () => {
-      console.log(sex, startAge, finishAge, startSumLikes, finishSumLikes, preferences, location, tags, 'all what we send');
-      const data = new FormData();
-      data.append('age', JSON.stringify([startAge, finishAge]));
-      data.append('sumLikes', JSON.stringify([startSumLikes, finishSumLikes]));
-      data.append('sex', sex);
-      data.append('preferences', preferences);
-      data.append('location', location);
-      data.append('tags', JSON.stringify(tags));
+      const data = JSON.stringify({
+        age: [startAge, finishAge],
+        sumLikes: [startSumLikes, finishSumLikes],
+        sex,
+        preferences,
+        location,
+        tags
+      });
       api().post('search', data, {  headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         }})
         .then((data) => {
-          console.log(data);
-          alert('успех');
           setSearchResult(data.data);
           setResultGet(true);
+          if (data.data.length === 0) {
+            alert('Поиск с такими параметрами не дал результатов!');
+          }
         })
         .catch(e => {
           console.log(e);
@@ -209,8 +202,7 @@ export default function Match() {
             <button type="button" onClick={submit} className="WriteMesButton">Принять</button>
           </form>
           {resultGet ?  <div className="rating-container">
-            <Card.Group style={{
-              margin: 'auto', width: '100%', backgroundColor: 'pink'
+            <Card.Group style={{ margin: 'auto', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center'
             }} itemsPerRow={7}>
               {searchResultMaped}
             </Card.Group>
