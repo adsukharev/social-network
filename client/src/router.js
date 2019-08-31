@@ -5,6 +5,7 @@ import Profile from './components/Profile/profile-component';
 import Rating from './components/Rating/rating-component';
 import Search from './components/Search/search-component';
 import Chat from './components/Chat/chat-component';
+import ChatId from './components/Chat/chat-id-component';
 
 
 Vue.use(Router);
@@ -37,6 +38,11 @@ export default new Router({
             path: '/chat',
             name: 'chat',
             component: Chat,
+        },
+        {
+            path: '/chat/:id',
+            name: 'chatId',
+            component: ChatId,
         },
     ],
 })

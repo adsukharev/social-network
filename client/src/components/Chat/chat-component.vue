@@ -1,12 +1,20 @@
 <template>
     <div>
-        <div v-if="Object.keys(chats).length > 0">
-            <div class="row" v-for="chat in chats">
-                <div class="col">
-                    {{chat}}
-                </div>
-            </div>
-        </div>
+
+        <table v-if="Object.keys(chats).length > 0" class="table table-hover">
+            <thead>
+            <tr class="table_rows">
+                <th>Chat Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="chat in chats" class="table_rows">
+                <router-link :to="{ name: 'chatId', params: { id: chat.chat_id }}">
+                    <td>{{chat.chat_name}}</td>
+                </router-link>
+            </tr>
+            </tbody>
+        </table>
         <div v-else>
             <h4>No chats yet</h4>
         </div>
@@ -15,26 +23,11 @@
 
 <script>
     import {mapState, mapGetters, mapMutations} from 'vuex';
-    import UserService from '@/services/Users.js';
     import ChatService from '@/services/Chat.js';
 
-    // import infoComponent from './info-component.vue';
-    // import avatarComponent from './avatar-component.vue';
-    // import photosComponent from './photos-component.vue'
-    // import changeProfileModalComponent from './change-profile-modal-component.vue'
-    // import likesInfoComponent from './likes-info-component.vue'
-    // import historyInfoComponent from './history-info-component.vue'
 
     export default {
         name: 'chat-component',
-        // components: {
-        //     infoComponent,
-        //     avatarComponent,
-        //     photosComponent,
-        //     changeProfileModalComponent,
-        //     likesInfoComponent,
-        //     historyInfoComponent
-        // },
         data() {
             return {
                 chats: []
@@ -42,7 +35,7 @@
         },
         computed: {
             ...mapState([
-                'loggedUser', 'modalEditProfile', 'userProfile'
+                'loggedUser', 'userProfile'
             ]),
         },
         created() {
@@ -57,6 +50,8 @@
 </script>
 
 <style>
-
+    .table_rows {
+        text-align: center;
+    }
 </style>
 
