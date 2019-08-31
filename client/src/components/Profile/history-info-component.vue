@@ -31,6 +31,9 @@
         },
         methods: {
              fetchUsersHistory() {
+                 if (this.userProfile.history === null) {
+                     return ;
+                 }
                 this.userProfile.history.forEach( async (login) => {
                     const user = await UserService.fetchOneUserByLogin(login, this.loggedUser.token);
                     this.usersHistory.push(user);

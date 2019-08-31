@@ -21,7 +21,6 @@ class Likes(Base):
 
     def __add_like(self, to_like_id):
         from_like_id = session['user_id']
-        print(from_like_id)
         sql = '''INSERT INTO likes (from_like_fk, to_like_fk)
                              VALUES (%s, %s);'''
         record = (from_like_id, to_like_id)

@@ -43,12 +43,49 @@
         },
         methods: {
             async addLike() {
+                if (!this.checkLike())
+                    return;
                 await ProfileService.addLike(this.user.user_id, this.loggedUser.token);
-
+                this.user.sumlikes += 1;
+                this.user.likes.push(this.loggedUser.login);
+                this.$toasted.success("Like")
+            },
+            checkLike() {
+                if (this.user.likes === null) {
+                    this.user.likes = [];
+                    return true;
+                }
+                if (this.user.likes.includes(this.loggedUser.login)) {
+                    this.$toasted.info("You've already liked this person");
+                    return false
+                }
+                return true;
             },
             async addDislike() {
+                if (!this.checkDislike())
+                    return;
                 await ProfileService.addDislike(this.user.user_id, this.loggedUser.token);
-
+                this.user.sumlikes -= 1;
+                this.deleteEl();
+                this.$toasted.error("Dislike")
+            },
+            deleteEl() {
+                for (let i = 0; i < this.user.likes.length; i++) {
+                    if (this.user.likes[i] === this.loggedUser.login) {
+                        this.user.likes.splice(i, 1);
+                    }
+                }
+            },
+            checkDislike() {
+                if (this.user.likes === null) {
+                    this.$toasted.info("You can dislike after like");
+                    return false
+                }
+                if (!this.user.likes.includes(this.loggedUser.login)) {
+                    this.$toasted.info("You can dislike after like");
+                    return false;
+                }
+                return true;
             },
         },
     }

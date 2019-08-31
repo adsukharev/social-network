@@ -24,8 +24,7 @@ class ProfileService {
             }
         })
     }
-
-    static addDislike(client, token) {
+    static addDislike(id, token) {
         return api().delete(`likes/${id}`, {headers: {"Authorization": `Bearer ${token}`}});
     }
 

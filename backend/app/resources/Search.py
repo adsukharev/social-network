@@ -7,7 +7,7 @@ from flask_jwt_extended import jwt_required
 class Search(Base):
 
     sql = """
-                    SELECT  user_id, user_name, age, sex, avatar, preferences, r.sumLikes, t.tags
+                    SELECT  user_id, user_name, age, sex, l.likes, avatar, preferences, r.sumLikes, t.tags
                     FROM    users u
                     JOIN rating r ON r.user_fk = u.user_id
                     LEFT JOIN (
@@ -16,6 +16,12 @@ class Search(Base):
                         JOIN  tags USING (tag_id)
                         GROUP BY 1
                         ) t ON u.user_id = t.user_id_fk
+                    LEFT JOIN (
+                      SELECT likes.to_like_fk, array_agg(u.login) as likes
+                      FROM likes
+                      JOIN  users u ON u.user_id = likes.from_like_fk
+                      GROUP BY 1
+                      ) l ON u.user_id = l.to_like_fk
                     WHERE   u.user_id != %s AND u.fake = '0'
                             {}
                     ;"""

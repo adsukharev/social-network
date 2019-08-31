@@ -31,6 +31,9 @@
         },
         methods: {
              fetchUsersLiked() {
+                 if (this.userProfile.likes === null) {
+                     return ;
+                 }
                 this.userProfile.likes.forEach( async (login) => {
                     const user = await UserService.fetchOneUserByLogin(login, this.loggedUser.token);
                     this.usersLiked.push(user);

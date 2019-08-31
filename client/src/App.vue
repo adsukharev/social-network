@@ -72,12 +72,5 @@
         padding-bottom: 1em;
     }
 
-    /*#footer {*/
-    /*    background-color: rgb(237, 238, 240);*/
-    /*    position: absolute;*/
-    /*    bottom: 0;*/
-    /*    width: 100%;*/
-    /*    height: 2.5rem; !* Footer height *!*/
-    /*}*/
 </style>
 
