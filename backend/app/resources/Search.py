@@ -30,7 +30,6 @@ class Search(Base):
             return {"message": "error"}
         sql_recommendation = self.__make_recomendation(user)
         sql = self.sql.format(sql_recommendation)
-        print(sql)
         record = (session['user_id'],)
         users = self.base_get_limited_all(sql, record)
         return users

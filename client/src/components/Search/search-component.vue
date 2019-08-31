@@ -11,13 +11,13 @@
         <hr>
         <div class="row">
             <div class="col">
-                <search-modal-component></search-modal-component>
+                <search-modal-component @searchedUsers="searchDetailed"></search-modal-component>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <div class="d-inline-block">
-                    <avatar-component v-for="user in usersDetailed" :user="user"></avatar-component>
+                <div class="d-inline-block" v-for="user in usersDetailed" >
+                    <avatar-component :user="user"></avatar-component>
                 </div>
             </div>
         </div>
@@ -42,7 +42,6 @@
             return {
                 usersRecommended: [],
                 usersDetailed: [],
-                dataForSearch: {},
             };
         },
         computed: {
@@ -57,8 +56,9 @@
             async searchRecommend() {
                 this.usersRecommended = await UserService.searchRecommend(this.loggedUser.token);
             },
-            async searchDetailed() {
-                this.usersDetailed = await UserService.searchDetailed(this.dataForSearch, this.loggedUser.token);
+            async searchDetailed(dataForSearch) {
+                const users = await UserService.searchDetailed(dataForSearch, this.loggedUser.token);
+                this.usersDetailed = users.data
             },
         }
     };

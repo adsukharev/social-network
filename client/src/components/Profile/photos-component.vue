@@ -5,7 +5,7 @@
             <div class="d-inline-block" v-for="(photo, index) in userProfile.avatar">
                 <img :src="photo">
                 <br>
-                <button class="btn btn-sm btn-secondary" @click="deleteImage(index + 1)">Delete</button>
+                <button v-if="loggedUser.id === userProfile.user_id" class="btn btn-sm btn-secondary" @click="deleteImage(index + 1)">Delete</button>
             </div>
 
         </div>

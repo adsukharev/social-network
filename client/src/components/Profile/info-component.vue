@@ -18,7 +18,6 @@
         <div class="row">
             <div class="col">
                 <hr>
-                <h6 class="headers_profile">Main Information</h6>
             </div>
         </div>
 

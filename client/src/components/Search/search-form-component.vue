@@ -2,30 +2,43 @@
     <div>
         <form @submit.prevent class="">
 
-            <div class="form-inline">
-                <div class="form-group ">
-                    <label for="ageFromInput" class="label">Age:</label>
-                    <input type="number" class="form-control" id="ageFromInput" v-model="userForm.age"
+            <div class="form-group row">
+                <label for="ageFromInput" class="col-3 col-form-label">Age:</label>
+                <div class="col">
+                    <input type="number" class="form-control" id="ageFromInput" v-model="userForm.age[0]"
                            placeholder="from">
                 </div>
-
-                <div class="form-group ">
-                    <label for="ageTillInput">-</label>
-                    <input type="number" class="form-control" id="ageTillInput" v-model="userForm.age" placeholder="to">
+                <div class="col">
+                    <input type="number" class="form-control" id="ageTillInput" v-model="userForm.age[1]"
+                           placeholder="to">
                 </div>
-
             </div>
 
-            <div class="form-row">
-                <div class="form-group col">
-                    <label for="sexInput">Sex:</label>
+            <div class="form-group row">
+                <label for="likesFromInput" class="col-3 col-form-label">Total Likes:</label>
+                <div class="col">
+                    <input type="number" class="form-control" id="likesFromInput" v-model="userForm.sumLikes[0]"
+                           placeholder="from">
+                </div>
+                <div class="col">
+                    <input type="number" class="form-control" id="likesTillInput" v-model="userForm.sumLikes[1]"
+                           placeholder="to">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="sexInput" class="col-3 col-form-label">Sex:</label>
+                <div class="col">
                     <select class="form-control" id="sexInput" v-model="userForm.sex">
                         <option>male</option>
                         <option>female</option>
                     </select>
                 </div>
-                <div class="form-group col">
-                    <label for="preferencesInput">Preferences:</label>
+            </div>
+
+            <div class="form-group row">
+                <label for="preferencesInput" class="col-3 col-form-label">Preferences:</label>
+                <div class="col">
                     <select id="preferencesInput" class="form-control" v-model="userForm.preferences">
                         <option>bisexual</option>
                         <option>getero</option>
@@ -34,30 +47,29 @@
                 </div>
             </div>
 
-            <div class="form-row">
-                <div class="form-group col">
-                    <label for="tagsInput">Tag's list:</label>
+            <div class="form-group row">
+                <label for="tagsInput" class="col-3 col-form-label">Tag's list:</label>
+                <div class="col">
                     <select id="tagsInput" class="form-control" v-model="selectedTag">
                         <option v-for="tag in allTags">{{tag}}</option>
                     </select>
                 </div>
-                <div class="form-group col">
-                    <label for="tagsChosenInput">Chosen tags:</label>
-                    <!--                      <button class="btn btn-sm btn-outline-dark">Clear tags</button>-->
-                    <input type="image" src="deleteIcon" id="icondelete" @click="deleteTags()"/>
+            </div>
+
+            <div class="form-group row">
+                <label for="tagsChosenInput" class="col-3 col-form-label">Chosen tags:</label>
+                <div class="col-7">
                     <input id="tagsChosenInput" class="form-control-plaintext" readonly v-model="userForm.tags">
+                </div>
+                <div class="col-2">
+                    <input type="image" src="deleteIcon" id="icondelete" @click="deleteTags()"/>
                 </div>
             </div>
 
 
-            <div class="form-row">
-                <div class="form-group  col">
-                    <label for="locationInput">Location:</label>
-                    <input type="checkbox" id="locationInput" v-model="userForm.location">
-                </div>
-                <div class="form-group col">
-
-                </div>
+            <div class="form-check" style="padding-left: 0">
+                <label for="locationInput" class="form-check-label">Close to you:</label>
+                <input type="checkbox" id="locationInput" v-model="userForm.location">
             </div>
 
         </form>
@@ -72,11 +84,11 @@
         name: "search-form-component",
         data() {
             return {
-                data: '',
                 userForm: {
-                    age: Number,
+                    age: [],
+                    sumLikes: [],
                     sex: '',
-                    locatiom: false,
+                    location: false,
                     preferences: '',
                     tags: [],
                 },
@@ -118,9 +130,6 @@
 </script>
 
 <style scoped>
-    #locationInput {
-        margin-left: 1em;
-    }
 
     #icondelete {
         padding: 0;
@@ -128,7 +137,8 @@
         width: 20px;
         height: auto;
     }
-    .label {
-        margin-right: 1em;
+
+    #locationInput {
+        margin-left: 2rem;
     }
 </style>

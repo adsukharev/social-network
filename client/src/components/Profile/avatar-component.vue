@@ -33,11 +33,6 @@
                 photoMain: '',
             };
         },
-        // watch: {
-        //   user: function (newUser) {
-        //       this.photoMain = newUser.avatar[0]
-        //   }
-        // },
         computed: {
             ...mapState([
                 'loggedUser', 'modalEditProfile', 'userProfile',

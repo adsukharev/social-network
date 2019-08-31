@@ -43,22 +43,21 @@
         watch: {},
         methods: {
             async startSearch() {
-                this.checkForm();
-                const dataForSend = this.createFormData();
-                await UserService.updateUser(this.loggedUser.id, dataForSend, this.loggedUser.token);
+                // this.checkForm();
+
+                // const serachedUsers = await UserService.searchDetailed(this.userForm, this.loggedUser.token);
                 this.showModalProfile = false;
-                this.$toasted.success("Profile is changed");
-                this.$emit('updateUser')
+                this.$emit('searchedUsers', this.userForm)
 
             },
             setUserForm(newUserForm) {
                 this.userForm = newUserForm;
             },
-            checkForm() {
-                if (!this.userForm.bio) {
-                    this.userForm.bio = ''
-                }
-            },
+            // checkForm() {
+            //     if (!this.userForm.bio) {
+            //         this.userForm.bio = ''
+            //     }
+            // },
 
         }
     }

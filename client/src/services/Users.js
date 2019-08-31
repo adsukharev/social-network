@@ -79,8 +79,20 @@ class UsersService {
         })
     }
 
+    // static searchDetailed(user, token) {
+    //     return new Promise(async (resolve, reject) => {
+    //         try {
+    //             const res = api().post('search', user, {headers: {"Authorization": `Bearer ${token}`}});
+    //             console.log(res.data);
+    //             resolve(res)
+    //         } catch (err) {
+    //             reject(err);
+    //         }
+    //     })
+    // }
     static searchDetailed(user, token) {
-        return api().post('search', user, {headers: {"Authorization": `Bearer ${token}`}});
+        return  api().post('search', user, {headers: {"Authorization": `Bearer ${token}`}});
+
     }
 
 }
