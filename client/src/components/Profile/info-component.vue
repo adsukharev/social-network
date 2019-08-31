@@ -7,11 +7,12 @@
             </div>
             <div class="col">
                 {{userProfile.online}}
-                <button v-if="loggedUser.id !== userProfile.user_id"
-                        class="btn btn-sm btn-outline-dark blockBtn"
-                        @click="blockUser(userProfile.user_id)">Block
-                </button>
-
+                <router-link :to="{ name: 'profile', params: { id: loggedUser.id }}">
+                    <button v-if="loggedUser.id !== userProfile.user_id"
+                            class="btn btn-sm btn-outline-dark blockBtn"
+                            @click="blockUser(userProfile.user_id)">Fake
+                    </button>
+                </router-link>
             </div>
         </div>
 
@@ -67,6 +68,8 @@
         methods: {
             async blockUser(id) {
                 await UserService.fakeUser(id, this.loggedUser.token);
+                this.$toasted.info('User is blocked')
+
             }
         }
 
