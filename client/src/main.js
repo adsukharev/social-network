@@ -5,7 +5,18 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import Toasted from 'vue-toasted';
+import VueSocketIO from 'vue-socket.io'
 
+
+Vue.use(new VueSocketIO({
+    debug: true,
+    connection: 'http://' + document.domain + ':' + location.port + '/api/socket', // todo: ENV
+    vuex: {
+        store,
+        actionPrefix: 'SOCKET_',
+        mutationPrefix: 'SOCKET_'
+    },
+}));
 Vue.config.productionTip = false;
 Vue.use(Toasted, {position: 'bottom-right', duration : 5000});
 
