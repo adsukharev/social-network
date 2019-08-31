@@ -5,12 +5,13 @@ import { Link } from 'react-router-dom';
 import LinkButton from '../LinkButton';
 import api from "../../api";
 import axios from 'axios';
-import Geolocation from '../Geolocation';
+import { usePosition } from 'use-position';
 
 export default function Login(props) {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
     const [geoloc, setGeoloc] = useState({});
+  const { latitude, longitude, error } = usePosition();
 
     const goHome = () => {
         props.setLogedIn(true);
@@ -18,9 +19,12 @@ export default function Login(props) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log(latitude, longitude);
         const data = {
             login: login,
             password: password,
+            latitude,
+          longitude
         };
         await api().post('signin', data, {
             headers: { Accept: 'application/json',

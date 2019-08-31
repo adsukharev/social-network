@@ -1,141 +1,14 @@
-import React, {useEffect} from 'react';
-import api from "../../api";
+import React, {useState, useContext} from 'react';
+import {ChatContext} from "../../contexts/ChatContext";
+import DialogMenu from "./DialogMenu";
+import DialogWindow from "./DialogWindow";
 
 export default function Chat() {
-  useEffect(() => {
-    api().get('chats', {  headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },}).then(data => console.log(data)).catch(e => console.log(e));
-  });
+  const {chatsLoaded} = useContext(ChatContext);
     return (
-        <div>
-            <h1>Chat</h1>
+        chatsLoaded &&     <div className="Chat-Container-Background">
+          <DialogMenu />
+          <DialogWindow />
         </div>
     )
 }
-
-
-// import sortMultidimensionalArrayFunc from 'sort-multidimensional-array-func';
-// import { block } from 'bem-cn';
-// const cn = require('bem-cn')('table');
-//
-// let { block } = require('bem-cn');
-
-// const TABLE_COLUMNS = [
-//     {
-//         label: 'Name',
-//         sort: 'default',
-//     },
-//     {
-//         label: 'ID',
-//         sort: 'default',
-//     },
-//     {
-//         label: 'Count',
-//         sort: 'default',
-//     },
-// ];
-//
-// const SortableHeader = (props) => {
-//     const { columns, onClick } = props;
-//
-//     return(
-//         <thead>
-//         <tr>
-//             {columns.map((element, index) =>
-//                 <th
-//                     key={index}
-//                     className={cn('sorting').state({
-//                         sortASC: element.sort === 'asc',
-//                         sortDESC: element.sort === 'desc',
-//                     }).mix('sorting-block text-nowrap')}
-//                     onClick={() => onClick(index, element.sort)}
-//                 >
-//                     {element.label}
-//                 </th>
-//             )}
-//         </tr>
-//         </thead>
-//     );
-// }
-//
-// const SortableBody = (props) => {
-//     const { data } = props;
-//
-//     return(
-//         <tbody>
-//         {data.map((element, index) =>
-//             <tr key={index}>
-//                 {element.map((item, i) =>
-//                     <td key={i}>{item}</td>
-//                 )}
-//             </tr>
-//         )}
-//         </tbody>
-//     );
-// }
-//
-// export default class SortableTable extends React.Component {
-//     static propTypes = {
-//         data: React.PropTypes.array,
-//     };
-//
-//     constructor(props) {
-//         super(props);
-//
-//         this.state = {
-//             data: [],
-//             columns: TABLE_COLUMNS,
-//         };
-//     }
-//
-//     componentWillMount() {
-//         const { data } = this.props;
-//         this.setState({ data });
-//     }
-//
-//     componentWillReceiveProps(nextProps) {
-//         const { data } = nextProps;
-//         this.setState({ data });
-//     }
-//
-//     render() {
-//         return (
-//             <table className={cn}>
-//                 <SortableHeader columns={this.state.columns} onClick={this.sortTableFunc} />
-//                 <SortableBody data={this.state.data} />
-//             </table>
-//         );
-//     }
-//
-//     sortTableFunc = (id, sortMethod) => {
-//         const { data, columns } = this.state;
-//
-//         let currentSortMethod = 'default';
-//
-//         switch (sortMethod) {
-//             case 'default':
-//                 currentSortMethod = 'asc';
-//                 break;
-//             case 'asc':
-//                 currentSortMethod = 'desc';
-//                 break;
-//             case 'desc':
-//                 currentSortMethod = 'asc';
-//                 break;
-//             default:
-//                 currentSortMethod = 'asc';
-//         }
-//
-//         const changeColumn = columns.map((e, i) =>
-//             ({ ...e, sort: i === id ? currentSortMethod : 'default' })
-//         );
-//
-//         const sortData = sortMultidimensionalArrayFunc(data, id, currentSortMethod);
-//
-//         this.setState({
-//             data: sortData,
-//             columns: changeColumn,
-//         });
-//     }
-// }

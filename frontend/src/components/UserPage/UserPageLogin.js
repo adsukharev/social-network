@@ -11,7 +11,7 @@ import LinkButton from "../LinkButton";
 
 
 export default function ChangeProfileModal(props) {
-  const {userInfo, isLoaded, token, changed} = useContext(UserContext);
+  const {userInfo, isLoaded, token, changed, setChanged} = useContext(UserContext);
   const [myPage, setMyPage] = useState(false);
   const [thisUser, setThisUser] = useState(userInfo);
   const [changedAvatar, setChangedAvatar] = useState(false);
@@ -29,6 +29,13 @@ export default function ChangeProfileModal(props) {
             setMyPage(true);
           } else {
             setMyPage(false);
+            if (data.data.history) {
+              if (!data.data.history.some(() => userInfo.login)) {
+              pushHistory();
+            }
+          } else {
+              pushHistory();
+            }
           }
         })
         .catch(e => {
@@ -41,11 +48,6 @@ export default function ChangeProfileModal(props) {
     }
   }, [isLoaded, changedAvatar, changed, props.location.pathname]);
 
-useEffect(() => {
-  if (thisUser) {
-  pushHistory();
-}
-}, [thisUser]);
 
   const pushHistory = async () => {
     await api().post(`history/${thisUser.user_id}`, {}, {
@@ -80,19 +82,37 @@ useEffect(() => {
   };
 
   const setLikeToUSer = async () => {
-    await api().post(`likes/${thisUser.user_id}`, {}, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+    if (thisUser && thisUser.likes) {
+      if (!thisUser.likes.some(() => userInfo.login)) {
+        await api().post(`likes/${thisUser.user_id}`, {}, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          }
+        })
+          .then((data) => {
+            console.log(data);
+            alert('Лайк поставлен!');
+          })
+          .catch((e) => {
+            console.log(e);
+            alert('OOps!!')
+          })
       }
-    })
-      .then((data) => {
-        console.log(data);
-        alert('Лайк поставлен!');
+    }  else if (thisUser) {
+      await api().post(`likes/${thisUser.user_id}`, {}, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        }
       })
-      .catch((e) => {
-        console.log(e);
-        alert('OOps!!')
-      })
+        .then((data) => {
+          console.log(data);
+          alert('Лайк поставлен!');
+        })
+        .catch((e) => {
+          console.log(e);
+          alert('OOps!!')
+        })
+    }
   };
   const setFakeToUser = async () => {
     await api().post(`fake/${thisUser.user_id}`, {}, {

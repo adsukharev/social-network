@@ -29,7 +29,11 @@ export default function ChangeProfileModal(props) {
             setMyPage(true);
           } else {
             setMyPage(false);
-            if (!data.data.history.some(() => userInfo.login)) {
+            if (data.data.history) {
+              if (!data.data.history.some(() => userInfo.login)) {
+                pushHistory();
+              }
+            } else {
               pushHistory();
             }
           }
@@ -77,20 +81,37 @@ export default function ChangeProfileModal(props) {
   };
 
   const setLikeToUSer = async () => {
-    await api().post(`likes${props.location.pathname.substring(6)}`, {}, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      }
-    })
-      .then((data) => {
-        console.log(data);
-        setChanged(!changed);
-        alert('Лайк поставлен!');
+    if (thisUser && thisUser.likes) {
+      if (!thisUser.likes.some(() => userInfo.login)) {
+        await api().post(`likes${props.location.pathname.substring(6)}`, {}, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          }
+        })
+          .then((data) => {
+            console.log(data);
+            setChanged(!changed);
+            alert('Лайк поставлен!');
+          })
+          .catch((e) => {
+            console.log(e);
+            alert('OOps!!')
+          }); }} else if (thisUser) {
+      await api().post(`likes${props.location.pathname.substring(6)}`, {}, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        }
       })
-      .catch((e) => {
-        console.log(e);
-        alert('OOps!!')
-      })
+        .then((data) => {
+          console.log(data);
+          setChanged(!changed);
+          alert('Лайк поставлен!');
+        })
+        .catch((e) => {
+          console.log(e);
+          alert('OOps!!')
+        });
+    }
   };
   const setFakeToUser = async () => {
     await api().post(`fake${props.location.pathname.substring(6)}`, {}, {

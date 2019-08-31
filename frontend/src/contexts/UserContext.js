@@ -1,18 +1,19 @@
 import React, { useState, createContext, useEffect } from 'react';
 import jwtDecode from 'jwt-decode';
-// import io from 'socket.io-client';
+import io from 'socket.io-client';
 import api from '../api';
 
 export const UserContext = createContext();
 
 const UserContextProvider = (props) => {
   const { children } = props;
-  // const [socket, setSocket] = useState(io(`${urlPrefix}:4040`));
+  // const [socket, setSocket] = useState(io(`http://localhost:5000/api/socket`));
   const [token, setToken] = useState(jwtDecode(localStorage.getItem('token')));
   const [userInfo, setUserInfo] = useState(null);
   const [changed, setChanged] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
+    // socket.on('connect', (socket) => console.log('CONNECTED', socket));
     api().get(`users/${token.identity}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,

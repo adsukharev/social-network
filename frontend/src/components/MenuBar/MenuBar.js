@@ -14,8 +14,8 @@ const logout = async () => {
     //     }
     // });
     localStorage.clear();
-    await api().get('secret');
-    props.setIsLogedIn(false);
+    // await api().get('secret');
+    props.setLoggedIn(false);
 };
     return (
         isLoaded && <Menu vertical className='compact inverted vertical left fixed'>
@@ -60,9 +60,11 @@ const logout = async () => {
                 </Menu.Item>
 
 
-                <Menu.Item as={Link} to={'/login '}  name='logout' active={props.activeItem === 'auth'}
-                           onClick={logout}>
-                    {/*<Label>1</Label>*/}
+                <Menu.Item as={Link} to={'/login '}  name='logout'
+                           onClick={async () => {
+                               await logout();
+                               // props.location.reload();
+                           }}>
                     Выход
                 </Menu.Item>
             </div>
