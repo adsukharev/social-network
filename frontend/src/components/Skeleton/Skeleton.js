@@ -5,6 +5,7 @@ import {BrowserRouter as Router, Route} from "react-router-dom";
 import UserContextProvider from "../../contexts/UserContext";
 import ChatContextProvider from '../../contexts/ChatContext';
 import io from "socket.io-client";
+import {ToastProvider} from "../toast-manager";
 
 export default function Skeleton(props) {
     const [activeItem, setActiveItem] = useState('Моя страница');
@@ -14,6 +15,7 @@ export default function Skeleton(props) {
         <Router>
           <UserContextProvider>
             <ChatContextProvider socket={socket} setSocket={setSocket}>
+              <ToastProvider>
           <Route path={'/'} render={ () => {
             return(
             <Fragment>
@@ -21,6 +23,7 @@ export default function Skeleton(props) {
               <Main  activeItem={activeItem}/>
             </Fragment>)
           }} />
+              </ToastProvider>
             </ChatContextProvider>
           </UserContextProvider>
         </Router>

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import InputMessage from './InputMessage';
 import Messages from './Messages';
 import { ChatContext } from '../../contexts/ChatContext';
@@ -7,6 +7,7 @@ import { UserContext } from '../../contexts/UserContext';
 function DialogWindow(props) {
   const {  activeChat, setActiveChat, chats, setChats, chatsLoaded } = useContext(ChatContext);
   const { userInfo } = useContext(UserContext);
+  const [messagesChanged, setMessagesChanged] = useState(false);
   return (
     activeChat !== null ? (
       <div className="ChatWindow-Chat-Container">
@@ -14,11 +15,13 @@ function DialogWindow(props) {
           {activeChat.chat_name}
         </div>
         <Messages
+          messagesChanged={messagesChanged}
+          setMessagesChanged={setMessagesChanged}
           style={{ zIndex: 0 }}
           user={userInfo}
         />
         <div className="ChatWindow-ChatInput-Container">
-          <InputMessage {...props} />
+          <InputMessage messagesChanged={messagesChanged} setMessagesChanged={setMessagesChanged} {...props} />
         </div>
       </div>
     )

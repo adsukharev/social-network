@@ -1,13 +1,13 @@
 import React, {Fragment, useState, useEffect, useContext} from 'react';
 import defaultImage from '../../images/image.png';
-import {Button, Card, Form, Header, Image, Input, Modal, Select, Statistic, Grid} from 'semantic-ui-react'
-import jwtDecode from 'jwt-decode';
+import {Button, Image} from 'semantic-ui-react'
 import {UserContext} from "../../contexts/UserContext";
 import api from "../../api";
 import { PortalWithState } from 'react-portal';
 import EditProfile from "./EditProfile";
 import {Link} from "react-router-dom";
-import LinkButton from "../LinkButton";
+import {ChatContext} from "../../contexts/ChatContext";
+
 
 
 export default function ChangeProfileModal(props) {
@@ -15,9 +15,9 @@ export default function ChangeProfileModal(props) {
   const [myPage, setMyPage] = useState(false);
   const [thisUser, setThisUser] = useState(userInfo);
   const [changedAvatar, setChangedAvatar] = useState(false);
+  const {socket} = useContext(ChatContext);
   useEffect(() => {
     const getInfoAboutUser = async () => {
-      console.log(props.location.pathname.substring(1));
       await api().get(props.location.pathname.substring(1), {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -30,11 +30,11 @@ export default function ChangeProfileModal(props) {
           } else {
             setMyPage(false);
             if (data.data.history) {
-              if (!data.data.history.some(() => userInfo.login)) {
-              pushHistory();
+              if (!data.data.history.some((item) => userInfo.login === item)) {
+              pushHistory(data.data);
             }
           } else {
-              pushHistory();
+              pushHistory(data.data);
             }
           }
         })
@@ -49,13 +49,19 @@ export default function ChangeProfileModal(props) {
   }, [isLoaded, changedAvatar, changed, props.location.pathname]);
 
 
-  const pushHistory = async () => {
+  const pushHistory = async (thisUser) => {
     await api().post(`history/${thisUser.user_id}`, {}, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       }
     }).then((data) => {
-      console.log(thisUser.user_id);
+      let notification = {
+        author: userInfo.login,
+        partner_id: thisUser.user_id,
+        type: 'history'
+      };
+      socket.emit('manage_notification', notification);
+      setChanged(!changed);
       alert('Ваше посещение внесено в историю!!');
     })
       .catch((e) => {
@@ -71,6 +77,12 @@ export default function ChangeProfileModal(props) {
       }
     })
       .then((data) => {
+        let notification = {
+          author: userInfo.login,
+          partner_id: thisUser.user_id,
+          type: 'dislike'
+        };
+        socket.emit('manage_notification', notification);
         alert('Дизлайк поставлен!');
       })
       .catch((e) => {
@@ -88,7 +100,13 @@ export default function ChangeProfileModal(props) {
           }
         })
           .then((data) => {
-            console.log(data);
+            let notification = {
+              author: userInfo.login,
+              partner_id: thisUser.user_id,
+              type: 'like'
+            };
+            socket.emit('manage_notification', notification);
+            setChanged(!changed);
             alert('Лайк поставлен!');
           })
           .catch((e) => {
@@ -103,6 +121,13 @@ export default function ChangeProfileModal(props) {
         }
       })
         .then((data) => {
+          let notification = {
+            author: userInfo.login,
+            partner_id: thisUser.user_id,
+            type: 'like'
+          };
+          socket.emit('manage_notification', notification);
+          setChanged(!changed);
           alert('Лайк поставлен!');
         })
         .catch((e) => {
@@ -118,6 +143,12 @@ export default function ChangeProfileModal(props) {
       }
     })
       .then((data) => {
+        let notification = {
+          author: userInfo.login,
+          partner_id: thisUser.user_id,
+          type: 'fake'
+        };
+        socket.emit('manage_notification', notification);
         alert('Вы пожаловались на этого пользователя!');
       })
       .catch((e) => {

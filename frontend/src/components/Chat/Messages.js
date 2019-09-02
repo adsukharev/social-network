@@ -10,10 +10,10 @@ const { activeChat, setActiveChat, chats, setChats, chatsLoaded} = useContext(Ch
   const [chatIsLoaded, setChatIsLoaded] = useState(false);
   const { userInfo } = useContext(UserContext);
   const {socket} = useContext(ChatContext);
-  const [messagesChanged, setMessagesChanged] = useState(false);
+const {messagesChanged, setMessagesChanged} = props;
 
   useEffect(() => {
-    socket.on('receive_message', () => {
+    socket.on('notification', () => {
       setMessagesChanged(!messagesChanged);
       getMessages();
     });
@@ -29,7 +29,7 @@ const { activeChat, setActiveChat, chats, setChats, chatsLoaded} = useContext(Ch
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       }
     }).then((data) => {
-      setMessages(data.data);
+      setMessages(data.data.messages);
       setChatIsLoaded(true);
     })
       .catch(e => console.log(e));

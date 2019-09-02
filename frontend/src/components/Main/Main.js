@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 import UserPage from '../UserPage/UserPage';
 import Chat from '../Chat/Chat';
@@ -7,8 +7,20 @@ import Notifications from '../Notifications/Notifications';
 import Top from '../Top/Top';
 import Recommendations from "../Recommendations/Recommendations";
 import UserPageLogin from "../UserPage/UserPageLogin";
+import {Advertisement} from 'semantic-ui-react';
+import {UserContext} from "../../contexts/UserContext";
+import {ChatContext} from "../../contexts/ChatContext";
+import { ToastProvider, useToasts } from "../toast-manager";
 
 export default function Main() {
+    const {socket} = useContext(ChatContext);
+    const [notificationContent, setNotificationContent] = useState('');
+    const { add } = useToasts();
+    useEffect(() => {
+        socket.on('notification', (notification) => {
+            add(notification);
+        });
+    }, []);
     return(
         <div className="main-container">
             <Switch>
