@@ -7,13 +7,14 @@ class Messages(Base):
 
     creation_date = ''
 
-    def __init__(self):
-        self.creation_date = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+    # def __init__(self):
+    #     self.creation_date = strftime("%Y-%m-%d %H:%M:%S", gmtime())
 
     def handle_message(self, message):
         text = message['text']
-        author = session['user_id']
         chat_id = message['chat_id']
+        author = session['user_id']
+        self.creation_date = message['creation_date']
         if not self.__add_message(text, author):
             return 'error'
         message_id = self.__get_message_id(author)

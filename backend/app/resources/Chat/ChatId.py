@@ -1,9 +1,11 @@
 from app.resources.Common.Base import Base
 from .ChatSocket import ChatSocket
+from flask_jwt_extended import jwt_required
 
 
 class ChatId(Base):
 
+    @jwt_required
     def get(self, chat_id):
 
         sql = """   SELECT m.creation_date, m.text, u.login as author

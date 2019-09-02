@@ -24,7 +24,7 @@
 </template>
 
 <script>
-    import RegistartionService from '@/services/Registration.js'
+    import RegistrationService from '@/services/Registration.js'
 
     export default {
         name: 'LoginComponent',
@@ -40,7 +40,7 @@
         },
         methods: {
             async signUp() {
-                const res = await RegistartionService.signUp(this.loginData);
+                const res = await RegistrationService.signUp(this.loginData);
                 this.$toasted.info(res);
             },
             async oauth() {

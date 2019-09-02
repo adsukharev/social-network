@@ -16,9 +16,8 @@ class ChatService {
     static fetchChat(id, token) {
         return new Promise(async (resolve, reject) => {
             try {
-                const res = await api().post(`chats/${id}`, '' , {headers: {"Authorization": `Bearer ${token}`}});
+                const res = await api().get(`chats/${id}` , {headers: {"Authorization": `Bearer ${token}`}});
                 resolve(res.data)
-
             } catch (err) {
                 reject(err);
             }

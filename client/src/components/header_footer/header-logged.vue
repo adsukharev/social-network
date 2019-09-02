@@ -7,7 +7,7 @@
             <router-link class="nav-item nav-link" to="/chat" exact @click.native="">Chat</router-link>
             <router-link class="nav-item nav-link" to="/search" exact @click.native="">Search</router-link>
             <router-link class="nav-item nav-link" to="/rating" exact @click.native="">Rating</router-link>
-            <router-link class="nav-item nav-link" to="/" exact @click.native="logoutUser">Log out</router-link>
+            <router-link class="nav-item nav-link" to="/" exact @click.native="logout">Log out</router-link>
         </div>
     </div>
 
@@ -15,6 +15,7 @@
 
 <script>
     import {mapState, mapMutations} from 'vuex';
+    import RegistrationService from '@/services/Registration.js'
 
     export default {
         name: "HeaderLogged",
@@ -27,6 +28,11 @@
             ...mapMutations([
                 'logoutUser'
             ]),
+            async logout() {
+                await RegistrationService.logout(this.loggedUser.token);
+                this.logoutUser();
+                this.$socket.emit('disconnect');
+            }
         }
     }
 </script>

@@ -1,7 +1,7 @@
 import api from './api.js';
 
 
-class RegistartionService {
+class RegistrationService {
 
   static signUp(data) {
     return new Promise(async (resolve, reject) => {
@@ -66,4 +66,4 @@ class RegistartionService {
 
 }
 
-export default RegistartionService;
+export default RegistrationService;

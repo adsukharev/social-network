@@ -1,9 +1,11 @@
 <template>
     <div>
         <div class="container messages">
-            <div class="row" v-if="chat.length > 0">
-                <div class="col">
-                    {{chat}}
+            <div v-if="messages.length > 0">
+                <div class="row" v-for="message in messages">
+                    <div class="col">
+                        {{message | filterMessage}}
+                    </div>
                 </div>
             </div>
             <h5 v-else>No message yet</h5>
@@ -11,7 +13,7 @@
         <div class="container input_field">
             <div class="row">
                 <div class="col-10">
-                    <input class="btn-block" v-model="message">
+                    <input class="btn-block" v-model="dataToSend.text">
                 </div>
                 <div class="col">
                     <button class="btn btn-outline-success btn-sm button_cust" @click="sendMessage">Send</button>
@@ -28,11 +30,16 @@
 
 
     export default {
-        name: 'chat-component',
+        name: 'chat-id-component',
         data() {
             return {
-                chat: [],
-                message: '',
+                messages: [],
+                dataToSend: {
+                    text: '',
+                    chat_id: this.$route.params.id,
+                    author: '',
+                    creation_date: '',
+                }
 
             };
         },
@@ -41,23 +48,30 @@
                 'loggedUser', 'userProfile'
             ]),
         },
+        filters: {
+            filterMessage: function (value) {
+                let date = new Date(value.creation_date).toLocaleTimeString();
+                let message = `${value.author} ${date}: ${value.text}`;
+                return message
+            }
+        },
         created() {
             this.getChat();
+            this.$socket.emit('join', this.dataToSend.chat_id)
         },
         methods: {
             async getChat() {
-                this.chat = await ChatService.fetchChat(this.$route.params.id, this.loggedUser.token);
+                this.messages = await ChatService.fetchChat(this.dataToSend.chat_id, this.loggedUser.token);
             },
             async sendMessage() {
-                this.$socket.emit('emit_method', this.message)
+                this.dataToSend.author = this.loggedUser.login;
+                this.dataToSend.creation_date = new Date();
+                this.$socket.emit('message', this.dataToSend)
             }
         },
         sockets: {
-            connect: function () {
-                console.log('socket connected')
-            },
-            customEmit: function (data) {
-                console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+            receive_message: function (message) {
+                this.messages.push(message);
             }
         },
     };

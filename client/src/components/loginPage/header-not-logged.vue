@@ -10,7 +10,7 @@
 </template>
 
 <script>
-    import RegistartionService from '@/services/Registration.js'
+    import RegistrationService from '@/services/Registration.js'
     import {mapState, mapMutations} from 'vuex';
 
     export default {
@@ -55,11 +55,13 @@
                 }
             },
             async sendLogin() {
-                const res = await RegistartionService.signIn(this.loginData);
+                const res = await RegistrationService.signIn(this.loginData);
                 if (res.message === "ok") {
                     this.forgottenFalse();
                     await this.askLocation();
                     this.startSession(res);
+                    this.$socket.emit('connect_logged_user', this.user.id);
+                    // this.$socket.emit('connect');
                     this.changePath('/profile/' + this.user.id)
                 } else {
                     this.$toasted.error(res.message);

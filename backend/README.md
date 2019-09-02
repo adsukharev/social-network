@@ -303,7 +303,7 @@ Example GET <chat_id>  response
 ### Socket
 
 ```
-/api/socket -> path to socket
+/api/socket -> connect to socket
     
 ```
 Events
@@ -311,7 +311,7 @@ Events
 on:
 
 ```
-'connect' -> connect to socket
+'connect' -> connected to socket
 'receive_message' -> get message from server to another user
 'notification_message' -> notificate about message another user
 'notification_like' -> notificate about like another user
@@ -322,6 +322,19 @@ on:
 emit:
 
 ```
-'join' -> join the chat
+'connect_logged_user' -> after sign in send user_id
+```
+
+```
+'join' -> send chat_id to join the chat
+```
+
+```
 'message' -> send message 
+{
+    "text": "Hello",
+    "chat_id": "1", -> get this from url
+    "author": "YoYo", -> login of user
+    "creation_date": "2019-09-02T09:25:07.561Z", -> new Date()
+}
 ```

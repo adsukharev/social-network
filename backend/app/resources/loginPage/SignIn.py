@@ -37,6 +37,7 @@ class SignIn(UsersCommon):
             return "Your account is blocked"
         session['login'] = login
         session['user_id'] = user_data['user_id']
+        print('user_id sign in: ', session['user_id'])
         return "ok"
 
     def create_token(self):

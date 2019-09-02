@@ -10,7 +10,7 @@ import VueSocketIO from 'vue-socket.io'
 
 Vue.use(new VueSocketIO({
     debug: true,
-    connection: 'http://' + document.domain + ':' + location.port + '/api/socket', // todo: ENV
+    connection: 'http://localhost:5000/api/socket', // todo: ENV
     vuex: {
         store,
         actionPrefix: 'SOCKET_',

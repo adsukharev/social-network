@@ -38,7 +38,7 @@ app.register_blueprint(api_bp, url_prefix='/api')
 app.config.update(mail_settings)
 CORS(app, resources={r"/*": {"origins": "*"}}, headers=['Content-Type'], expose_headers=['Access-Control-Allow-Origin'], supports_credentials=True)
 jwt = JWTManager(app)
-socketio = SocketIO(app)
+socketio = SocketIO(app, cors_allowed_origins='*', cors_credentials=True)
 
 # Route
 api.add_resource(SignUp, '/signup')
@@ -75,16 +75,16 @@ def check_if_token_in_blacklist(decrypted_token):
     return True
 
 
-@app.route('/chat')
-def socket():
-    return render_template('socket.html')
-
-
-@app.route('/chats')
-def chats():
-    return render_template('chats.html')
-
-
-@app.route('/')
-def login():
-    return render_template('login.html')
+# @app.route('/chat')
+# def socket():
+#     return render_template('socket.html')
+#
+#
+# @app.route('/chats')
+# def chats():
+#     return render_template('chats.html')
+#
+#
+# @app.route('/')
+# def login():
+#     return render_template('login.html')
