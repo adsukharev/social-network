@@ -335,6 +335,17 @@ emit:
     "text": "Hello",
     "chat_id": "1", -> get this from url
     "author": "YoYo", -> login of user
-    "creation_date": "2019-09-02T09:25:07.561Z", -> new Date()
+    "creation_date": "2019-09-02T09:25:07.561Z", -> new Date(),
 }
 ```
+
+```
+'manage_notification' -> send message 
+{
+    "author": "YoYo", -> login of user
+    "partner_id": "2", for whom notification
+    "type": "history" or "like" or "dislike" or "fake"
+}
+```
+
+

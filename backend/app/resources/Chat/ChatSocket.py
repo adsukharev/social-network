@@ -22,8 +22,6 @@ class ChatSocket(Namespace, Base):
                 print("else connect", session)
         except Exception as e:
             print(e)
-        # data = {'data': 'connected'}
-        # emit('connection_response', data)
 
     def on_connect_logged_user(self, user_id):
         try:
@@ -82,18 +80,33 @@ class ChatSocket(Namespace, Base):
         if res == 'error':
             return res
         room = data['chat_id']
-        self.notification_message(room, data)
+        data['type'] = 'message'
+        self.on_manage_notification(data)
         print("sent to room:", room)
         emit('receive_message', data, room=room)
 
-    def notification_message(self, chat_id, mes):
-        # user_id = mes.author
-        # sql = """   SELECT room
-        #             FROM users
-        #             JOIN chat_users cu USING (user_id)
-        #             WHERE chat_id = %s AND user_id != %s;"""
-        # record = (chat_id, user_id)
-        # room_obj = self.base_get_one(sql, record)
-        # room = room_obj['room']
-        # emit('notification_message', mes, room=room)
-        emit('notification_message', mes, room=chat_id)
+    def on_manage_notification(self, data):
+        print(data)
+        partner_room = self.__get_partner_room(data['partner_id'])
+        message = self.__create_notification(data)
+        emit('notification', message, room=partner_room)
+
+    def __create_notification(self, data):
+        if data['type'] == 'message':
+            return data['author'] + ': ' + data['text']
+        elif data['type'] == 'like':
+            return data['author'] + ' liked you'
+        elif data['type'] == 'dislike':
+            return data['author'] + ' disliked you'
+        elif data['type'] == 'history':
+            return data['author'] + ' has visited your profile'
+        elif data['type'] == 'fake':
+            return 'You are blocked'
+
+    def __get_partner_room(self, partner_id):
+        sql = """SELECT room
+                FROM users
+                WHERE user_id = %s;"""
+        record = (partner_id,)
+        room_obj = self.base_get_one(sql, record)
+        return room_obj['room']

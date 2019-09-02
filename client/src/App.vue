@@ -56,8 +56,8 @@
             connect: function () {
                 console.log('socket connected');
             },
-            notification_message: function (message) {
-                this.$toasted.info(message.author + ': ' + message.text);
+            notification: function (message) {
+                this.$toasted.info(message);
             },
         },
 

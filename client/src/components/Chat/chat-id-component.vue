@@ -39,6 +39,8 @@
                     chat_id: this.$route.params.id,
                     author: '',
                     creation_date: '',
+                    partner_id: '',
+                    // type: 'message',
                 }
 
             };
@@ -61,12 +63,16 @@
         },
         methods: {
             async getChat() {
-                this.messages = await ChatService.fetchChat(this.dataToSend.chat_id, this.loggedUser.token);
+                const data = await ChatService.fetchChat(this.dataToSend.chat_id, this.loggedUser.token);
+                console.log(data);
+                this.messages = data['messages'];
+                this.dataToSend.partner_id = data['partner_id'];
             },
             async sendMessage() {
                 this.dataToSend.author = this.loggedUser.login;
                 this.dataToSend.creation_date = new Date();
-                this.$socket.emit('message', this.dataToSend)
+                this.$socket.emit('message', this.dataToSend);
+                this.dataToSend.text = '';
             }
         },
         sockets: {

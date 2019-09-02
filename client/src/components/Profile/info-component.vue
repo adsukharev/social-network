@@ -68,6 +68,11 @@
         methods: {
             async blockUser(id) {
                 await UserService.fakeUser(id, this.loggedUser.token);
+                this.$socket.emit('manage_notification', {
+                    type: 'fake',
+                    author: this.loggedUser.login,
+                    partner_id: id,
+                });
                 this.$toasted.info('User is blocked')
 
             }

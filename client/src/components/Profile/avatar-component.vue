@@ -1,7 +1,11 @@
 <template>
 
     <div class="image_container">
-        <router-link :to="{ name: 'profile', params: { id: user.user_id }}">
+        <router-link
+                v-if="user.avatar"
+                :to="{ name: 'profile', params: { id: user.user_id }}"
+                exact @click.native="manageHistory"
+        >
             <img :src="user.avatar[0]" style="width:128px;height:150px;" alt="avatar">
         </router-link>
         <div v-if="loggedUser.id !== user.user_id || rating">
@@ -29,8 +33,7 @@
         },
         data() {
             return {
-                data: '',
-                photoMain: '',
+                notification: {}
             };
         },
         computed: {
@@ -41,6 +44,13 @@
                 return this.user.user_name + ', ' + this.user.age
             },
         },
+        created() {
+            this.notification = {
+                type: 'like',
+                author: this.loggedUser.login,
+                partner_id: this.user.user_id,
+            }
+        },
         methods: {
             async addLike() {
                 if (!this.checkLike())
@@ -48,6 +58,7 @@
                 await ProfileService.addLike(this.user.user_id, this.loggedUser.token);
                 this.user.sumlikes += 1;
                 this.user.likes.push(this.loggedUser.login);
+                this.sendNotification('like');
                 this.$toasted.success("Like")
             },
             checkLike() {
@@ -67,6 +78,7 @@
                 await ProfileService.addDislike(this.user.user_id, this.loggedUser.token);
                 this.user.sumlikes -= 1;
                 this.deleteEl();
+                this.sendNotification('dislike');
                 this.$toasted.error("Dislike")
             },
             deleteEl() {
@@ -87,6 +99,14 @@
                 }
                 return true;
             },
+            async manageHistory() {
+                await ProfileService.addHistory(this.user.user_id, this.loggedUser.token);
+                this.sendNotification('history')
+            },
+            sendNotification(type) {
+                this.notification.type = type;
+                this.$socket.emit('manage_notification', this.notification);
+            }
         },
     }
 </script>
