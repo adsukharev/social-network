@@ -337,6 +337,7 @@ emit:
     "chat_id": "1", -> get this from url
     "author": "YoYo", -> login of user
     "creation_date": "2019-09-02T09:25:07.561Z", -> new Date(),
+     partner_id: '2'
 }
 ```
 
