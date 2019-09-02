@@ -20,7 +20,6 @@ export default function Recommendations() {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
             }})
           .then((data) => {
-              console.log(data);
               setRecommendResult(data.data);
               setResultGet(true);
               if(data.data.length === 0) {

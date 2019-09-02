@@ -17,7 +17,6 @@ export default function ChangeProfileModal(props) {
   const [changedAvatar, setChangedAvatar] = useState(false);
   useEffect(() => {
     const getInfoAboutUser = async () => {
-      console.log(props.location.pathname.substring(1));
       await api().get(props.location.pathname.substring(1), {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -54,7 +53,6 @@ export default function ChangeProfileModal(props) {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       }
     }).then((data) => {
-      console.log(data);
       alert('Ваше посещение внесено в историю!!');
     })
       .catch((e) => {
@@ -70,7 +68,6 @@ export default function ChangeProfileModal(props) {
       }
     })
       .then((data) => {
-        console.log(data);
         setChanged(!changed);
         alert('Дизлайк поставлен!');
       })
@@ -82,14 +79,13 @@ export default function ChangeProfileModal(props) {
 
   const setLikeToUSer = async () => {
     if (thisUser && thisUser.likes) {
-      if (!thisUser.likes.some(() => userInfo.login)) {
+      if (!thisUser.likes.some(() => userInfo.login === thisUser.login)) {
         await api().post(`likes${props.location.pathname.substring(6)}`, {}, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           }
         })
           .then((data) => {
-            console.log(data);
             setChanged(!changed);
             alert('Лайк поставлен!');
           })
@@ -103,7 +99,6 @@ export default function ChangeProfileModal(props) {
         }
       })
         .then((data) => {
-          console.log(data);
           setChanged(!changed);
           alert('Лайк поставлен!');
         })
@@ -120,7 +115,6 @@ export default function ChangeProfileModal(props) {
       }
     })
       .then((data) => {
-        console.log(data);
         setChanged(!changed);
         alert('Вы пожаловались на этого пользователя!');
       })
@@ -175,7 +169,10 @@ export default function ChangeProfileModal(props) {
                 )}
               </PortalWithState>
             </Fragment> : null}
-          {!myPage ? <Button className="userpage-avatar-container-button" basic color='pink' content='Нравится' onClick={setLikeToUSer} /> : null}
+          {!myPage ? <Button className="userpage-avatar-container-button" basic color='pink' content='Нравится' onClick={() => {
+            setLikeToUSer();
+            console.log('2')
+          }} /> : null}
           {!myPage ? <Button className="userpage-avatar-container-button" basic color='pink' content='Не нравится' onClick={setUnLikeToUSer} /> : null}
           {!myPage ? <Button className="userpage-avatar-container-button"  basic color='yellow' content='Пожаловаться' onClick={setFakeToUser}/> : null}
           <h2>{thisUser.sumlikes}</h2>
@@ -208,10 +205,10 @@ export default function ChangeProfileModal(props) {
             <p>Количество лайков:</p><p>{thisUser.sumLikes}</p>
           </div> : null}
           {thisUser.history ? <div className="userpage-information-section">
-            <p>История посещений:</p><div>{history.slice(0, 5)}</div>
+            <p>История посещений:</p><div>{history}</div>
           </div> : null}
           {thisUser.likes ? <div className="userpage-information-section">
-            <p>История лайков:</p><div>{likes.slice(0, 5)}</div>
+            <p>История лайков:</p><div>{likes}</div>
           </div> : null}
           {thisUser.tags ? <div className="userpage-information-section">
             <p>Тэги:</p><div>{tags}</div>

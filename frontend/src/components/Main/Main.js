@@ -17,6 +17,7 @@ export default function Main() {
                 <Route path={'/match'} component={Match}/>
                 <Route path={'/Recommendations'} component={Recommendations}/>
                 <Route path={'/chats'} component={Chat}/>
+                <Route path={'/chats/:id'} component={Chat}/>
                 <Route path={'/users/:id'} component={UserPage} />
                 <Route path={'/user_login/:login'} component={UserPageLogin}/>
             </Switch>

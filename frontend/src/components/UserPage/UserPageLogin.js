@@ -56,7 +56,6 @@ export default function ChangeProfileModal(props) {
       }
     }).then((data) => {
       console.log(thisUser.user_id);
-      console.log(data);
       alert('Ваше посещение внесено в историю!!');
     })
       .catch((e) => {
@@ -72,7 +71,6 @@ export default function ChangeProfileModal(props) {
       }
     })
       .then((data) => {
-        console.log(data);
         alert('Дизлайк поставлен!');
       })
       .catch((e) => {
@@ -83,7 +81,7 @@ export default function ChangeProfileModal(props) {
 
   const setLikeToUSer = async () => {
     if (thisUser && thisUser.likes) {
-      if (!thisUser.likes.some(() => userInfo.login)) {
+      if (!thisUser.likes.some(() => userInfo.login === thisUser.login)) {
         await api().post(`likes/${thisUser.user_id}`, {}, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -105,7 +103,6 @@ export default function ChangeProfileModal(props) {
         }
       })
         .then((data) => {
-          console.log(data);
           alert('Лайк поставлен!');
         })
         .catch((e) => {
@@ -121,7 +118,6 @@ export default function ChangeProfileModal(props) {
       }
     })
       .then((data) => {
-        console.log(data);
         alert('Вы пожаловались на этого пользователя!');
       })
       .catch((e) => {

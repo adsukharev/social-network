@@ -4,7 +4,7 @@ import Messages from './Messages';
 import { ChatContext } from '../../contexts/ChatContext';
 import { UserContext } from '../../contexts/UserContext';
 
-function DialogWindow() {
+function DialogWindow(props) {
   const {  activeChat, setActiveChat, chats, setChats, chatsLoaded } = useContext(ChatContext);
   const { userInfo } = useContext(UserContext);
   return (
@@ -18,7 +18,7 @@ function DialogWindow() {
           user={userInfo}
         />
         <div className="ChatWindow-ChatInput-Container">
-          <InputMessage />
+          <InputMessage {...props} />
         </div>
       </div>
     )

@@ -18,7 +18,6 @@ export default function Top() {
       .then((data) => {
         setTopArray(data.data);
         setLoad(true);
-        console.log(data)
       })
   }, [isLoaded]);
 
@@ -45,7 +44,7 @@ export default function Top() {
     }
   );
   return (
-    isLoaded && userInfo && <div className="rating-container">
+    isLoaded && userInfo && isLoad && <div className="rating-container">
       <h1>Лучшие пользователи</h1>
       <Card.Group style={{
         margin: 'auto', width: '100%', backgroundColor: 'pink'

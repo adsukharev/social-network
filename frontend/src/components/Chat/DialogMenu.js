@@ -1,14 +1,21 @@
-import React, { useContext } from 'react';
-
+import React, { useContext, useEffect } from 'react';
+import {Link} from "react-router-dom";
 import { ChatContext } from '../../contexts/ChatContext';
 import { UserContext } from '../../contexts/UserContext';
 
 
-export default function DialogMenu() {
-  const {   activeChat, setActiveChat, chats, setChats, chatsLoaded } = useContext(ChatContext);
+export default function DialogMenu(props) {
+  const {   activeChat, setActiveChat, chats, setChats, chatsLoaded, socket } = useContext(ChatContext);
   const { userInfo } = useContext(UserContext);
 
-
+  useEffect(() => {
+    chats.forEach((chat) => {
+      if(chat.chat_id == props.location.pathname.slice(7)) {
+        setActiveChat(chat);
+        socket.emit('join', chat.chat_id);
+      }
+    })
+  }, [props.location.pathname]);
   return (
     <div className="ChatMenu-Choosing-Bar">
       {
@@ -16,8 +23,8 @@ export default function DialogMenu() {
           if (chat.chat_name) {
             const chatSideName = chat.chat_name;
             return (
+              <Link  key={chat.chat_id} to={`/chats/${chat.chat_id}`}>
               <div
-                key={chat.chat_id}
                 className="ChatMenu-Choosing-Item"
                 onClick={() => {
                   setActiveChat(chat);
@@ -34,11 +41,13 @@ export default function DialogMenu() {
                 </div>
 
               </div>
+              </Link>
             );
           }
           return null;
         })
       }
     </div>
+
   );
 }

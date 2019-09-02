@@ -9,17 +9,31 @@ const { activeChat, setActiveChat, chats, setChats, chatsLoaded} = useContext(Ch
   const [msgs, setMessages] = useState([]);
   const [chatIsLoaded, setChatIsLoaded] = useState(false);
   const { userInfo } = useContext(UserContext);
-
+  const {socket} = useContext(ChatContext);
+  const [messagesChanged, setMessagesChanged] = useState(false);
 
   useEffect(() => {
-   api().get(`chats/${activeChat.chat_id}`).then((data) => {
-     console.log(data);
-     setMessages(data.data);
-     setChatIsLoaded(true);
-   })
-     .catch(e => console.log(e));
-  }, [activeChat]);
+    socket.on('receive_message', () => {
+      setMessagesChanged(!messagesChanged);
+      getMessages();
+    });
+  }, []);
 
+  useEffect(() => {
+    getMessages();
+  }, [activeChat, messagesChanged]);
+
+  const getMessages = async () => {
+    await api().get(`chats/${activeChat.chat_id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      }
+    }).then((data) => {
+      setMessages(data.data);
+      setChatIsLoaded(true);
+    })
+      .catch(e => console.log(e));
+  };
   return (
     chatIsLoaded && <div className="ChatWindow-Messages-Container">
       { msgs.length > 0

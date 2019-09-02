@@ -31,6 +31,8 @@ function App() {
         console.log(e);
       });
   }, []);
+
+
     return (
       isLoaded && <Router history={history}>
         <div className="App">

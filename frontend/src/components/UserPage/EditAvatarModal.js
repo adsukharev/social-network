@@ -97,7 +97,6 @@ export default function EditAvatarModal(props) {
 
   const sendToServer = async () => {
     const data = new FormData();
-    console.log(finalImage);
     data.append('avatar', finalImage);
     await api().put(`users/${userInfo.user_id}`, data, {
       headers: {
@@ -105,7 +104,6 @@ export default function EditAvatarModal(props) {
       }
     }).then(
       (data) => {
-        console.log(data);
         setChanged(!changed);
         closeModalWindow();
       },

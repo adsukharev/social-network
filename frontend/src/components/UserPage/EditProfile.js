@@ -85,7 +85,6 @@ export default function EditProfile(props) {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },})
         .then(data => {
-          console.log(data.data);
           let newOpt = data.data.map(item => {
             return ({
               key: item, text: item, value: item
@@ -100,7 +99,6 @@ export default function EditProfile(props) {
         },
       })
         .then((data) => {
-          console.log(data);
           if (data.data.email !== null) {
             setEmail(data.data.email);
           }
@@ -139,7 +137,6 @@ export default function EditProfile(props) {
   const submit = async () => {
     const data =  new FormData();
 
-    console.log(tags);
     data.append('email', email);
     data.append('login', login);
     data.append('user_name', userName);

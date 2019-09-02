@@ -2,50 +2,32 @@ import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
 import { ChatContext } from '../../contexts/ChatContext';
 
-export default function InputMessage() {
+export default function InputMessage(props) {
   const [message, setMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const { socket, user, userInfo } = useContext(UserContext);
-  const { chat, chats, setChats } = useContext(ChatContext);
+  const { user, userInfo, isLoaded } = useContext(UserContext);
+  const { chat, chats, setChats, socket, activeChat } = useContext(ChatContext);
 
-  const getTime = date => `${date.getHours()}:${(`0${date.getMinutes()}`).slice(-2)}`;
-
-  const sendMessage = (send) => {
-    // socket.emit('MESSAGE_SENT', { chatId: chat.id, send });
+  const sendMessage = () => {
+    let send = {
+      text: message,
+        chat_id: activeChat.chat_id,
+      author: userInfo.login,
+      creation_date: new Date(Date.now()).toLocaleTimeString(),
+    };
+    socket.emit('message', send);
   };
 
-
-  const createMessageForServer = (message = '', sender = '') => ({
-    chatId: chat.id,
-    // id: uuidv4(),
-    time: getTime(new Date(Date.now())),
-    message,
-    sender,
-    status: false,
-  });
-
-
-  const addMessageToChat = (chatId, mes) => {
-    // eslint-disable-next-line no-shadow
-    const newChats = chats.map((chat) => {
-      if (chat.id === chatId && !chat.messages.some(msg => msg.id === mes.id)) {
-        chat.messages.push(mes);
-      }
-      return chat;
-    });
-
-    setChats(newChats);
-  };
 
   const handleSubmit = () => {
     if (message !== '') {
-      // sendMessage(send);
+      sendMessage();
       // addMessageToChat(chat.id, send);
     }
     setMessage('');
   };
   return (
-    <form onSubmit={(e) => {
+    isLoaded && <form onSubmit={(e) => {
       e.preventDefault();
       handleSubmit(e);
     }}
