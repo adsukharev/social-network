@@ -286,18 +286,21 @@ Example GET response
 
 Example GET <chat_id>  response
 ```
-[
-    {
-        "creation_date": "2019-08-07 15:34:07",
-        "text": "asdad",
-        "author": "test1"
-    },
-    {
-        "creation_date": "2019-08-07 15:34:11",
-        "text": "asdd",
-        "author": "test2"
-    }
-]
+{
+    "messages": [
+        {
+            "creation_date": "2019-08-07 15:34:07",
+            "text": "asdad",
+            "author": "test1"
+        },
+        {
+            "creation_date": "2019-08-07 15:34:11",
+            "text": "asdd",
+            "author": "test2"
+        }
+    ],
+    "partner_id": 2
+}
 ```
 
 ### Socket
