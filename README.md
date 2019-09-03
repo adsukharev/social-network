@@ -13,9 +13,9 @@ Full specification: https://cdn.intra.42.fr/pdf/pdf/968/matcha.en.pdf
 
 Goals:
 
-- Everything must be secured (CSRF, SQL-debugging)
+- Everything must be secured (JWT, SQL-debugging)
 - Sign In and Sign Up components with email confirmation
-- User Profile (gender, tags, pictures, fame rating, etc)
+- User Profile (biography, tags, pictures, fame rating, etc)
 - GPS Location
 - Match profiles (Same geographic area, With a maximum of common tags, With a maximum “fame rating”, etc)
 - Chat
