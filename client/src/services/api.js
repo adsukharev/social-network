@@ -1,11 +1,10 @@
 import axios from 'axios';
 // import { PORT_MACHINE } from "babel-dotenv";
 
-// const host = process.env.HOST;
-const host = 'localhost';
+const HOST_URL = process.env.VUE_APP_HOST_URL;
 export default () => {
     return axios.create({
         withCredentials: true,
-        baseURL: `http://${host}:5000/api/`,
+        baseURL: `${HOST_URL}/api/`,
     });
 }

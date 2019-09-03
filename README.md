@@ -5,7 +5,7 @@ Full specification: https://cdn.intra.42.fr/pdf/pdf/968/matcha.en.pdf
 
 [Server] Python (Flask)
 
-[Client] Bootstrap4, React
+[Client] Vue, Bootstrap4
 
 [Database] PostgreSQL
 
@@ -39,7 +39,10 @@ eval $(docker-machine env Matcha)
 ```
 
 #### Setup HOST
-if you use docker-machine or your host is differ from "localhost" change in .env variable HOST
+if you use docker-machine or your host is differ from "localhost" change:
+
+* .env HOST
+* docker-compose.yml VUE_APP_HOST_URL
 
 
 ## Build and Run
