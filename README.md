@@ -52,8 +52,7 @@ git clone https://github.com/AndreiSukharev/Matcha.git matcha
 cd matcha
 docker-compose up --build
 sh dbGPS.sh
-front: http://localhost:3000
-check backend: http://localhost:5000
+go to: http://localhost:8080
 ```
 
 ## Test
