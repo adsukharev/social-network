@@ -1,11 +1,13 @@
 from app.resources.Common.Base import Base
 from flask import session
+from flask_jwt_extended import jwt_required
 
 
 class Chats(Base):
     from_like = ''
     to_like = ''
 
+    @jwt_required
     def get(self):
         user_id = session['user_id']
         sql = """   SELECT c.chat_name, c.chat_id

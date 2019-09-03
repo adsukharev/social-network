@@ -1,11 +1,15 @@
 from app.resources.Common.Base import Base
 from flask import session
+from flask_jwt_extended import jwt_required
+from .Notification import Notification
 
 
 class History(Base):
 
+    @jwt_required
     def post(self, to_history_id):
         res = self.__add_history(to_history_id)
+        # Notification.send_notification(to_history_id, 'history')
         return res
 
     def __add_history(self, to_history_id):
@@ -17,6 +21,7 @@ class History(Base):
         # todo:notificate
         return res
 
+    @jwt_required
     def delete(self, to_history_id):
         sql = """DELETE from history WHERE history_id =%s"""
         record = (to_history_id,)

@@ -1,8 +1,10 @@
 from app.resources.Common.UsersCommon import UsersCommon
+from flask_jwt_extended import jwt_required
 
 
 class UserLogin(UsersCommon):
 
+    @jwt_required
     def get(self, login):
         sql = """
                 SELECT  u.*, r.sumLikes, l.likes, h.history, t.tags
@@ -26,6 +28,7 @@ class UserLogin(UsersCommon):
                      JOIN  tags USING (tag_id)
                      GROUP BY 1
                      ) t ON u.user_id = t.user_id_fk
+                WHERE u.login = %s
             ;"""
         record = (login,)
         user = self.base_get_one(sql, record)

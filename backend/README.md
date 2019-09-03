@@ -49,7 +49,8 @@ Example for POST:
  ```
  {
     "message": "ok",
-    "access_token": "eyJ0eXAiOiJK"
+    "access_token": "eyJ0eXAiOiJK",
+    'user_id': "32"
 }
 ```
 
@@ -78,7 +79,8 @@ GET     /api/oauth - callback from facebook
 request from GET:
 ```
 "message": "ok",
-"access_token": "eyJ0eXAiOiJK"
+"access_token": "eyJ0eXAiOiJK",
+'user_id': "32"
 ```
 
  
@@ -113,11 +115,12 @@ Response for getting one user:
     "preferences": "bisexual",  -> 3 types: bisexual, gomo, getero
     "bio": "I like swimming",
     "avatar": [
-        "life.jpg",
-        "vietnam.jpg"
+        "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASAB",
+        "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQSADASDD"
     ],
     "notification": true,
     "fake": false,
+    "city": "Moscow",
     "latitude": 55.7116,
     "longitude": 37.7382,
     "online": "online",
@@ -183,7 +186,7 @@ Response:
     "user_id": 4,
     "login": "test",
     "user_name": "Olega",
-    "avatar": "life.jpg",
+    "avatar": ["data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASAB"],
     "sumlikes": 8
 }
 
@@ -214,7 +217,7 @@ if ok:
         "user_name": "Vika",
         "age": 23,
         "sex": "female",
-        "avatar": kek.png,
+        "avatar": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASAB",
         "preferences": "getero",
          "sumlikes": 10,
         "tags": [
@@ -245,7 +248,7 @@ Example POST response
         "user_name": "Vika",
         "age": 23,
         "sex": "female",
-        "avatar": kek.png,
+        "avatar": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASAB",
         "preferences": "getero",
          "sumlikes": 10,
         "tags": [
@@ -283,24 +286,27 @@ Example GET response
 
 Example GET <chat_id>  response
 ```
-[
-    {
-        "creation_date": "2019-08-07 15:34:07",
-        "text": "asdad",
-        "author": "test1"
-    },
-    {
-        "creation_date": "2019-08-07 15:34:11",
-        "text": "asdd",
-        "author": "test2"
-    }
-]
+{
+    "messages": [
+        {
+            "creation_date": "2019-08-07 15:34:07",
+            "text": "asdad",
+            "author": "test1"
+        },
+        {
+            "creation_date": "2019-08-07 15:34:11",
+            "text": "asdd",
+            "author": "test2"
+        }
+    ],
+    "partner_id": 2
+}
 ```
 
 ### Socket
 
 ```
-/api/socket -> path to socket
+/api/socket -> connect to socket
     
 ```
 Events
@@ -308,17 +314,40 @@ Events
 on:
 
 ```
-'connect' -> connect to socket
-'receive_message' -> get message from server to another user
-'notification_message' -> notificate about message another user
-'notification_like' -> notificate about like another user
-'notification_history' -> notificate about history another user
+'connect' -> connected to socket
+'receive_message(message)' -> get message from server to another user
+'notification(message)' -> notificate about message, fake, history, likes, dislikes
 
 ```
 
 emit:
 
 ```
-'join' -> join the chat
-'message' -> send message 
+'connect_logged_user(user_id)' -> after sign in send user_id
 ```
+
+```
+'join(chat_id)' -> send chat_id to join the chat
+```
+
+```
+'message(message)' -> send message 
+{
+    "text": "Hello",
+    "chat_id": "1", -> get this from url
+    "author": "YoYo", -> login of user
+    "creation_date": "2019-09-02T09:25:07.561Z", -> new Date(),
+    "partner_id": '2'
+}
+```
+
+```
+'manage_notification(data)' -> send notification 
+{
+    "author": "YoYo", -> login of user
+    "partner_id": "2", for whom notification
+    "type": "history" or "like" or "dislike" or "fake"
+}
+```
+
+

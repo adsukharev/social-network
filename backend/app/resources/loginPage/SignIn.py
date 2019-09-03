@@ -37,20 +37,23 @@ class SignIn(UsersCommon):
             return "Your account is blocked"
         session['login'] = login
         session['user_id'] = user_data['user_id']
+        print('user_id sign in: ', session['user_id'])
         return "ok"
 
     def create_token(self):
         access_token = create_access_token(identity=session['user_id'], expires_delta=False)
         result_obj = {
             'message': "ok",
-            'access_token': access_token
+            'access_token': access_token,
+            'user_id': session['user_id']
         }
         return result_obj
 
     def add_location(self):
         latitude, longitude = self.get_location()
-        sql = "UPDATE users SET latitude = %s, longitude = %s WHERE user_id =%s"
-        record = (latitude, longitude, session['user_id'])
+        city = 'Moscow'
+        sql = "UPDATE users SET latitude = %s, longitude = %s, city = %s WHERE user_id =%s"
+        record = (latitude, longitude, city, session['user_id'])
         if self.base_write(sql, record) == "ok":
             return 1
         return 0

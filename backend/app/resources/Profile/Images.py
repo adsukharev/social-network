@@ -3,6 +3,7 @@ import os
 import base64
 from werkzeug.utils import secure_filename
 from app.resources.Common.Base import Base
+from flask_jwt_extended import jwt_required
 
 
 class Images(Base):
@@ -18,10 +19,11 @@ class Images(Base):
         image = self.files['avatar']
         if not self.__image_validation(image):
             return "image does not valid"
-        filename = self.__save_image_server(image)
-        if filename == "error":
-            return filename
-        res = self.__save_image_db(filename)
+        # filename = self.__save_image_server(image)
+        # if filename == "error":
+        #     return filename
+        new_image = self.__to_base64(image)
+        res = self.__save_image_db(new_image)
         return res
 
     def __check_image_exist(self):
@@ -52,15 +54,28 @@ class Images(Base):
         except:
             return "error"
 
-    def __save_image_db(self, filename):
-        # image_64_encoded = base64.b64encode(image.read())
-        # extention = image.filename.rsplit('.', 1)[1].lower()
-        # print(extention)
-        # sql = "UPDATE users SET avatar = %s WHERE user_id =%s"
+    def __to_base64(self, image):
+        data = 'data:image/'
+        image_64_encoded = (base64.b64encode(image.read())).decode("utf-8")
+        extention = image.filename.rsplit('.', 1)[1].lower() + ';base64,'
+        new_image = data + extention + image_64_encoded
+        return new_image
+
+    def __save_image_db(self, image):
         sql = "UPDATE users SET avatar = array_append(avatar, %s) WHERE user_id = %s;"
-        record = (filename, self.user_id)
+        record = (image, self.user_id)
         res = self.base_write(sql, record)
         return res
+
+    # def __save_image_db(self, filename):
+    #     # image_64_encoded = base64.b64encode(image.read())
+    #     # extention = image.filename.rsplit('.', 1)[1].lower()
+    #     # print(extention)
+    #     # sql = "UPDATE users SET avatar = %s WHERE user_id =%s"
+    #     sql = "UPDATE users SET avatar = array_append(avatar, %s) WHERE user_id = %s;"
+    #     record = (filename, self.user_id)
+    #     res = self.base_write(sql, record)
+    #     return res
 
     @staticmethod
     def get_image_base64(path):
@@ -71,10 +86,7 @@ class Images(Base):
             image_64_encode = base64.encodebytes(image_read)
         return image_64_encode
 
-    # # make target image main in ?key=value
-    # def get(self):
-    #     get_sql = "SELECT user_id, avatar[1] FROM users WHERE user_id = 2;"
-
+    # @jwt_required
     def delete(self, image_id):
         user_id = session['user_id']
         sql = "UPDATE users SET avatar = array_remove(avatar, avatar[%s]) WHERE user_id = %s;"

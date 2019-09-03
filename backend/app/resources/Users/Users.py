@@ -1,9 +1,11 @@
 from app.resources.Common.Base import Base
-from flask import request
+from flask import request, session
+from flask_jwt_extended import jwt_required
 
 
 class Users(Base):
 
+    # @jwt_required
     def get(self):
         sql = """
                 SELECT  u.*, r.sumLikes, l.likes, h.history, t.tags
@@ -32,6 +34,7 @@ class Users(Base):
         users = self.base_get_all(sql)
         return users
 
+    @jwt_required
     def post(self):
         email = request.json['email']
         login = request.json['login']
