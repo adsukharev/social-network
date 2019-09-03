@@ -41,7 +41,13 @@
                 'loggedUser', 'modalEditProfile', 'userProfile',
             ]),
             info: function () {
-                return this.user.user_name + ', ' + this.user.age
+                if (this.user.age)
+                    return this.user.user_name + ', ' + this.user.age
+                else if (!this.user.age)
+                    return this.user.user_name;
+                else
+                    return '-'
+
             },
         },
         created() {

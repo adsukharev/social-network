@@ -40,7 +40,6 @@
                     author: '',
                     creation_date: '',
                     partner_id: '',
-                    // type: 'message',
                 }
 
             };
@@ -69,11 +68,24 @@
                 this.dataToSend.partner_id = data['partner_id'];
             },
             async sendMessage() {
+                if (!this.checkForm()) {
+                    return ;
+                }
                 this.dataToSend.author = this.loggedUser.login;
                 this.dataToSend.creation_date = new Date();
                 this.$socket.emit('message', this.dataToSend);
                 this.dataToSend.text = '';
-            }
+            },
+            checkForm() {
+                const reg = /<script/;
+                if (reg.test(this.dataToSend.text)) {
+                   this.dataToSend.text = '';
+                    this.$toasted.error("Don't fuck my ass");
+                    return false
+                }
+                return true
+
+            },
         },
         sockets: {
             receive_message: function (message) {

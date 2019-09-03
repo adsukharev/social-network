@@ -44,11 +44,9 @@
         },
         watch: {},
         methods: {
-            ...mapMutations([
-                'userProfileChange'
-            ]),
             async editProfile() {
-                this.checkForm();
+                if (!this.checkForm())
+                    return ;
                 const dataForSend = this.createFormData();
                 await UserService.updateUser(this.loggedUser.id, dataForSend, this.loggedUser.token);
                 this.showModalProfile = false;
@@ -60,9 +58,38 @@
                 this.userForm = newUserForm;
             },
             checkForm() {
+                const reg = /<script/;
                 if (!this.userForm.bio) {
                     this.userForm.bio = ''
                 }
+                if (reg.test(this.userForm.bio)){
+                    this.userForm.bio = '';
+                    this.$toasted.error("Don't fuck my ass");
+                }
+                if (reg.test(this.userForm.tags)){
+                    this.userForm.tags = '';
+                    this.$toasted.error("Don't fuck my ass");
+                }
+                if (this.userForm.user_name.length < 2 || this.userForm.user_name.length > 15) {
+                    this.$toasted.error("name should between 3-15 characters long")
+                    return false
+                }
+                if (this.userForm.city.length < 2 || this.userForm.city.length > 35) {
+                    this.$toasted.error("city should between 3-35 characters long")
+                    return false
+                }
+                if (this.userForm.password) {
+                    if (this.userForm.password.length < 2 || this.userForm.password.length > 15) {
+                        this.$toasted.error("password should between 3-15 characters long")
+                        return false
+                    }
+                }
+                if (this.userForm.age < 15 || this.userForm.age > 150) {
+                    this.$toasted.error("age should between 15-150 years old")
+                    return false
+                }
+                return true
+
             },
             createFormData() {
                 let dataForSend = new FormData();

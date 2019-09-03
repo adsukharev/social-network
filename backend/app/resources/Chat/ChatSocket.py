@@ -86,8 +86,10 @@ class ChatSocket(Namespace, Base):
         emit('receive_message', data, room=room)
 
     def on_manage_notification(self, data):
-        print(data)
+
         partner_room = self.__get_partner_room(data['partner_id'])
+        if partner_room is None:
+            return
         message = self.__create_notification(data)
         emit('notification', message, room=partner_room)
 

@@ -6,11 +6,11 @@
                 <label for="ageFromInput" class="col-3 col-form-label">Age:</label>
                 <div class="col">
                     <input type="number" class="form-control" id="ageFromInput" v-model="userForm.age[0]"
-                           placeholder="from">
+                           placeholder="from" min="15" max="150">
                 </div>
                 <div class="col">
                     <input type="number" class="form-control" id="ageTillInput" v-model="userForm.age[1]"
-                           placeholder="to">
+                           placeholder="to" min="15" max="150">
                 </div>
             </div>
 
@@ -18,11 +18,11 @@
                 <label for="likesFromInput" class="col-3 col-form-label">Total Likes:</label>
                 <div class="col">
                     <input type="number" class="form-control" id="likesFromInput" v-model="userForm.sumLikes[0]"
-                           placeholder="from">
+                           placeholder="from" min="0" max="100000">
                 </div>
                 <div class="col">
                     <input type="number" class="form-control" id="likesTillInput" v-model="userForm.sumLikes[1]"
-                           placeholder="to">
+                           placeholder="to" min="0" max="100000">
                 </div>
             </div>
 

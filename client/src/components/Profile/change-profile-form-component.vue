@@ -5,12 +5,14 @@
             <div class="form-row">
                 <div class="form-group col">
                     <label for="userNameInput">User Name:</label>
-                    <input type="text" class="form-control" id="userNameInput" v-model="userForm.user_name">
+                    <input type="text" class="form-control" id="userNameInput" v-model="userForm.user_name"
+                           maxlength="15">
                 </div>
 
                 <div class="form-group col">
                     <label for="passwordInput">Password:</label>
-                    <input type="password" class="form-control" id="passwordInput" v-model="userForm.password">
+                    <input type="password" class="form-control" id="passwordInput" v-model="userForm.password"
+                           maxlength="15">
                 </div>
             </div>
 
@@ -21,7 +23,7 @@
                 </div>
                 <div class="form-group col">
                     <label for="ageInput">Age:</label>
-                    <input type="number" class="form-control" id="ageInput" v-model="userForm.age">
+                    <input type="number" class="form-control" id="ageInput" v-model="userForm.age" min="15" max="150">
                 </div>
 
             </div>
@@ -53,13 +55,13 @@
                 </div>
                 <div class="form-group col">
                     <label for="tagsChosenInput">Your tags:</label>
-                    <textarea id="tagsChosenInput" v-model="tagsString"></textarea>
+                    <textarea id="tagsChosenInput" v-model="tagsString" maxlength="250"></textarea>
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="bioInput">Biography:</label>
-                <textarea id="bioInput" class="form-control" v-model="userForm.bio"></textarea>
+                <textarea id="bioInput" class="form-control" v-model="userForm.bio" maxlength="250"></textarea>
             </div>
 
             <div class="form-group">
@@ -118,13 +120,18 @@
                 deep: true
             },
             selected: function (newValue) {
-                if (!this.userForm.tags.includes(newValue)) {
+                if (!this.userForm.tags) {
+                    this.userForm.tags = [];
+                    this.userForm.tags[0] = newValue;
+                    this.tagsString = newValue
+                } else if (!this.userForm.tags.includes(newValue)) {
                     if (this.tagsString.slice(-1) === ',') {
                         this.tagsString += newValue
+                    } else if (this.userForm.tags[0] === '') {
+                        this.tagsString = newValue
                     } else {
                         this.tagsString += ',' + newValue
                     }
-                    this.selected = '';
                 }
             },
             tagsString: function (newValue) {
@@ -132,9 +139,10 @@
             }
         },
         created() {
-            this.userForm = this.userProfile;
+            this.userForm = Object.assign({}, this.userProfile);
             this.userForm.password = '';
-            this.tagsString = String(this.userForm.tags);
+            if (this.userForm.tags)
+                this.tagsString = String(this.userForm.tags);
             this.getTags();
         },
         methods: {

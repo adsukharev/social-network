@@ -3,8 +3,8 @@
         <div class="row">
             <div class="col">
                 <h6 class="headers_profile">Recommendation</h6>
-                <div class="d-inline-block">
-                    <avatar-component v-for="user in usersRecommended" :user="user"></avatar-component>
+                <div class="d-inline-block" v-for="user in usersRecommended">
+                    <avatar-component  :user="user"></avatar-component>
                 </div>
             </div>
         </div>
@@ -13,10 +13,18 @@
             <div class="col">
                 <search-modal-component @searchedUsers="searchDetailed"></search-modal-component>
             </div>
+            <div class="col">
+                <select class="form-control" v-model="filterSelect">
+                    <option selected>Filter results</option>
+                    <option>age</option>
+                    <option>name</option>
+                    <option>rating</option>
+                </select>
+            </div>
         </div>
         <div class="row">
             <div class="col">
-                <div class="d-inline-block" v-for="user in usersDetailed" >
+                <div class="d-inline-block" v-for="user in usersDetailed">
                     <avatar-component :user="user"></avatar-component>
                 </div>
             </div>
@@ -42,12 +50,24 @@
             return {
                 usersRecommended: [],
                 usersDetailed: [],
+                filterSelect: 'Filter results'
             };
         },
         computed: {
             ...mapState([
                 'loggedUser'
             ]),
+        },
+        watch: {
+            filterSelect: function (newFilter) {
+                if (newFilter === 'age') {
+                    this.usersDetailed.sort(this.compareAge)
+                } else if (newFilter === 'name') {
+                    this.usersDetailed.sort(this.compareName)
+                } else if (newFilter === 'rating') {
+                    this.usersDetailed.sort(this.compareLikes)
+                }
+            }
         },
         created() {
             this.searchRecommend();
@@ -60,6 +80,33 @@
                 const users = await UserService.searchDetailed(dataForSearch, this.loggedUser.token);
                 this.usersDetailed = users.data
             },
+            compareAge(a, b) {
+                if (a.age < b.age) {
+                    return -1;
+                }
+                if (a.age > b.age) {
+                    return 1;
+                }
+                return 0;
+            },
+            compareName(a, b) {
+                if (a.user_name < b.user_name) {
+                    return -1;
+                }
+                if (a.user_name > b.user_name) {
+                    return 1;
+                }
+                return 0;
+            },
+            compareLikes(a, b) {
+                if (a.sumlikes < b.sumlikes) {
+                    return -1;
+                }
+                if (a.sumlikes > b.sumlikes) {
+                    return 1;
+                }
+                return 0;
+            }
         }
     };
 </script>

@@ -13,7 +13,7 @@ Full specification: https://cdn.intra.42.fr/pdf/pdf/968/matcha.en.pdf
 
 Goals:
 
-- Everything must be secured (JWT, SQL-debugging)
+- Everything must be secured (JWT, SQL-debugging, XSS)
 - Sign In and Sign Up components with email confirmation
 - User Profile (biography, tags, pictures, fame rating, etc)
 - GPS Location

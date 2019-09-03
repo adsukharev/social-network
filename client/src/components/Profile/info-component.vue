@@ -33,12 +33,12 @@
 
             </div>
             <div class="col">
-                <p>{{userProfile.city}}</p>
-                <p>{{userProfile.age}}</p>
-                <p>{{userProfile.sex}}</p>
-                <p>{{userProfile.preferences}}</p>
-                <p>{{String(userProfile.tags)}}</p>
-                <p>{{userProfile.bio}}</p>
+                <p>{{userProfile.city | filterEmpty}} </p>
+                <p>{{userProfile.age | filterEmpty}}</p>
+                <p>{{userProfile.sex | filterEmpty}}</p>
+                <p>{{userProfile.preferences | filterEmpty}}</p>
+                <p>{{(userProfile.tags) | filterEmpty}}</p>
+                <p>{{userProfile.bio | filterEmpty}}</p>
 
             </div>
         </div>
@@ -59,7 +59,7 @@
     import {mapState, mapGetters, mapMutations} from 'vuex';
 
     export default {
-        name: "avatar-component",
+        name: "info-component",
         computed: {
             ...mapState([
                 'userProfile', 'loggedUser'
@@ -76,7 +76,15 @@
                 this.$toasted.info('User is blocked')
 
             }
-        }
+        },
+        filters: {
+            filterEmpty: function (value) {
+                if (!value) {
+                    return '-';
+                }
+                return String(value);
+            }
+        },
 
     }
 </script>

@@ -43,9 +43,8 @@
         watch: {},
         methods: {
             async startSearch() {
-                // this.checkForm();
-
-                // const serachedUsers = await UserService.searchDetailed(this.userForm, this.loggedUser.token);
+                if (!this.checkForm())
+                    return;
                 this.showModalProfile = false;
                 this.$emit('searchedUsers', this.userForm)
 
@@ -53,11 +52,17 @@
             setUserForm(newUserForm) {
                 this.userForm = newUserForm;
             },
-            // checkForm() {
-            //     if (!this.userForm.bio) {
-            //         this.userForm.bio = ''
-            //     }
-            // },
+            checkForm() {
+                if (this.userForm.age[0] < 15 || this.userForm.age[1] > 150) {
+                    this.$toasted.error("age should between 15-150 years old")
+                    return false
+                }
+                if (this.userForm.sumLikes[0] < 0 || this.userForm.sumLikes[1] > 10000) {
+                    this.$toasted.error("likes should be < 10 000");
+                    return false
+                }
+                return true;
+            },
 
         }
     }

@@ -1,8 +1,21 @@
 <template>
     <div class="navbar-collapse justify-content-end">
         <form class="form-inline" @submit.prevent>
-            <input class="form-control mr-sm-2" v-model="loginData.login" type="text" placeholder="Login">
-            <input class="form-control mr-sm-2" v-model="loginData.password" type="password" placeholder="Password">
+            <input
+                    class="form-control mr-sm-2"
+                    v-model="loginData.login"
+                    type="text" placeholder="Login"
+                    minlength="3"
+                    maxlength="15"
+            >
+            <input
+                    class="form-control mr-sm-2"
+                    v-model="loginData.password"
+                    type="password"
+                    placeholder="Password"
+                    minlength="3"
+                    maxlength="15"
+            >
             <button class="btn btn-primary" type="submit" @click="sendLogin()">Log in</button>
             <router-link to="/" exact @click.native="forgottenTrue">Forgotten password?</router-link>
         </form>
@@ -66,7 +79,7 @@
                 } else {
                     this.$toasted.error(res.message);
                 }
-            }
+            },
         },
     }
 </script>

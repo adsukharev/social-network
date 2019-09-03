@@ -4,7 +4,7 @@
             <div class="col-4">
                 <avatar-component :user="userProfile" @addPhoto="getUser"></avatar-component>
                 <change-profile-modal-component v-if="loggedUser.id === userProfile.user_id"
-                                                @updateUser="getUser(this.$route.params.id)"></change-profile-modal-component>
+                                                @updateUser="getUser()"></change-profile-modal-component>
             </div>
             <div class="col">
                 <info-component></info-component>
@@ -50,6 +50,7 @@
         },
         data() {
             return {
+                routeId: ''
             };
         },
         computed: {
@@ -59,18 +60,20 @@
         },
         watch: {
             '$route.params.id': function (id) {
-                this.getUser(id)
+                // this.routeId = id;
+                this.getUser(id);
             }
         },
         created() {
             this.getUser(this.$route.params.id);
+            // this.routeId = this.$route.params.id;
         },
         methods: {
             ...mapMutations([
                 'userProfileChange'
             ]),
             async getUser(id) {
-                const user = await UserService.fetchOneUser(id, this.loggedUser.token);
+                const user = await UserService.fetchOneUser(this.$route.params.id, this.loggedUser.token);
                 this.userProfileChange(user);
             },
         }

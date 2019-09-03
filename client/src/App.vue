@@ -41,7 +41,6 @@
         data() {
             return {
                 checkLogged: false,
-                kek: sessionStorage.getItem('vuex'),
             };
         },
         computed: {
