@@ -24,6 +24,9 @@ Goals:
 P.S  When two people “like” each other, we will say that they are “connected” and are now able to chat
 ## Getting Started
 
+#### Install npm
+brew install node
+
 #### Install docker
 
 You can use two variants.
@@ -42,7 +45,6 @@ eval $(docker-machine env Matcha)
 if you use docker-machine or your host is differ from "localhost" change:
 
 * .env HOST
-* docker-compose.yml VUE_APP_HOST_URL
 
 
 ## Build and Run
@@ -52,6 +54,8 @@ git clone https://github.com/AndreiSukharev/Matcha.git matcha
 cd matcha
 docker-compose up --build
 sh dbGPS.sh
+cd client
+npm i
 go to: http://localhost:8080
 ```
 

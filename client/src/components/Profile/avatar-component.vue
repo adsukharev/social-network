@@ -106,8 +106,10 @@
                 return true;
             },
             async manageHistory() {
-                await ProfileService.addHistory(this.user.user_id, this.loggedUser.token);
-                this.sendNotification('history')
+                if (this.user.user_id !== this.loggedUser.id) {
+                    await ProfileService.addHistory(this.user.user_id, this.loggedUser.token);
+                    this.sendNotification('history')
+                }
             },
             sendNotification(type) {
                 this.notification.type = type;

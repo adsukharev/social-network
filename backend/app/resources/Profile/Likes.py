@@ -3,7 +3,6 @@ from flask import session
 from app.resources.Rating import Rating
 from app.resources.Chat.Chats import Chats
 from flask_jwt_extended import jwt_required
-from .Notification import Notification
 
 
 class Likes(Base):
@@ -18,7 +17,6 @@ class Likes(Base):
         # increase like in rating
         rating = Rating()
         res = rating.inc_like(to_like_id)
-        # Notification.send_notification(to_like_id, 'like')
         return res
 
     def __add_like(self, to_like_id):
@@ -45,7 +43,6 @@ class Likes(Base):
         chat_obj = Chats()
         from_like_id = session['user_id']
         res = chat_obj.manage_chat_to_delete(from_like_id, to_like_id)
-        # Notification.send_notification(to_like_id, 'like')
         return res
 
     def __delete_like(self, to_like_id):

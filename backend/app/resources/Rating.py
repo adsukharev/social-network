@@ -6,11 +6,18 @@ class Rating(Base):
 
     @jwt_required
     def get(self):
-        sql = '''   SELECT u.user_id, u.login, u.user_name, u.age, r.sumLikes, array_agg(u.avatar[1]) as avatar
+        sql = '''   SELECT u.user_id, u.login, u.user_name, u.age, l.likes, r.sumLikes, array_agg(u.avatar[1]) as avatar
                     FROM users u
                     JOIN rating r ON r.user_fk = u.user_id
-                    GROUP BY u.user_id, r.sumLikes
-                    ORDER BY r.sumlikes DESC 
+                    LEFT JOIN (
+                      SELECT likes.to_like_fk, array_agg(u.login) as likes
+                      FROM likes
+                      JOIN  users u ON u.user_id = likes.from_like_fk
+                      GROUP BY 1
+                      ) l ON u.user_id = l.to_like_fk
+                    WHERE u.fake = '0'
+                    GROUP BY u.user_id, r.sumLikes,l.likes
+                    ORDER BY r.sumlikes DESC    
                     ;'''
         rating = self.base_get_all(sql)
         return rating

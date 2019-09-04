@@ -19,20 +19,21 @@
                    placeholder="Password" maxlength="15">
         </div>
 
-            <div class="row">
+        <div class="row">
 
-                <div class="col-sm-6">
-                    <facebook-login class="button"
-                                    appId="532470077295016"
-                                    @login="onLogin"
-                                    @logout="onLogout"
-                                    @sdk-loaded="sdkLoaded">
-                        >
-                    </facebook-login>
-                </div>
-                <div class="col-sm-4 offset-sm-2">
-                    <button type="submit" class="btn btn-success btn-block" @click="signUp()">Sign Up</button>
-                </div>
+            <div class="col-sm-6">
+                <facebook-login class="button"
+                                appId="532470077295016"
+                                @login="onLogin"
+                                @logout="onLogout"
+                                @sdk-loaded="sdkLoaded">
+                    version="3.1"
+                    >
+                </facebook-login>
+            </div>
+            <div class="col-sm-4 offset-sm-2">
+                <button type="submit" class="btn btn-success btn-block" @click="signUp()">Sign Up</button>
+            </div>
 
 
         </div>
@@ -45,6 +46,8 @@
     import RegistrationService from '@/services/Registration.js'
     import facebookLogin from 'facebook-login-vuejs';
     import {mapMutations} from 'vuex';
+    import axios from 'axios';
+
 
     export default {
         name: 'LoginComponent',
@@ -65,12 +68,12 @@
                     email: '',
                     social_id: '',
                 },
-                FB: undefined,
                 fbLogin: {
                     login: '',
                     id: '',
                     token: '',
-                }
+                },
+                fb: undefined,
             };
         },
         methods: {

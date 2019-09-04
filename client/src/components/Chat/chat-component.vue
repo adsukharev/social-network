@@ -19,6 +19,8 @@
             <h4>No chats yet</h4>
         </div>
     </div>
+
+
 </template>
 
 <script>

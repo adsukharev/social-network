@@ -3,7 +3,6 @@ import os
 import base64
 from werkzeug.utils import secure_filename
 from app.resources.Common.Base import Base
-from flask_jwt_extended import jwt_required
 
 
 class Images(Base):
