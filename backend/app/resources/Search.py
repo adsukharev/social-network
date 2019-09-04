@@ -99,7 +99,6 @@ class Search(Base):
     # search with user's input
     @jwt_required
     def post(self):
-        # todo: block condition
         sql_condition = self.__make_sql()
         sql = self.sql.format(sql_condition)
         record = (session['user_id'],)

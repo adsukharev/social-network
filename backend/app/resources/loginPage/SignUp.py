@@ -13,7 +13,6 @@ class SignUp(UsersCommon):
         record = (login,)
         if not self.__check_email_token(record, token):
             return "incorrect token"
-        # todo:redirect to images.html
         self.__change_user_status(record)
         # add user to rating
         user_id = self.get_user_id(record)

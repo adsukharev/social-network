@@ -18,7 +18,6 @@ class History(Base):
         sql = '''INSERT INTO history (from_history_fk, to_history_fk)
                              VALUES (%s, %s);'''
         res = self.base_write(sql, record)
-        # todo:notificate
         return res
 
     @jwt_required

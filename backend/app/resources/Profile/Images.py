@@ -77,14 +77,13 @@ class Images(Base):
     #     res = self.base_write(sql, record)
     #     return res
 
-    @staticmethod
-    def get_image_base64(path):
-        # todo:path
-        path = '/usr/src/backend/app/user_images/life.jpg'
-        with open(path, "rb") as f:
-            image_read = f.read()
-            image_64_encode = base64.encodebytes(image_read)
-        return image_64_encode
+    # @staticmethod
+    # def get_image_base64(path):
+    #     path = '/usr/src/backend/app/user_images/life.jpg'
+    #     with open(path, "rb") as f:
+    #         image_read = f.read()
+    #         image_64_encode = base64.encodebytes(image_read)
+    #     return image_64_encode
 
     # @jwt_required
     def delete(self, image_id):
