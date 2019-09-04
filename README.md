@@ -56,6 +56,7 @@ docker-compose up --build
 sh dbGPS.sh
 cd client
 npm i
+npm run serve
 go to: http://localhost:8080
 ```
 
