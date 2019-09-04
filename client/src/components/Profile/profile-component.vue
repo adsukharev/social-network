@@ -1,12 +1,12 @@
 <template>
     <div>
         <div class="row">
-            <div class="col-4">
+            <div class="col-lg-4 ">
                 <avatar-component :user="userProfile" @addPhoto="getUser"></avatar-component>
                 <change-profile-modal-component v-if="loggedUser.id === userProfile.user_id"
                                                 @updateUser="getUser()"></change-profile-modal-component>
             </div>
-            <div class="col">
+            <div class="col-lg-8">
                 <info-component></info-component>
             </div>
         </div>
@@ -18,10 +18,10 @@
         </div>
         <hr>
         <div class="row" v-if="loggedUser.id === userProfile.user_id">
-            <div class="col">
+            <div class="col-sm-6">
                 <likes-info-component></likes-info-component>
             </div>
-            <div class="col">
+            <div class="col-sm-6">
                 <history-info-component></history-info-component>
             </div>
         </div>

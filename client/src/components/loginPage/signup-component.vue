@@ -18,19 +18,23 @@
             <input type="password" v-model="loginData.password" class="form-control" id="passwordInput"
                    placeholder="Password" maxlength="15">
         </div>
-        <div class="row">
-            <div class="col">
-                <button type="submit" class="btn btn-success btn-block" @click="signUp()">Sign Up</button>
-            </div>
-            <div class="col">
-                <facebook-login class="button"
-                                appId="532470077295016"
-                                @login="onLogin"
-                                @logout="onLogout"
-                                @sdk-loaded="sdkLoaded">
-                    >
-                </facebook-login>
-            </div>
+
+            <div class="row">
+
+                <div class="col-sm-6">
+                    <facebook-login class="button"
+                                    appId="532470077295016"
+                                    @login="onLogin"
+                                    @logout="onLogout"
+                                    @sdk-loaded="sdkLoaded">
+                        >
+                    </facebook-login>
+                </div>
+                <div class="col-sm-4 offset-sm-2">
+                    <button type="submit" class="btn btn-success btn-block" @click="signUp()">Sign Up</button>
+                </div>
+
+
         </div>
 
 
@@ -95,7 +99,7 @@
                 }
                 if (this.loginData.email) {
                     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                    if (! re.test(this.loginData.email))
+                    if (!re.test(this.loginData.email))
                         return false
                 }
                 if (this.loginData.password.length < 3 || this.loginData.password.length > 15) {

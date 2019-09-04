@@ -23,7 +23,7 @@
         </div>
 
         <div class="row">
-            <div class="col">
+            <div class="col-4">
                 <p>City</p>
                 <p>Age</p>
                 <p>Sex</p>
@@ -32,7 +32,7 @@
                 <p>Biography</p>
 
             </div>
-            <div class="col">
+            <div class="col-8">
                 <p>{{userProfile.city | filterEmpty}} </p>
                 <p>{{userProfile.age | filterEmpty}}</p>
                 <p>{{userProfile.sex | filterEmpty}}</p>
@@ -43,14 +43,7 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col">
 
-            </div>
-            <div class="col">
-
-            </div>
-        </div>
     </div>
 </template>
 
