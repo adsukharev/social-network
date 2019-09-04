@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col">
                 <hr>
-                <photos-component @updateUser="getUser(this.$route.params.id)"></photos-component>
+                <photos-component @updateUser="getUser()"></photos-component>
             </div>
         </div>
         <hr>
