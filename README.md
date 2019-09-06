@@ -30,22 +30,16 @@ brew install node
 #### Install docker
 
 You can use two variants.
-The first one (prefer for home laptop):
+The first one:
 ```
 https://docs.docker.com/compose/install/
 ```
-The second (for school):
+The second one:
 ```
 brew install docker docker-machine docker-compose
 docker-machine create --driver virtualbox Matcha
 eval $(docker-machine env Matcha)
 ```
-
-#### Setup HOST
-if you use docker-machine or your host is differ from "localhost" change:
-
-* .env HOST
-
 
 ## Build and Run
 

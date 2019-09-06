@@ -8,11 +8,12 @@ import Toasted from 'vue-toasted';
 import VueSocketIO from 'vue-socket.io'
 
 
-// let HOST_URL = process.env.VUE_APP_HOST_URL;
-
+let HOST_URL = process.env.VUE_APP_HOST_URL;
+// let HOST_URL = "http://192.168.99.100:5000";
+// let HOST_URL = "http://localhost:5000";
 Vue.use(new VueSocketIO({
     debug: true,
-    connection: `http://192.168.99.100:5000/api/socket`,
+    connection: `${HOST_URL}/api/socket`,
     vuex: {
         store,
         actionPrefix: 'SOCKET_',

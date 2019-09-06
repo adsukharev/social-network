@@ -110,7 +110,6 @@
                 if (this.userForm.tags)
                     dataForSend.append('tags', JSON.stringify(this.userForm.tags));
                 dataForSend.append('bio', this.userForm.bio);
-                dataForSend.append('notification', this.userForm.notification);
                 return dataForSend
             },
         }

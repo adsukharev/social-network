@@ -65,11 +65,6 @@
             </div>
 
             <div class="form-group">
-                <label for="notificationInput">Notification:</label>
-                <input type="checkbox" id="notificationInput" v-model="userForm.notification">
-            </div>
-
-            <div class="form-group">
                 <input id="avatarinput" class="form-control-file" type="file" ref="myFile"
                        accept="image/png, image/jpeg"
                        @change="getAvatar">
@@ -100,7 +95,6 @@
                     preferences: '',
                     tags: [],
                     bio: '',
-                    notification: false
                 },
                 tagsString: '',
                 selected: '',
@@ -157,7 +151,5 @@
 </script>
 
 <style scoped>
-    #notificationInput {
-        margin-left: 1em;
-    }
+
 </style>
