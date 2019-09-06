@@ -70,31 +70,6 @@ We have sent new passport to your email
 DELETE     /api/logout
 ```
 
- ### OAuth
-```
-POST    /api/oauth -redirect to facebook
-GET     /api/oauth - callback from facebook
-```
-
-request from GET:
-```
-"message": "ok",
-"access_token": "eyJ0eXAiOiJK",
-'user_id': "32"
-```
-
- 
- 
- ### Check Authorization
-```
-GET     /api/secret
-```
-Request Header:
-```
-Key                 Value
-Authorization       Bearer eyJ0eXAiOiJK(token)
-```
-
 ### Users
 
 ```

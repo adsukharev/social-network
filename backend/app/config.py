@@ -20,8 +20,3 @@ mail_settings = {
         "MAIL_USERNAME": os.environ['EMAIL_USER'],
         "MAIL_PASSWORD": os.environ['EMAIL_PASSWORD']
 }
-
-FACEBOOK = {
-    'id': '532470077295016',
-    'secret': '6b9844087159d342e6741f57f63aa737'
-}
