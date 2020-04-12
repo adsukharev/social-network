@@ -36,6 +36,7 @@ class Email:
                     <p>To activate your account click the link below.</p>
                     <a href={}>Activate</a>
                 """.format(name, login, link)
+
         msg = Message(
             subject = "Matcha Confirmation",
             sender=current_app.config.get("MAIL_USERNAME"),
