@@ -8,7 +8,6 @@ flask_restful==0.3.6
 Flask-Mail
 flask-jwt-extended
 flask-cors
-geoip2
 flask-socketio
 gevent
 rauth

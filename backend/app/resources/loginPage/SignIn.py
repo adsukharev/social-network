@@ -1,7 +1,6 @@
 from app.resources.Common.UsersCommon import UsersCommon
 from flask import request, session
 from flask_jwt_extended import create_access_token
-import geoip2.database
 
 
 class SignIn(UsersCommon):
@@ -59,23 +58,13 @@ class SignIn(UsersCommon):
         return 0
 
     def get_location(self):
-        try:
-            if self.check_location():
-                latitude = request.json['latitude']
-                longitude = request.json['longitude']
-            else:
-                reader = geoip2.database.Reader('./GeoLite2/GeoLite2-City.mmdb')
-                ip = str(request.remote_addr)
-                response = reader.city(ip)
-                latitude = response.location.latitude
-                longitude = response.location.longitude
-                reader.close()
-        except Exception as e:
-            print(e)
+        if self.check_location():
+            latitude = request.json['latitude']
+            longitude = request.json['longitude']
+        else:
             latitude = 55.7116423
             longitude = 37.738213
-        finally:
-            return float(latitude), float(longitude)
+        return float(latitude), float(longitude)
 
     def check_location(self):
         if 'latitude' in request.json and 'longitude' in request.json:

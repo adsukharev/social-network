@@ -2,6 +2,7 @@
 Social network for dating
 
 Full specification: https://cdn.intra.42.fr/pdf/pdf/968/matcha.en.pdf
+Video: 
 
 [Server] Python (Flask)
 
@@ -13,7 +14,7 @@ Full specification: https://cdn.intra.42.fr/pdf/pdf/968/matcha.en.pdf
 
 Goals:
 
-- Everything must be secured (JWT, SQL-debugging, XSS)
+- Everything must be secured (JWT, SQL-debugging, XSS, hash password)
 - Sign In and Sign Up components with email confirmation
 - User Profile (biography, tags, pictures, fame rating, etc)
 - GPS Location
@@ -47,11 +48,9 @@ eval $(docker-machine env Matcha)
 git clone https://github.com/AndreiSukharev/Matcha.git matcha
 cd matcha
 docker-compose up --build
-sh dbGPS.sh
-cd client
-npm i
-npm run serve
 go to: http://localhost:8080
+
+Note: you can change a port in docker-compose
 ```
 
 ## Test

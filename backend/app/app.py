@@ -1,4 +1,4 @@
-from flask import Blueprint, Flask, render_template
+from flask import Blueprint, Flask
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
@@ -17,7 +17,7 @@ from app.resources.Profile.Images import Images
 from .resources.loginPage.SignUp import SignUp
 from .resources.loginPage.SignIn import SignIn
 from .resources.loginPage.LogOut import LogOut
-from .resources.loginPage.OAuthFB import OAuthFB
+# from .resources.loginPage.OAuthFB import OAuthFB
 from .resources.Rating import Rating
 from .resources.Search import Search
 from .resources.Profile.Fake import Fake
@@ -44,7 +44,7 @@ socketio = SocketIO(app, cors_allowed_origins='*', cors_credentials=True)
 api.add_resource(SignUp, '/signup')
 api.add_resource(SignIn, '/signin')
 api.add_resource(LogOut, '/logout')
-api.add_resource(OAuthFB, '/oauth')
+# api.add_resource(OAuthFB, '/oauth')
 api.add_resource(Users, '/users')
 api.add_resource(UserId, '/users/<user_id>')
 api.add_resource(UserLogin, '/user_login/<login>')
